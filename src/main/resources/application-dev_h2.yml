@@ -1,0 +1,44 @@
+server:
+  servlet:
+    context-path: /guessme
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    platform: H2
+    url: jdbc:h2:mem:asocdb;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL;INIT=CREATE SCHEMA IF NOT EXISTS asocijacije
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+      javax:
+        persistence:
+          schema-generation:
+            drop-source: metadata
+            create-source: metadata
+            scripts:
+              action: none #drop-and-create
+              drop-target: np_database_create.sql
+              create-target: np_database_create.sql
+            database:
+              action: drop-and-create
+
+logging:
+  level:
+    root: INFO
+    rs:
+      apps:
+        nn:
+          asocijacije: DEBUG
+
