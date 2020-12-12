@@ -18,13 +18,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import rs.apps.nn.guessme.bean.Word;
+import rs.apps.nn.guessme.model.Word;
 import rs.apps.nn.guessme.repository.WordRepository;
 import rs.apps.nn.guessme.service.WordService;
 
 @RestController
 @RequestMapping (path = "/")
-public class AsocijacijeController {
+public class QuessMeController {
 
 	@Autowired
 	private WordService wordService;

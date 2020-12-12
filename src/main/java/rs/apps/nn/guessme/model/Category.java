@@ -1,4 +1,4 @@
-package rs.apps.nn.guessme.bean;
+package rs.apps.nn.guessme.model;
 
 import java.util.Set;
 
@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 
  * @author Nebojsa
@@ -18,6 +22,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "CATEGORY", schema = "asocijacije")
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = { }) // (exclude = { "recipes" })
 public class Category {
 
 	@Id

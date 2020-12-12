@@ -1,4 +1,4 @@
-package rs.apps.nn.guessme.bean;
+package rs.apps.nn.guessme.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 /**
  * 
  * @author Nebojsa
@@ -17,6 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "WORD", schema="asocijacije")
+@Data
 public class Word {
 
 	@Id
