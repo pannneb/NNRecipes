@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import rs.apps.nn.guessme.bean.Word;
+import rs.apps.nn.guessme.model.Word;
 
 public interface WordRepositoryCustom {
 

@@ -7,7 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import rs.apps.nn.guessme.bean.Word;
+import rs.apps.nn.guessme.model.Word;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

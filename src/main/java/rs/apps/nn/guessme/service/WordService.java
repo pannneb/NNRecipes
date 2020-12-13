@@ -9,7 +9,7 @@ import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import rs.apps.nn.guessme.bean.Word;
+import rs.apps.nn.guessme.model.Word;
 import rs.apps.nn.guessme.repository.WordRepository;
 
 @Service

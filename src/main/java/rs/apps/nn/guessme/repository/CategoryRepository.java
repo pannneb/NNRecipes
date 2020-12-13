@@ -5,13 +5,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import rs.apps.nn.guessme.bean.Word;
+import rs.apps.nn.guessme.model.Category;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Word, Long> , WordRepositoryCustom {
+public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-	Optional<Word> findById(Long wordId);
+	Optional<Category> findById(Long wordId);
 
 }
-
-

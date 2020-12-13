@@ -1,6 +1,8 @@
 server:
   servlet:
     context-path: /guessme
+  port: 8081
+#  context-path: /guessme   deprecated
 
 spring:
   h2:
@@ -36,9 +38,20 @@ spring:
 
 logging:
   level:
-    root: INFO
+#    root: INFO
     rs:
       apps:
         nn:
           asocijacije: DEBUG
+#  pattern:
+#    console: '%d{"yyyy/MM/dd HH:mm:ss,SSS"} [%p] [%t] %M\(%F:%L\) - %msg%n'
 
+#actuator start
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: "conditions,configprops"
+#actuator end
+        
