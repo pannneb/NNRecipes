@@ -1,0 +1,82 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<configuration>
+
+	<property name="LOG_PATH" value="/Users/Nebojsa/sts-workspace/logs"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd} %d{HH:mm:ss} | %5p | %-15.15thread | %-5.5X{logId} | %30.30logger | %-20.-20M\(%-4.4line\) | %m%n</pattern>
+       		<charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <appender name = "LOG_ROLLING_DEV" class = "ch.qos.logback.core.rolling.RollingFileAppender">
+      <file>${LOG_PATH}/log-quessme-dev.log</file>
+	  <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	    <fileNamePattern>log-quessme-dev-%d{yyyy-MM-dd}.log</fileNamePattern>
+        <maxHistory>10</maxHistory>
+	    <totalSizeCap>3GB</totalSizeCap>
+      </rollingPolicy>
+      <encoder>
+	    <pattern>%d{yyyy-MM-dd} %d{HH:mm:ss} | %5p | %-15.15thread | %-5.5X{logId} | %30.30logger | %-20.-20M\(%-4.4line\) | %m%n</pattern>
+    	<charset>utf8</charset>
+      </encoder>
+    </appender>
+   
+    <appender name="LOG_ROLLING_TEST"	class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <file>${LOG_PATH}/log-quessme_test.log</file>
+      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	    <fileNamePattern>quessme_test-%d{yyyy-MM-dd}.log</fileNamePattern> <!-- daily rollover -->
+	    <maxHistory>10</maxHistory> <!-- keep 30 days' worth of history capped at 3GB total size -->
+		<totalSizeCap>3GB</totalSizeCap>
+	  </rollingPolicy>
+	  <encoder>
+    	<pattern>%d{yyyy-MM-dd} %d{HH:mm:ss} | %5p | %-15.15thread | %-5.5X{logId} | %30.30logger | %-20.-20M\(%-4.4line\) | %m%n</pattern>
+		<charset>utf8</charset>
+	  </encoder>
+	</appender>   
+   
+	<appender name="LOG_ROLLING_PROD"	class="ch.qos.logback.core.rolling.RollingFileAppender">
+	  <file>${LOG_PATH}/log-quessme-pr.log</file>
+	  <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+		<fileNamePattern>log-quessme-pr-%d{yyyy-MM-dd}.log</fileNamePattern> <!-- daily rollover -->
+		<maxHistory>30</maxHistory> <!-- keep 30 days' worth of history capped at 3GB total size -->
+		<totalSizeCap>3GB</totalSizeCap>
+	  </rollingPolicy>
+	  <encoder>
+	 	<!-- <pattern>%d{yyyy-MM-dd} %d{HH:mm:ss.SSS} | %5p | %-25.25thread | %-17.17X{logId} | %40.40logger | %-20.-20M\(%-4.4line\) | %m%n</pattern> -->
+		<pattern>%d{yyyy-MM-dd} %d{HH:mm:ss} | %5p | %-15.15thread | %-5.5X{logId} | %30.30logger | %-20.-20M\(%-4.4line\) | %m%n</pattern>
+		<charset>utf8</charset>
+	  </encoder>
+	</appender>
+
+	<!-- 
+	 	<logger name="jdbc.sqlonly" 		level="INFO" 	additivity="false">	<appender-ref ref="STDOUT"/>	</logger>
+		<logger name="jdbc.sqltiming" 		level="OFF" 	additivity="false">	<appender-ref ref="STDOUT"/>	</logger>
+		<logger name="jdbc.audit" 			level="OFF" 	additivity="false">	<appender-ref ref="STDOUT"/>	</logger>
+		<logger name="jdbc.resultset" 		level="OFF" 	additivity="false">	<appender-ref ref="STDOUT"/>	</logger>
+		<logger name="jdbc.connection" 		level="INFO" 	additivity="false">	<appender-ref ref="STDOUT"/>	</logger>
+	-->
+
+   	<springProfile name="dev_h2">
+		<root level="INFO">
+			<appender-ref ref="LOG_ROLLING_DEV" />
+		</root>
+		<root level="INFO">
+			<appender-ref ref="STDOUT" />
+		</root>
+	</springProfile>
+
+   	<springProfile name="test_pg">
+		<root level="trace">
+			<appender-ref ref="ROLLIN_TEST" />
+		</root>
+	</springProfile>
+
+	<springProfile name="prod">
+		<root level="debug">
+			<appender-ref ref="ROLLIN_PROD" />
+		</root>
+	</springProfile>
+
+</configuration>
