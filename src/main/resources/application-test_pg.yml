@@ -12,7 +12,8 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
+# validate
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     database: postgresql
     show-sql: true
