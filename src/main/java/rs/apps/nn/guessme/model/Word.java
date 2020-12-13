@@ -18,7 +18,7 @@ import lombok.Data;
  *
  */
 @Entity
-@Table(name = "WORD", schema="asocijacije")
+@Table(name = "word", schema="asocijacije")
 @Data
 public class Word {
 

@@ -21,7 +21,7 @@ import lombok.Setter;
  *
  */
 @Entity
-@Table(name = "CATEGORY", schema = "asocijacije")
+@Table(name = "category", schema = "asocijacije")
 @Getter
 @Setter
 @EqualsAndHashCode(exclude = { }) // (exclude = { "recipes" })
