@@ -59,9 +59,9 @@
 	-->
 
    	<springProfile name="dev_h2">
-		<root level="INFO">
+		<!-- <root level="INFO">
 			<appender-ref ref="LOG_ROLLING_DEV" />
-		</root>
+		</root> -->
 		<root level="INFO">
 			<appender-ref ref="STDOUT" />
 		</root>
