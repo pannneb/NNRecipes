@@ -9,7 +9,7 @@
        		<charset>utf8</charset>
         </encoder>
     </appender>
-<!-- 
+
     <appender name = "LOG_ROLLING_DEV" class = "ch.qos.logback.core.rolling.RollingFileAppender">
       <file>${LOG_PATH}/log-quessme-dev.log</file>
 	  <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -26,8 +26,8 @@
     <appender name="LOG_ROLLING_TEST"	class="ch.qos.logback.core.rolling.RollingFileAppender">
       <file>${LOG_PATH}/log-quessme_test.log</file>
       <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-	    <fileNamePattern>quessme_test-%d{yyyy-MM-dd}.log</fileNamePattern>
-	    <maxHistory>10</maxHistory>
+	    <fileNamePattern>quessme_test-%d{yyyy-MM-dd}.log</fileNamePattern> <!-- daily rollover -->
+	    <maxHistory>10</maxHistory> <!-- keep 30 days' worth of history capped at 3GB total size -->
 		<totalSizeCap>3GB</totalSizeCap>
 	  </rollingPolicy>
 	  <encoder>
@@ -39,16 +39,17 @@
 	<appender name="LOG_ROLLING_PROD"	class="ch.qos.logback.core.rolling.RollingFileAppender">
 	  <file>${LOG_PATH}/log-quessme-pr.log</file>
 	  <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-		<fileNamePattern>log-quessme-pr-%d{yyyy-MM-dd}.log</fileNamePattern>
-		<maxHistory>30</maxHistory> 
+		<fileNamePattern>log-quessme-pr-%d{yyyy-MM-dd}.log</fileNamePattern> <!-- daily rollover -->
+		<maxHistory>30</maxHistory> <!-- keep 30 days' worth of history capped at 3GB total size -->
 		<totalSizeCap>3GB</totalSizeCap>
 	  </rollingPolicy>
 	  <encoder>
+	 	<!-- <pattern>%d{yyyy-MM-dd} %d{HH:mm:ss.SSS} | %5p | %-25.25thread | %-17.17X{logId} | %40.40logger | %-20.-20M\(%-4.4line\) | %m%n</pattern> -->
 		<pattern>%d{yyyy-MM-dd} %d{HH:mm:ss} | %5p | %-15.15thread | %-5.5X{logId} | %30.30logger | %-20.-20M\(%-4.4line\) | %m%n</pattern>
 		<charset>utf8</charset>
 	  </encoder>
 	</appender>
- -->
+
 	<!-- 
 	 	<logger name="jdbc.sqlonly" 		level="INFO" 	additivity="false">	<appender-ref ref="STDOUT"/>	</logger>
 		<logger name="jdbc.sqltiming" 		level="OFF" 	additivity="false">	<appender-ref ref="STDOUT"/>	</logger>
