@@ -8,8 +8,8 @@
 		<version>2.2.6.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>rs.apps.nn.asocijacije.group</groupId>
-	<artifactId>rs.apps.nn.asocijacije</artifactId>
+	<groupId>rs.apps.nn.quessme.group</groupId>
+	<artifactId>rs.apps.nn.quessme</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>NQuessMe</name>
 	<description>Quess Me Spring Boot Game and API</description>
