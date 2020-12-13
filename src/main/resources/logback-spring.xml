@@ -67,8 +67,8 @@
 	</springProfile>
 
    	<springProfile name="test_pg">
-		<root level="trace">
-			<appender-ref ref="ROLLIN_TEST" />
+		<root level="INFO">
+			<appender-ref ref="STDOUT" />
 		</root>
 	</springProfile>
 

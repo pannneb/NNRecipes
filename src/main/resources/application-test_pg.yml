@@ -1,14 +1,27 @@
+server:
+  servlet:
+    context-path: /guessme
+  port: 8081
+#  context-path: /guessme   deprecated
+
 spring:
   datasource:
     url: jdbc:postgresql://ec2-46-137-177-160.eu-west-1.compute.amazonaws.com:5432/d69khgdes1m2cr
     username: nahsqaslwvvwkp
     password: e0af0e608cd5bd2fdfd64ce6efda35cce54fc266f15e09583b1c969b92184046
+
   jpa:
     hibernate:
       ddl-auto: validate
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     database: postgresql
     show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
 #    properties:
 #      javax:
 #        persistence:
