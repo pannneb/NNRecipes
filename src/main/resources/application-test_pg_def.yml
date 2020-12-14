@@ -6,9 +6,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://ec2-75-101-212-64.compute-1.amazonaws.com:5432/dd5mptuunin77f
-    username: jdnsyxdidcbnil
-    password: 37ac51914e3ca62858332459bb34b2543f9a0ae9adde9d53bdb765325e66a1bf
+    url: jdbc:postgresql://ec2-46-137-177-160.eu-west-1.compute.amazonaws.com:5432/d69khgdes1m2cr
+    username: nahsqaslwvvwkp
+    password: e0af0e608cd5bd2fdfd64ce6efda35cce54fc266f15e09583b1c969b92184046
 
   jpa:
     hibernate:
