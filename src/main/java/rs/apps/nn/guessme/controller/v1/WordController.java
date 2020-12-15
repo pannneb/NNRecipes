@@ -14,7 +14,7 @@ import rs.apps.nn.guessme.model.Word;
 import rs.apps.nn.guessme.service.WordService;
 
 @Controller
-@RequestMapping(path = "/v1/word")
+@RequestMapping(path = "/v1/words")
 public class WordController {
 
 	private WordService wordService;
@@ -38,7 +38,7 @@ public class WordController {
 		return rd;
 	}
 
-	@RequestMapping({ "/all", "/all/" })
+	@RequestMapping({ "/", "" })
 	@ResponseBody
 	public List<Word> getWords() {
 		return wordService.getAllWords();
