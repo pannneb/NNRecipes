@@ -39,15 +39,16 @@ public class WordService {
             throw new ValidationException("No word record exist for given id");
         }
     }
-     
-    public Word createOrUpdateWord(Word entity) throws ValidationException 
+
+    public Word createOrUpdateWordByWord(Word entity) throws ValidationException 
     {
-        Optional<Word> word = wordRepository.findById(entity.getId());
-         
+        // Optional<Word> word = wordRepository.findById(entity.getId());
+        Optional<Word> word = wordRepository.findByWord(entity.getWord());
+
         if(word.isPresent()) 
         {
             Word newEntity = word.get();
-            newEntity.setId(entity.getId());
+            // newEntity.setId(entity.getId());
             newEntity.setWord(entity.getWord());
             newEntity.setCategoryFk(entity.getCategoryFk());
  

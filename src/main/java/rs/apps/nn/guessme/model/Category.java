@@ -1,5 +1,6 @@
 package rs.apps.nn.guessme.model;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -25,7 +26,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(exclude = { }) // (exclude = { "recipes" })
-public class Category {
+public class Category implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,8 +42,8 @@ public class Category {
 	private String description;
 
 	// @OneToMany(mappedBy = "appEmailSend", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@OneToMany(mappedBy = "category", cascade=CascadeType.ALL)
-	private Set<Word> words;
+	//@OneToMany(mappedBy = "category", cascade=CascadeType.ALL)
+	//private Set<Word> words;
 
 	public Long getId() {
 		return id;
@@ -63,19 +69,19 @@ public class Category {
 		this.description = description;
 	}
 
-	public Set<Word> getWords() {
-		return words;
-	}
-
-	public void setWords(Set<Word> words) {
-		this.words = words;
-	}
+//	public Set<Word> getWords() {
+//		return words;
+//	}
+//
+//	public void setWords(Set<Word> words) {
+//		this.words = words;
+//	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Category [id=").append(id).append(", name=").append(name).append(", description=")
-				.append(description).append(", words=").append(words).append("]");
+				.append(description)/*.append(", words=").append(words)*/.append("]");
 		return builder.toString();
 	}
 
