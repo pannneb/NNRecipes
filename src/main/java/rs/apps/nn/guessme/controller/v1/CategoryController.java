@@ -11,26 +11,32 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import rs.apps.nn.guessme.api.EnumResponseStatus;
 import rs.apps.nn.guessme.api.ResponseData;
 import rs.apps.nn.guessme.exception.ValidateException;
-import rs.apps.nn.guessme.model.Word;
-import rs.apps.nn.guessme.service.WordService;
+import rs.apps.nn.guessme.model.Category;
+import rs.apps.nn.guessme.service.CategoryService;
 
 @Controller
-@RequestMapping(path = "/v1/words")
-public class WordController {
+@RequestMapping(path = "/v1/categories")
+public class CategoryController {
 
-	private WordService wordService;
+	private CategoryService categoryService;
 
-	public WordController(WordService wordService) {
+	public CategoryController(CategoryService categoryService) {
 		super();
-		this.wordService = wordService;
+		this.categoryService = categoryService;
+	}
+
+	@RequestMapping({ "/", "" })
+	@ResponseBody
+	public List<Category> getCategories() {
+		return categoryService.getCategories();
 	}
 
 	@PostMapping(value = "/new", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public ResponseData createPerson(@RequestBody Word word) {
+	public ResponseData createCategory(@RequestBody Category cat) {
 		ResponseData rd = new ResponseData();
 		try {
-			wordService.createOrUpdateWordByWord(word);
+			categoryService.createOrUpdateCategory(cat);
 			rd.setStatus(EnumResponseStatus.RESP_OK.getId());
 		} catch (ValidateException e) {
 			rd.setStatus(e.getValExcCode());
@@ -40,12 +46,6 @@ public class WordController {
 			rd.setDescription(e.getMessage());
 		}
 		return rd;
-	}
-
-	@RequestMapping({ "/", "" })
-	@ResponseBody
-	public List<Word> getWords() {
-		return wordService.getAllWords();
 	}
 
 }

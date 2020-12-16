@@ -35,6 +35,8 @@ spring:
               create-target: np_database_create.sql
             database:
               action: drop-and-create
+  messages:
+    basename: messages/messages
 
 logging:
   level:
