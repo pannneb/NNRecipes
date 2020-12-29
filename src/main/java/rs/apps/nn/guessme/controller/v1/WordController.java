@@ -1,7 +1,9 @@
 package rs.apps.nn.guessme.controller.v1;
 
 import java.util.List;
+import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,15 +13,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import rs.apps.nn.guessme.api.EnumResponseStatus;
 import rs.apps.nn.guessme.api.ResponseData;
-import rs.apps.nn.guessme.exception.ValidateException;
+import rs.apps.nn.guessme.common.MessageSourceGuessMe;
+import rs.apps.nn.guessme.controller.BasicAPIController;
 import rs.apps.nn.guessme.model.Word;
 import rs.apps.nn.guessme.service.WordService;
 
-@Controller
+@Controller("WordControllerApi")
 @RequestMapping(path = "/v1/words")
-public class WordController {
+public class WordController extends BasicAPIController {
 
 	private WordService wordService;
+
+	@Autowired
+	private MessageSourceGuessMe messageSource;
 
 	public WordController(WordService wordService) {
 		super();
@@ -33,19 +39,16 @@ public class WordController {
 		try {
 			wordService.createOrUpdateWordByWord(word);
 			rd.setStatus(EnumResponseStatus.RESP_OK.getId());
-		} catch (ValidateException e) {
-			rd.setStatus(e.getValExcCode());
-			rd.setDescription(e.getValExcDesc());
 		} catch (Exception e) {
-			rd.setStatus(EnumResponseStatus.RESP_GENERAL_ERR.getId());
-			rd.setDescription(e.getMessage());
+			handleException(rd, messageSource, e);
 		}
 		return rd;
 	}
 
-	@GetMapping({ "/", "" })
+	@GetMapping({ "" /* ,"/" */ })
 	@ResponseBody
 	public List<Word> getWords() {
+		String s = messageSource.getMessage("msg.info.getAllWords", null, Locale.UK);
 		return wordService.getAllWords();
 	}
 

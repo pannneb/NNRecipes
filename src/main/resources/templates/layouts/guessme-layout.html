@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:fragment="l_constructor (title, otherStaticResources, header, nav, mainContent, footer, horNavbar, breadcrumbs)">
+
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>	
+	
+<head>
+	<meta charset="UTF-8" />
+	<title th:replace="${title}">Page 1 Title</title>
+
+	<link rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+		crossorigin="anonymous">
+	<link rel="stylesheet"
+		href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+		integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+		crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" th:href="@{/main.css}" href="../../static/main.css" />
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/fontawesome-free/css/all.min.css}" href="../../static/vendor/fontawesome-free/css/all.min.css" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/sb-admin-2.min.css}" href="../../static/css/sb-admin-2.min.css" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-default.css}" href="../../static/css/bootstrap-default.css" />
+
+	 <!-- Bootstrap core JavaScript-->
+    <script type="text/javascript" src="../../static/vendor/jquery/jquery.min.js" th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" src="../../static/vendor/bootstrap/js/bootstrap.bundle.min.js" th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script type="text/javascript" src="../../static/vendor/jquery-easing/jquery.easing.min.js" th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script type="text/javascript" src="../../static/js/sb-admin-2.js" th:src="@{/js/sb-admin-2.js}"></script>
+
+    <!-- Page level plugins -->
+    <script type="text/javascript" src="../../static/vendor/chart.js/Chart.min.js" th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+
+    <!-- Page level custom scripts -->
+    <script type="text/javascript" src="../../static/js/demo/chart-area-demo.js" th:src="@{/js/demo/chart-area-demo.js}"></script>
+    <script type="text/javascript" src="../../js/demo/chart-pie-demo.js" th:src="@{/js/demo/chart-pie-demo.js}"></script>
+
+
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+	<!-- Other javascript, css source files -->
+	<th:block th:replace="${otherStaticResources} ?: ~{}"></th:block>
+
+</head>
+<body>
+
+<!-- 	<header th:insert="${header} ?: ~{}">
+		<h2>Page 1</h2>
+	</header>
+ -->
+	<div class="headerHorNav row" th:include="${header} ?: ~{/fragments/aaanav-fragments :: navBarHorizontal}"></div>
+
+
+	<header class="navbarHor" th:insert="${horNavbar} ?: ~{}">
+		<h2>Horizontal nav bar</h2>
+	</header>
+
+	<div class="wrapper" id="wrapperid">
+		<div >
+			<nav th:insert="${nav} ?: ~{}">
+				<ul>
+					<li><a href="#">Page 1</a></li>
+					<li><a href="#">Page 2</a></li>
+				</ul>
+			</nav>
+
+			<div>
+				<footer th:include="${breadcrumbs} ?: ~{/fragments/app-fragments :: breadcrumbs}"></footer>
+				<div th:insert="${mainContent} ?: ~{}" class="d-flex flex-column">
+					<h1>Page 1</h1>
+					<p>Main content of Page 1</p>
+				</div>
+			</div>
+			
+		</div>
+		<div class="push"></div>
+	</div>
+<!-- 
+	<footer th:insert="${footer} ?  : ~{/fragments/app-fragments :: copyright}">
+		<p>Footer</p>
+	</footer>
+ -->
+
+	<footer th:include="${footer} ?: ~{/fragments/app-fragments :: copyright}"></footer>
+	
+<!-- <body th:replace="${contentBody}"></body>
+ -->
+	<script>
+	    $("#sidebarToggle").click(function() {
+	      $("body").toggleClass("sidebar-toggled");
+	      $(".sidebar").toggleClass("toggled");
+	      if ($(".sidebar").hasClass("toggled")) {
+	        $('.sidebar .collapse').collapse('hide');
+	      };
+	    });
+    </script>
+
+</body>
+</html>

@@ -15,7 +15,16 @@
 	<description>Quess Me Spring Boot Game and API</description>
 
 	<properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	    <webjars-bootstrap.version>3.3.6</webjars-bootstrap.version>
+    	<webjars-jquery-ui.version>1.11.4</webjars-jquery-ui.version>
+    	<webjars-jquery.version>2.2.4</webjars-jquery.version>
+	    <wro4j.version>1.9.0</wro4j.version>
 		<java.version>11</java.version>
+		<jaxb.version>2.3.0</jaxb.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -23,6 +32,23 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency> --><!-- 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency> -->
+		<!-- 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency> -->
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jdbc</artifactId>
@@ -40,13 +66,36 @@
 		    <artifactId>springdoc-openapi-ui</artifactId>
 		    <version>1.5.1</version>
 		</dependency>
-		
+		<!-- 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-		</dependency>
+		</dependency> -->
 
 
+
+		<!-- webjars -->
+	    <dependency>
+	      <groupId>org.webjars</groupId>
+	      <artifactId>webjars-locator-core</artifactId>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.webjars</groupId>
+	      <artifactId>jquery</artifactId>
+	      <version>${webjars-jquery.version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.webjars</groupId>
+	      <artifactId>jquery-ui</artifactId>
+	      <version>${webjars-jquery-ui.version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.webjars</groupId>
+	      <artifactId>bootstrap</artifactId>
+	      <version>${webjars-bootstrap.version}</version>
+	    </dependency>
+	    <!-- end of webjars -->
+			
 <!-- 
 		<dependency>
 		    <groupId>com.integralblue</groupId>
@@ -70,7 +119,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -107,6 +155,13 @@
 		    <groupId>com.fasterxml.jackson.core</groupId>
     		<artifactId>jackson-core</artifactId>
     	</dependency>
+
+		<dependency>
+		  <groupId>ro.isdc.wro4j</groupId>
+		  <artifactId>wro4j-core</artifactId>
+		  <version>${wro4j.version}</version>
+		</dependency>
+    	
 		<!-- 
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -122,6 +177,71 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			
+			<plugin>
+			    <groupId>ro.isdc.wro4j</groupId>
+			    <artifactId>wro4j-maven-plugin</artifactId>
+			    <version>${wro4j.version}</version>
+			    <executions>
+		          <execution>
+		            <phase>generate-resources</phase>
+		            <goals>
+		              <goal>run</goal>
+		            </goals>
+		          </execution>
+		        </executions>
+		        <configuration>
+		          <wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
+		          <cssDestinationFolder>${project.build.directory}/classes/static/resources/css</cssDestinationFolder>
+		          <wroFile>${basedir}/src/main/wro/wro.xml</wroFile>
+		          <extraConfigFile>${basedir}/src/main/wro/wro.properties</extraConfigFile>
+		          <contextFolder>${basedir}/src/main/less</contextFolder>
+		        </configuration>
+		        <dependencies>
+		          <dependency>
+		            <groupId>org.webjars</groupId>
+		            <artifactId>bootstrap</artifactId>
+		            <version>${webjars-bootstrap.version}</version>
+		          </dependency>
+		        </dependencies>
+			</plugin>		
+			
+			
+			
+     
+			<!-- 
+  	 <plugin>
+        <groupId>ro.isdc.wro4j</groupId>
+        <artifactId>wro4j-maven-plugin</artifactId>
+        <version>${wro4j.version}</version>
+        <executions>
+          <execution>
+     		 <phase>generate-resources</phase>
+      		<goals>
+        		<goal>run</goal>
+      		</goals>
+          </execution>
+        </executions>
+        <configuration>
+          <wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
+          <cssDestinationFolder>${project.build.directory}/classes/static/resources/css</cssDestinationFolder>
+          <wroFile>${basedir}/src/main/wro/wro.xml</wroFile>
+          <extraConfigFile>${basedir}/src/main/wro/wro.properties</extraConfigFile>
+          <contextFolder>${basedir}/src/main/less</contextFolder>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>${webjars-bootstrap.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin> 
+      
+      
+    </pluginManagement>
+      -->
+			
 		</plugins>
 	</build>
 

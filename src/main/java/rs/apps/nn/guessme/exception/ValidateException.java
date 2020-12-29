@@ -1,14 +1,6 @@
 package rs.apps.nn.guessme.exception;
 
-import java.util.Locale;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-
 public class ValidateException extends RuntimeException {
-
-	@Autowired
-	MessageSource messageSource;
 
 	/**
 	 * 
@@ -31,13 +23,13 @@ public class ValidateException extends RuntimeException {
 	public ValidateException(String valExcCode, String valExcDesc) {
 		super();
 		this.valExcCode = valExcCode;
-		this.valExcDesc = messageSource.getMessage(valExcDesc, null, Locale.ENGLISH);
+		this.valExcDesc = valExcDesc; // messageSource.getMessage(valExcDesc, null, Locale.ENGLISH);
 	}
 
 	public ValidateException(String valExcCode, String valExcDesc, String[] params) {
 		super();
 		this.valExcCode = valExcCode;
-		this.valExcDesc = messageSource.getMessage(valExcDesc, null, Locale.ENGLISH);
+		this.valExcDesc = valExcDesc;// messageSource.getMessage(valExcDesc, null, Locale.ENGLISH);
 		this.setParams(params);
 	}
 
@@ -45,8 +37,7 @@ public class ValidateException extends RuntimeException {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("ValidateException [valExcCode=").append(valExcCode).append(", valExcDesc=").append(valExcDesc)
-		.append(", params=").append(params)
-				.append("]");
+				.append(", params=").append(params).append("]");
 		return builder.toString();
 	}
 

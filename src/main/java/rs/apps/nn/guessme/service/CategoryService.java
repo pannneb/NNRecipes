@@ -5,9 +5,9 @@ import java.util.List;
 import rs.apps.nn.guessme.exception.ValidateException;
 import rs.apps.nn.guessme.model.Category;
 
-public interface CategoryService {
+public interface CategoryService extends CrudServiceGuessMe<Category, Long>{
 
-	List<Category> getCategories();
+	List<Category> findAllByNameLike(String name);
 
 	Category createOrUpdateCategory(Category entity) throws ValidateException;
 

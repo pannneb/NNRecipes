@@ -15,7 +15,7 @@ import rs.apps.nn.guessme.exception.ValidateException;
 import rs.apps.nn.guessme.model.Category;
 import rs.apps.nn.guessme.service.CategoryService;
 
-@Controller
+@Controller("categoryControllerApi")
 @RequestMapping(path = "/v1/categories")
 public class CategoryController {
 
@@ -26,10 +26,10 @@ public class CategoryController {
 		this.categoryService = categoryService;
 	}
 
-	@GetMapping({ "/", "" })
+	@GetMapping({ /* "/", */ "" })
 	@ResponseBody
 	public List<Category> getCategories() {
-		return categoryService.getCategories();
+		return categoryService.findAll();
 	}
 
 	@PostMapping(value = "/new", consumes = "application/json", produces = "application/json")

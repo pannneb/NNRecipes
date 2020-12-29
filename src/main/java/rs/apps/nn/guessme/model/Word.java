@@ -15,7 +15,9 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
@@ -25,6 +27,8 @@ import lombok.Data;
 @Entity
 @Table(name = "word", schema="asocijacije")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Word implements Serializable {
 
 	/**

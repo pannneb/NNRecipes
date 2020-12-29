@@ -57,6 +57,8 @@
 		<logger name="jdbc.connection" 		level="INFO" 	additivity="false">	<appender-ref ref="STDOUT"/>	</logger>
 	-->
 
+		<logger name="ro.isdc.wro" 		level="DEBUG" 	additivity="false">	<appender-ref ref="STDOUT"/>	</logger>
+
    	<springProfile name="dev_h2">
 		<!-- <root level="INFO">
 			<appender-ref ref="LOG_ROLLING_DEV" />
@@ -67,7 +69,7 @@
 	</springProfile>
 
    	<springProfile name="test_pg">
-		<root level="INFO">
+		<root level="DEBUG">
 			<appender-ref ref="STDOUT" />
 		</root>
 	</springProfile>
