@@ -4,7 +4,7 @@ package rs.apps.nn.recipes.api;
  * Response Data for API
  * 
  * @author Nebojsa
- *
+ * 
  */
 public class ResponseData {
 
