@@ -1,10 +1,10 @@
-package rs.apps.nn.guessme;
+package rs.apps.nn.recipes;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NNGuessMeGameAndAPIApplicationTests {
+class NNRecipesApplicationTests {
 
 	@Test
 	void contextLoads() {

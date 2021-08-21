@@ -11,10 +11,10 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @SpringBootApplication
-public class NNGuessMeGameAndAPIApplication {
+public class NNRecipesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NNGuessMeGameAndAPIApplication.class, args);
+		SpringApplication.run(NNRecipesApplication.class, args);
 	}
 	@Bean
 	public LocaleResolver localeResolver() {

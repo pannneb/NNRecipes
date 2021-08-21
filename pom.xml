@@ -8,11 +8,11 @@
 		<version>2.2.6.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>rs.apps.nn.quessme.group</groupId>
-	<artifactId>rs.apps.nn.quessme</artifactId>
+	<groupId>rs.apps.nn.recipes.group</groupId>
+	<artifactId>rs.apps.nn.recipes</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>NQuessMe</name>
-	<description>Quess Me Spring Boot Game and API</description>
+	<name>NNRecipes</name>
+	<description>NN recipes app</description>
 
 	<properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

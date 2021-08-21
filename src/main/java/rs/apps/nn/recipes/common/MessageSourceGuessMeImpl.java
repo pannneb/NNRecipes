@@ -8,10 +8,10 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
 @Component
-@PropertySource("classpath:guessme.properties")
+@PropertySource("classpath:recipes.properties")
 public class MessageSourceGuessMeImpl extends ResourceBundleMessageSource implements MessageSourceGuessMe {
 
-	@Value("${guessme.locale.default}")
+	@Value("${recipes.locale.default}")
 	private String defaultLocale;
 
 	@Override

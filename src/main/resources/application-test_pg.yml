@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /guessme
+    context-path: /recipes
   port: 8081
 #  context-path: /guessme   deprecated
 

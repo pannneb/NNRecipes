@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /guessme
+    context-path: /recipes
   port: 8081
 #  context-path: /guessme   deprecated
 
@@ -11,30 +11,30 @@ spring:
       path: /h2-console
   datasource:
     platform: H2
-    url: jdbc:h2:mem:asocdb;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL;INIT=CREATE SCHEMA IF NOT EXISTS asocijacije
+    url: jdbc:h2:mem:asocdb;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL;INIT=CREATE SCHEMA IF NOT EXISTS recipes
     username: sa
     password:
     driverClassName: org.h2.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    database: postgresql
-    show-sql: true
-    hibernate:
-      ddl-auto: validate
-    properties:
-      hibernate:
-        format_sql: true
-      javax:
-        persistence:
-          schema-generation:
-            drop-source: metadata
-            create-source: metadata
-            scripts:
-              action: none #drop-and-create
-              drop-target: np_database_create.sql
-              create-target: np_database_create.sql
-            database:
-              action: drop-and-create
+#  jpa:
+#    database-platform: org.hibernate.dialect.H2Dialect
+#    database: postgresql
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: validate
+#    properties:
+#      hibernate:
+#        format_sql: true
+#      javax:
+#        persistence:
+#          schema-generation:
+#            drop-source: metadata
+#            create-source: metadata
+#            scripts:
+#              action: none #drop-and-create
+#              drop-target: np_database_create.sql
+#              create-target: np_database_create.sql
+#            database:
+#              action: drop-and-create
   messages:
     basename: messages/messages
 
@@ -45,6 +45,7 @@ logging:
       apps:
         nn:
           asocijacije: DEBUG
+          recipes: DEBUG
 #  pattern:
 #    console: '%d{"yyyy/MM/dd HH:mm:ss,SSS"} [%p] [%t] %M\(%F:%L\) - %msg%n'
 
