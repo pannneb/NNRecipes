@@ -8,7 +8,7 @@ package rs.apps.nn.recipes.api;
  */
 public class ResponseData {
 
-	private String description = "OK";
+	private String description = "OK"; 
 	private String status;
 
 	public String getStatus() {
