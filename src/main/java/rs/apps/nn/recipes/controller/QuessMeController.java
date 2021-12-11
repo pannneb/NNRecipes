@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import lombok.extern.slf4j.Slf4j;
-import rs.apps.nn.recipes.model.Word;
+import rs.apps.nn.recipes.domain.Word;
 import rs.apps.nn.recipes.service.WordService;
 
 import org.slf4j.Logger;

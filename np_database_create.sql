@@ -1,5 +1,5 @@
-
-    drop table asocijacije.category if exists
+asdadasdasdaas;
+    draaaop table asocijacije.category if exists
 
     drop table asocijacije.word if exists
 

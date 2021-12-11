@@ -1,16 +1,12 @@
 package rs.apps.nn.recipes.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
-import rs.apps.nn.recipes.api.EnumResponseStatus;
+import rs.apps.nn.recipes.domain.Category;
 import rs.apps.nn.recipes.exception.ValidateException;
-import rs.apps.nn.recipes.model.Category;
 import rs.apps.nn.recipes.repository.CategoryRepository;
 
 @Service
@@ -40,30 +36,31 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public Category createOrUpdateCategory(Category entity) throws ValidateException {
-		// Optional<Word> word = wordRepository.findById(entity.getId());
-		Optional<Category> category = categoryRepository.findByName(entity.getName());
-
-		if (category.isPresent()) {
-			throw new ValidateException(EnumResponseStatus.RESP_WORD_ALREADY_EXISTS.getId(),
-					"msg.err.entityAlreadyExists", new String[] { "Category" });
-
-			// Word newEntity = word.get();
-			// // newEntity.setId(entity.getId());
-			// newEntity.setWord(entity.getWord());
-			// newEntity.setCategoryFk(entity.getCategoryFk());
-			//
-			// newEntity = wordRepository.save(newEntity);
-			//
-			// return newEntity;
-		} else {
-			entity = categoryRepository.save(entity);
-			return entity;
-		}
+//		// Optional<Word> word = wordRepository.findById(entity.getId());
+//		Optional<Category> category = categoryRepository.findByName(entity.getName());
+//
+//		if (category.isPresent()) {
+//			throw new ValidateException(EnumResponseStatus.RESP_WORD_ALREADY_EXISTS.getId(),
+//					"msg.err.entityAlreadyExists", new String[] { "Category" });
+//
+//			// Word newEntity = word.get();
+//			// // newEntity.setId(entity.getId());
+//			// newEntity.setWord(entity.getWord());
+//			// newEntity.setCategoryFk(entity.getCategoryFk());
+//			//
+//			// newEntity = wordRepository.save(newEntity);
+//			//
+//			// return newEntity;
+//		} else {
+//			entity = categoryRepository.save(entity);
+//			return entity;
+//		}
+		return null;
 	}
 
 	@Override
-	public List<Category> findAllByNameLike(String name) {
-		return categoryRepository.findAllByNameLike(name);
+	public List<Category> findAllByDescriptionLike(String name) {
+		return categoryRepository.findAllByDescriptionLike(name);
 	}
 
 	@Override

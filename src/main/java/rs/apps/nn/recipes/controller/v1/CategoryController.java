@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import rs.apps.nn.recipes.api.EnumResponseStatus;
 import rs.apps.nn.recipes.api.ResponseData;
 import rs.apps.nn.recipes.exception.ValidateException;
-import rs.apps.nn.recipes.model.Category;
+import rs.apps.nn.recipes.domain.Category;
 import rs.apps.nn.recipes.service.CategoryService;
 
 @Controller("categoryControllerApi")

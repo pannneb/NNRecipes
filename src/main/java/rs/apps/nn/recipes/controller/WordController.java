@@ -15,7 +15,7 @@ import rs.apps.nn.recipes.api.EnumResponseStatus;
 import rs.apps.nn.recipes.api.ResponseData;
 import rs.apps.nn.recipes.common.MessageSourceGuessMe;
 import rs.apps.nn.recipes.controller.BasicAPIController;
-import rs.apps.nn.recipes.model.Word;
+import rs.apps.nn.recipes.domain.Word;
 import rs.apps.nn.recipes.service.WordService;
 
 @Controller

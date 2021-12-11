@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import lombok.extern.slf4j.Slf4j;
 import rs.apps.nn.recipes.api.EnumResponseStatus;
 import rs.apps.nn.recipes.api.ResponseData;
+import rs.apps.nn.recipes.domain.Category;
 import rs.apps.nn.recipes.exception.ValidateException;
-import rs.apps.nn.recipes.model.Category;
 import rs.apps.nn.recipes.service.CategoryService;
 
 @Slf4j
@@ -48,7 +48,7 @@ public class CategoryController {
 		//		});
 		// });
 		//		
-		return "categories/categoriesList";
+		return "categories/categoryList";
 	}
 
 	@RequestMapping(value = { "/old/","/old" }, method = RequestMethod.GET)
@@ -128,7 +128,7 @@ public class CategoryController {
 
 	@GetMapping({ "/new","/new/" })
 	public String initCreationForm(Model model) {
-		model.addAttribute("category", Category.builder().build());
+		// model.addAttribute("category", Category.builder().build());
 		return VIEWS_CATEGORY_CREATE_OR_UPDATE_FORM;
 	}
 
@@ -154,14 +154,15 @@ public class CategoryController {
 	@PostMapping("/{ownerId}/edit")
 	public String processUpdateOwnerForm(@Valid Category category, BindingResult result,
 			@PathVariable("ownerId") Long ownerId) {
-		if (result.hasErrors()) {
-			return VIEWS_CATEGORY_CREATE_OR_UPDATE_FORM;
-		}
-		else {
-			category.setId(ownerId);
-			Category o = categoryService.save(category);
-			return "redirect:/categories/"+o.getId();
-		}
+//		if (result.hasErrors()) {
+//			return VIEWS_CATEGORY_CREATE_OR_UPDATE_FORM;
+//		}
+//		else {
+//			category.setId(ownerId);
+//			Category o = categoryService.save(category);
+//			return "redirect:/categories/"+o.getId();
+//		}
+		return "sdadasdas";
 	}
 
 }

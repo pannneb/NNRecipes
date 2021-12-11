@@ -17,8 +17,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,23 +31,30 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Entity
+@Builder
 @Slf4j
-public class Recipe {
+@AllArgsConstructor
+@RequiredArgsConstructor
+// @NoArgsConstructor
+public class Recipe extends BaseEntity{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private static final long serialVersionUID = 1L;
 
+	@NotNull
+	@Size(min = 10, max=250)
+	private String title;
 	private String description;
 	private Integer prepTime;
 	private Integer cookTime;
 //	private Integer servTime;
 	private Integer servings;
+	@NotNull
 	private String source;
 	private String url;
 
-//	@Lob
-//	private String directions;
+	@Lob
+	private String directions;
+
 //	// private Difficulty difficulty;
 //
 //	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
@@ -59,12 +71,16 @@ public class Recipe {
 //	@Enumerated(value = EnumType.STRING)
 //	private Difficulty difficulty;
 //
-//	@OneToOne(cascade = CascadeType.ALL)
-//	private Notes notes;
-//
-//	@ManyToMany
-//	@JoinTable(name = "recipe_category", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-//	private Set<Category> categories = new HashSet<Category>();
+
+	// @OneToOne(cascade = CascadeType.ALL)
+	// @ManyToMany
+	// @JoinTable(schema="recipes", name = "recipe_note", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "note_id"))
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+	private Set<Note> notes = new HashSet<Note>();
+
+	@ManyToMany
+	@JoinTable(schema="recipes", name = "recipe_category", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+	private Set<Category> categories = new HashSet<Category>();
 
 	// public String getDescription() {
 	// return description;

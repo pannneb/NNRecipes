@@ -16,22 +16,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Table(name = "categoryrecipe", schema = "recipes")
-//@Getter
-//@Setter
-//@EqualsAndHashCode(exclude = {"recipes"})
-//@Entity
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
-public class CategoryRecipe {
+@Table(name = "category", schema = "recipes")
+@Getter
+@Setter
+ @EqualsAndHashCode(exclude = {"recipes"})
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Category {
 
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String description;
 
-//	@ManyToMany(mappedBy = "categories")
+	@ManyToMany(mappedBy = "categories")
 	private Set<Recipe> recipes;
 
 //	//public Long getId() {

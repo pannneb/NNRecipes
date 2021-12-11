@@ -1,20 +1,19 @@
 <html>
 <body>
   <form>
-   
-    <th:block th:fragment="input (label, name, type)"  th:with="classCustom=${classCustom} ?: '', readOnly=${readOnly} ?: ''">
+    <th:block th:fragment="inputClass (label, name, type, classss)">
       <div th:with="valid=${!#fields.hasErrors(name)}"
-        th:class="${'form-group' + (valid ? '' : ' has-error')}" class="form-group">
+        th:class="${'form-group' + (valid ? '' : ' has-error')}"
+        class="form-group">
         <label class="col-sm-12 control-label" th:text="${label}">Label</label>
-
-        <div th:class="'col-sm-12' + ' ' + ${(classCustom=='' ? '' : classCustom)}" >
-            <div th:switch="${type}" >
-                <input th:case="'text'" class="form-control"  type="text" th:field="*{__${name}__}" />
-                <input th:case="'number'" class="form-control" type="number" th:field="*{__${name}__}"  th:readonly="${readOnly=='true'}" />
-                <input th:case="'date'" class="form-control" type="text" th:field="*{__${name}__}"
+        <div class="col-sm-12">
+            <div th:switch="${type}">
+                <input th:case="'text'" class="${classss}" type="text" th:field="*{__${name}__}" />
+                <input th:case="'number'" class="classss" type="number" th:field="*{__${name}__}" />
+                <input th:case="'date'" class="form-control ${classss}" type="text" th:field="*{__${name}__}"
                         placeholder="YYYY-MM-DD" title="Enter a date in this format: YYYY-MM-DD"
                         pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>
-				<textarea  th:case="'textarea'" class="form-control"  th:field="*{__${name}__}" rows="3"></textarea>
+				<textarea  th:case="'textarea'" class="form-control ${classss}"  th:field="*{__${name}__}" rows="3"></textarea>
             </div>
           <span th:if="${valid}"
             class="glyphicon glyphicon-ok form-control-feedback"

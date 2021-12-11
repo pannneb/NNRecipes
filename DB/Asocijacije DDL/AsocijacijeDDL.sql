@@ -1,3 +1,5 @@
+asasfsafasfasf
+
 CREATE SCHEMA IF NOT EXISTS asocijacijeAAA
 
 create table asocijacije.WORDAAA ( 

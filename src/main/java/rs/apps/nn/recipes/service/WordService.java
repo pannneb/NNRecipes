@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.validation.ValidationException;
 
+import rs.apps.nn.recipes.domain.Word;
 import rs.apps.nn.recipes.exception.ValidateException;
-import rs.apps.nn.recipes.model.Word;
 
 public interface WordService {
 

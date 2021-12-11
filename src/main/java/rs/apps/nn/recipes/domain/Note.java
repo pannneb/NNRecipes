@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -12,30 +13,30 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-//@Table(name = "notes", schema = "recipes")
-//@Getter
-//@Setter
-//@EqualsAndHashCode(exclude = { "recipe" })
-//@Entity
-public class Notes {
+@Table(name = "note", schema = "recipes")
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = { "recipe" })
+@Entity
+public class Note {
 
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-//	@OneToOne // ne treba nam cascade
+	@ManyToOne
 	private Recipe recipe;
 
-//	@Lob
-	private String recipeNotes;
+	@Lob
+	private String text;
 
-	public Recipe getRecipe() {
-		return recipe;
-	}
-
-	public void setRecipe(Recipe recipe) {
-		this.recipe = recipe;
-	}
+	//	public Recipe getRecipe() {
+	//		return recipe;
+	//	}
+	//
+	//	public void setRecipe(Recipe recipe) {
+	//		this.recipe = recipe;
+	//	}
 
 	// public String getRecipeNotes() {
 	// return recipeNotes;

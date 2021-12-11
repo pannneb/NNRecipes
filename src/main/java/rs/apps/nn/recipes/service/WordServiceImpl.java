@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rs.apps.nn.recipes.api.EnumResponseStatus;
+import rs.apps.nn.recipes.domain.Word;
 import rs.apps.nn.recipes.exception.ValidateException;
-import rs.apps.nn.recipes.model.Word;
 import rs.apps.nn.recipes.repository.WordRepository;
 
 @Service

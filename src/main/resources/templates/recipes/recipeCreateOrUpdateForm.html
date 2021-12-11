@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      th:replace="~{layouts/guessme-newdesign-layout :: guessme_lo_constructor(
+                                                ~{::title},
+                                                ~{:: #home-static-resources},
+                                                ~{null},
+                                                ~{null},
+                                                ~{null}, 
+                                                ~{:: #recipe-add-edit-main-content}, 
+                                                ~{:: #home-footer1},
+                                                ~{:: #home-hor-navbar},
+                                                ~{null}
+                                               )}">
+                                               
+
+<head>
+
+    <!-- 
+        	th:replace="~{layouts/guessme-newdesign-layout :: quessme_lo_constructor(
+      
+      		th:replace="~{layouts/guessme-layout :: l_constructor (  
+
+                                                ~{:: #home-main-content},
+    -->
+
+    <title>Recipes List</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <th:block id="home-static-resources"> 
+    </th:block>
+
+</head>
+
+<body>
+      
+    <div id="recipe-add-edit-main-content">
+        <div class="container my-2 page-main-content">
+        <div class="card">
+            <div class="card-body">
+                <div th:switch="${recipes}" class="container my-2">
+            <!--     <div th:switch="${recipes}" class="container my-5"> -->
+	                <div class="row buttonsBar">
+	                    <div class="nav-link">
+	                        <a href="/recipes/recipe/list" class="btn btn-primary"><i
+	       						class="fas fa-user-plus ml-2"> List of All Recipes</i></a>
+	                    </div>
+	                    <div class="nav-link">
+						  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuItem1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						    Dropdown List
+						    <span class="caret"></span>
+						  </button>
+						 <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+					          <a class="dropdown-item" href="#">Action</a>
+					          <a class="dropdown-item" href="#">Another action</a>
+					          <div class="dropdown-divider"></div>
+					          <a class="dropdown-item" href="#">Something else here</a>
+					     </div>
+						</div>
+						<div class="nav-link">
+	                        <a href="/recipes/" class="btn btn-primary"><i
+	       						class="fas fa-sync-alt ml-2"> Refresh</i></a>
+	                    </div>
+						
+	               </div>
+<!-- 
+	private String title;
+	private String description;
+	private Integer prepTime;
+	private Integer cookTime;
+//	private Integer servTime;
+	private Integer servings;
+	private String source;
+	private String url;
+	 -->
+	 <hr></hr>
+                    <div class="col-md-12 col-xl-12 col-lg-12">
+                      <div class="card">    
+                          <div class="card-header">
+						 	  Create Recipe
+						  </div>
+					      <div class="card-body">
+ 
+						  <form th:object="${recipe}" action="" class="form-horizontal" id="add-recipe-form" method="post">
+                            <div class="row">
+                            <div class="col-md-12 col-lg-6">
+							    <div class="form-group has-feedback">
+							      <input
+							        th:replace="~{fragments/inputField :: input (label='Id', name='id', type='number', classCustom='col-md-5 col-lg-5', readOnly='true')}" />
+							      <input
+							        th:replace="~{fragments/inputField :: input ('Title', 'title', 'text')}" />
+							      <input
+							        th:replace="~{fragments/inputField :: input ('Source', 'source', 'text')}" />
+							      <input
+							        th:replace="~{fragments/inputField :: input ('URL', 'url', 'text')}" />
+							    </div>
+						    </div>
+						    
+                            <div class="col-md-12 col-lg-6">
+							    <div class="form-group has-feedback">
+							      <input
+							        th:replace="~{fragments/inputField :: input ('Preparation Time [min]', 'prepTime', 'number')}" />
+							      <input
+							        th:replace="~{fragments/inputField :: input ('Cooking Time [min]', 'cookTime', 'number')}" />
+							      <input
+							        th:replace="~{fragments/inputField :: input ('Servings', 'servings', 'number')}" />
+							    </div>
+						    </div>
+
+                            <div class="col-md-12 col-lg-12">
+							    <div class="form-group has-feedback">
+							      <input
+							        th:replace="~{fragments/inputField :: input ('Description', 'description', 'textarea')}" />
+							    </div>
+						    </div>
+
+						    </div>
+						    <div class="form-group">
+						      <div class="col-sm-offset-2 col-sm-10">
+						        <button
+						          th:with="text=${recipe['new']} ? 'Save' : 'Update'"
+						            class="btn btn-primary" type="submit" th:text="${text}">Add Recipe
+						        </button>
+						        <button class="btn btn-primary" type="submit">
+						            <i class="fas fa-user-plus ml-2" th:with="text=${recipe['new']} ? ' Save' : ' Update'" th:text="${text}">  </i>
+						        </button>
+						        
+						      </div>
+						    </div>
+						    
+						  </form>
+						  </div>
+					  </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+
+	<!-- 
+	    <div id="home-nav-menu" th:replace="~{/fragments/app-fragments-newdesign :: accordionSidebar}">
+	        Home Nav
+	    </div>
+	 -->
+
+</body>
+
+</html>

@@ -3,7 +3,7 @@ package rs.apps.nn.recipes.service;
 import java.util.List;
 import java.util.Set;
 
-public interface CrudServiceGuessMe<T, ID> {
+public interface CrudServiceRecipes<T, ID> {
 
 	List<T> findAll();
 

@@ -1,4 +1,4 @@
-package rs.apps.nn.recipes.model;
+package rs.apps.nn.recipes.domain;
 
 import java.io.Serializable;
 
@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
  *
  */
 @Entity
-@Table(name = "word", schema="asocijacije")
+@Table(name = "word", schema="recipes")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -43,13 +43,13 @@ public class Word implements Serializable {
 	@Column
 	private String word;
 
-	@Column
-	private Long categoryFk;
+//	@Column
+//	private Long categoryFk;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY /* , optional = false*/ )
-    @JoinColumn(name="categoryFk", referencedColumnName = "ID", nullable=false, insertable = false,  updatable=false)
-    private Category category;
+//    @JsonIgnore
+//    @ManyToOne(fetch = FetchType.LAZY /* , optional = false*/ )
+//    @JoinColumn(name="categoryFk", referencedColumnName = "ID", nullable=false, insertable = false,  updatable=false)
+//    private Category category;
 
 //	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 //	@JoinColumn(name = "PARTICIPANT_FK", referencedColumnName = "ID", nullable = true, unique = false, insertable = false, updatable = false)
@@ -73,29 +73,29 @@ public class Word implements Serializable {
 	public void setWord(String word) {
 		this.word = word;
 	}
+//
+//	public Long getCategoryFk() {
+//		return categoryFk;
+//	}
+//
+//	public void setCategoryFk(Long categoryFk) {
+//		this.categoryFk = categoryFk;
+//	}
+//
+//	public Category getCategory() {
+//		return category;
+//	}
+//
+//	public void setCategory(Category category) {
+//		this.category = category;
+//	}
 
-	public Long getCategoryFk() {
-		return categoryFk;
-	}
-
-	public void setCategoryFk(Long categoryFk) {
-		this.categoryFk = categoryFk;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Word [id=").append(id).append(", word=").append(word).append(", categoryFk=").append(categoryFk)
-				.append("]");
-		return builder.toString();
-	}
+//	@Override
+//	public String toString() {
+//		StringBuilder builder = new StringBuilder();
+//		builder.append("Word [id=").append(id).append(", word=").append(word).append(", categoryFk=").append(categoryFk)
+//				.append("]");
+//		return builder.toString();
+//	}
 
 }

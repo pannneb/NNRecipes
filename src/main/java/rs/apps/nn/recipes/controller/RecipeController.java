@@ -1,6 +1,5 @@
 package rs.apps.nn.recipes.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -8,68 +7,133 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
-import rs.apps.nn.recipes.api.EnumResponseStatus;
-import rs.apps.nn.recipes.api.ResponseData;
 import rs.apps.nn.recipes.domain.Recipe;
-import rs.apps.nn.recipes.exception.ValidateException;
-import rs.apps.nn.recipes.model.Category;
-import rs.apps.nn.recipes.service.CategoryService;
+import rs.apps.nn.recipes.service.RecipeService;
 
 @Slf4j
 @Controller
+@RequestMapping("recipe")
 public class RecipeController {
 
-	private static final String VIEWS_CATEGORY_CREATE_OR_UPDATE_FORM = "recipes/recipeCreateOrUpdateForm";
-	//private static final String VIEWS_CATEGORY_DETAILS_FORM = "categories/categoryDetails";
+	private static final String VIEWS_RECIPE_CREATE_OR_UPDATE_FORM = "recipes/recipeCreateOrUpdateForm";
 
-	// private final CategoryService categoryService;
+	private final RecipeService recipeService;
 
-	//	public RecipeController(CategoryService categoryService) {
-	//		super();
-	//		this.categoryService = categoryService;
-	//	}
 
-	public RecipeController() {
+	public RecipeController(RecipeService recipeService) {
 		super();
+		this.recipeService = recipeService;
 		log.debug("RecipeController constructor called");
 	}
 	
-	@RequestMapping(value = { "/", "" }, method = RequestMethod.GET)
-	public String categoriesList(Model model) {
-		
-		List<Recipe> recipes = new ArrayList<>(); // categoryService.findAll();
-		Recipe r1 = new Recipe();
-		r1.setUrl("www.url1.aaa");
-		r1.setSource("internet");
-		r1.setId(123L);
-		r1.setDescription("Description 1");
-//		r1.setSource( 1");
-//		
-		Recipe r2 = new Recipe();
-		r2.setUrl("www.aaaaaaaaa2.aaa");
-
-		recipes.add(r1);
-		recipes.add(r2);
+	@RequestMapping(value = { "/list/", "/list" }, method = RequestMethod.GET)
+	public String recipesList(Model model) {
+		List<Recipe> recipes = recipeService.findAll();
+		// Set<Recipe> listOfRecipes = recipeService.getRecipes();
 		model.addAttribute("recipes", recipes);
-
 		// listOfRecipes.forEach(a->{
 		//     a.getCategories().forEach(c->{
 		//			System.out.println(c.toString());
 		//		});
 		// });
 		//		
+		log.debug("RecipeController list called");
 		return "recipes/recipeList";
+
 	}
 
+	@GetMapping({ "/new" })
+	public String initCreationForm(Model model) {
+		model.addAttribute("recipe", Recipe.builder().build());
+		return VIEWS_RECIPE_CREATE_OR_UPDATE_FORM;
+	}
+
+	@PostMapping({ "/new" })
+	public String submitCreationForm(@Valid Recipe recipe, BindingResult result) {
+		log.debug("recipe new POST");
+		if (result.hasErrors()) {
+			// result.geterr
+			return VIEWS_RECIPE_CREATE_OR_UPDATE_FORM;
+		} else {
+			Recipe c = recipeService.save(recipe);
+			return "redirect:/recipe/" + c.getId();
+		}
+
+	// 	model.addAttribute("recipe", Recipe.builder().build());	
+	//	return VIEWS_RECIPE_CREATE_OR_UPDATE_FORM;
+	}
+
+	@GetMapping({ "/{recipeId}"})
+	public String showById(@PathVariable("recipeId") Long recipeId, Model model) {
+		model.addAttribute("recipe", recipeService.findById(recipeId));
+		return VIEWS_RECIPE_CREATE_OR_UPDATE_FORM;
+	}
+	
+	// Posto imamo @InitBinder koji onemogucava bindovanje ID-a koristi se rucno
+	// postavljanje ID u objektu
+	@PostMapping("/{recipeId}")
+	public String processUpdateRecipeForm(@Valid Recipe recipe, BindingResult result,
+			@PathVariable("recipeId") Long recipeId) {
+		if (result.hasErrors()) {
+			return VIEWS_RECIPE_CREATE_OR_UPDATE_FORM;
+		} else {
+			recipe.setId(recipeId);
+			Recipe c = recipeService.save(recipe);
+			return "redirect:/recipe/" + c.getId();
+		}
+	}
+
+	// Posto imamo @InitBinder koji onemogucava bindovanje ID-a koristi se rucno
+	// postavljanje ID u objektu
+	@PostMapping("/{recipeId}/delete/")
+	public String processDeleteRecipe(Recipe recipe, @PathVariable("recipeId") Long recipeId, Model model) {
+		// if (result.hasErrors()) {
+		// return VIEWS_RECIPE_CREATE_OR_UPDATE_FORM;
+		// } else {
+		
+		recipeService.deleteById(recipeId);
+	 	return "redirect:/recipe/list";
+		
+//		log.debug("processDeleteRecipe");
+//		List<Recipe> recipes = recipeService.findAll();
+//		model.addAttribute("recipes", recipes);
+//		return "recipes/recipeList";
+		
+	}
+
+	//	public ModelAndView showOwner(@PathVariable("recipeId") Long ownerId) {
+	//		System.out.println("RecipeController showOwner");
+	//		ModelAndView mav = new ModelAndView("owner/ownerDetails");
+	//		mav.addObject(recipeService.findById(ownerId));
+	//		return mav;
+	//	}
+
+	//	@GetMapping("/{ownerId}/edit")
+	//	public String initUpdateOwnerForm(@PathVariable/*("ownerId")*/ Long categoryId, Model model) {
+	//		Category c = categoryService.findById(categoryId);
+	//		model.addAttribute(c);
+	//		return VIEWS_CATEGORY_CREATE_OR_UPDATE_FORM;
+	//	}
+
+	//	//	@PostMapping("/new")
+	//	//	public String processCreationForm(@Valid Category category, BindingResult result) {
+	//	//		if (result.hasErrors()) {
+	//	//			return VIEWS_CATEGORY_CREATE_OR_UPDATE_FORM;
+	//	//		}
+	//	//		else {
+	//	//			Category c = categoryService.save(category);
+	//	//			return "redirect:/categories/" + c.getId();
+	//	//		}
+	//	//	}
+	
 	//	@RequestMapping(value = { "/","" }, method = RequestMethod.GET)
 	//	public String categoriesList(Model model) {
 	//		List<Category> categories = categoryService.findAll();
