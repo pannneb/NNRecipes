@@ -45,43 +45,37 @@
                 <div th:switch="${recipes}" class="container my-2">
             <!--     <div th:switch="${recipes}" class="container my-5"> -->
 	                <div class="row buttonsBar">
+	                    
 	                    <div class="nav-link">
-	                        <a href="/recipes/recipe/list" class="btn btn-primary"><i
-	       						class="fas fa-user-plus ml-2"> List of All Recipes</i></a>
+	                        <a href="/recipes/recipe/list" class="btn btn-primary">
+	                          <i class="fas fa-cheese" th:text="#{button.action.recipe.listAll}">List of All Recipes</i>
+	                        </a>
 	                    </div>
+	                    
 	                    <div class="nav-link">
 						  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuItem1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						    Dropdown List
-						    <span class="caret"></span>
+						    <span class="caret" th:text="#{label.info.dropdown}"></span>
 						  </button>
 						 <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-					          <a class="dropdown-item" href="#">Action</a>
-					          <a class="dropdown-item" href="#">Another action</a>
+					          <a class="dropdown-item" href="#" th:text="#{button.action.action}"/>
+					          <a class="dropdown-item" href="#" th:text="#{button.action.action1}"/>
 					          <div class="dropdown-divider"></div>
-					          <a class="dropdown-item" href="#">Something else here</a>
+					          <a class="dropdown-item" href="#" th:text="#{button.action.action2}"/>
 					     </div>
 						</div>
+						
 						<div class="nav-link">
-	                        <a href="/recipes/" class="btn btn-primary"><i
+						    <a href="/recipes/recipe/new" class="btn btn-primary"><i
 	       						class="fas fa-sync-alt ml-2"> Refresh</i></a>
 	                    </div>
 						
 	               </div>
-<!-- 
-	private String title;
-	private String description;
-	private Integer prepTime;
-	private Integer cookTime;
-//	private Integer servTime;
-	private Integer servings;
-	private String source;
-	private String url;
-	 -->
+
 	 <hr></hr>
                     <div class="col-md-12 col-xl-12 col-lg-12">
                       <div class="card">    
                           <div class="card-header">
-						 	  Create Recipe
+						 	  New Recipe
 						  </div>
 					      <div class="card-body">
  
@@ -90,31 +84,51 @@
                             <div class="col-md-12 col-lg-6">
 							    <div class="form-group has-feedback">
 							      <input
-							        th:replace="~{fragments/inputField :: input (label='Id', name='id', type='number', classCustom='col-md-5 col-lg-5', readOnly='true')}" />
+							        th:replace="~{fragments/inputField :: input (label='recipe.id', name='id', type='number', classCustom='col-md-5 col-lg-5', readOnly='true')}" />
 							      <input
-							        th:replace="~{fragments/inputField :: input ('Title', 'title', 'text')}" />
+							        th:replace="~{fragments/inputField :: input ('recipe.title', 'title', 'text')}" />
 							      <input
-							        th:replace="~{fragments/inputField :: input ('Source', 'source', 'text')}" />
+							        th:replace="~{fragments/inputField :: input ('recipe.source', 'source', 'text')}" />
 							      <input
-							        th:replace="~{fragments/inputField :: input ('URL', 'url', 'text')}" />
+							        th:replace="~{fragments/inputField :: input ('recipe.url', 'url', 'text')}" />
+
+								  <div class="col-md-12 form-group">
+                                    <label th:text="#{label.recipe.difficulty}"></label>
+                                    <select class="form-control" th:field="*{difficulty}">
+      									<option th:each="item:${T(rs.apps.nn.recipes.domain.Difficulty).values()}"
+      										th:value="${item.name()}"
+      										th:text="(#{label.enum.difficulty.+${item.name()}})"
+      									>val
+      									</option>
+                                    </select>
+                                    <select class="form-control" th:remove="all">
+                                        <option>Easy dummy</option>
+                                        <option>Medium dummy</option>
+                                        <option>Hard dummy</option>
+                                    </select>
+                                  </div>
+
 							    </div>
 						    </div>
 						    
                             <div class="col-md-12 col-lg-6">
 							    <div class="form-group has-feedback">
+							    
 							      <input
-							        th:replace="~{fragments/inputField :: input ('Preparation Time [min]', 'prepTime', 'number')}" />
+							        th:replace="~{fragments/selectField :: select ('recipe.category', 'category', ${categoryList})}" />
 							      <input
-							        th:replace="~{fragments/inputField :: input ('Cooking Time [min]', 'cookTime', 'number')}" />
+							        th:replace="~{fragments/inputField :: input ('recipe.prepTime', 'prepTime', 'number')}" />
 							      <input
-							        th:replace="~{fragments/inputField :: input ('Servings', 'servings', 'number')}" />
+							        th:replace="~{fragments/inputField :: input ('recipe.cookTime', 'cookTime', 'number')}" />
+							      <input
+							        th:replace="~{fragments/inputField :: input ('recipe.servings', 'servings', 'number')}" />
 							    </div>
 						    </div>
 
                             <div class="col-md-12 col-lg-12">
 							    <div class="form-group has-feedback">
 							      <input
-							        th:replace="~{fragments/inputField :: input ('Description', 'description', 'textarea')}" />
+							        th:replace="~{fragments/inputField :: input ('recipe.description', 'description', 'textarea')}" />
 							    </div>
 						    </div>
 
@@ -122,11 +136,12 @@
 						    <div class="form-group">
 						      <div class="col-sm-offset-2 col-sm-10">
 						        <button
-						          th:with="text=${recipe['new']} ? 'Save' : 'Update'"
-						            class="btn btn-primary" type="submit" th:text="${text}">Add Recipe
+						            th:with="text=${recipe['new']} ? 'save' : 'update'"
+						            class="btn btn-primary" type="submit" th:text="(#{button.action.+${text}})">
 						        </button>
+						        
 						        <button class="btn btn-primary" type="submit">
-						            <i class="fas fa-user-plus ml-2" th:with="text=${recipe['new']} ? ' Save' : ' Update'" th:text="${text}">  </i>
+						            <i class="fas fa-user-plus ml-2" th:with="text=${recipe['new']} ? 'save' : 'update'" th:text="(#{button.action.+${text}})">  </i>
 						        </button>
 						        
 						      </div>

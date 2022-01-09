@@ -11,4 +11,6 @@ public interface CategoryService extends CrudServiceRecipes<Category, Long>{
 
 	Category createOrUpdateCategory(Category entity) throws ValidateException;
 
+	List<Category> findAllByOrderByIdAsc();
+
 }

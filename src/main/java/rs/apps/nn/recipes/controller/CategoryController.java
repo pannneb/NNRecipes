@@ -7,28 +7,32 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.slf4j.Slf4j;
 import rs.apps.nn.recipes.api.EnumResponseStatus;
 import rs.apps.nn.recipes.api.ResponseData;
 import rs.apps.nn.recipes.domain.Category;
+import rs.apps.nn.recipes.domain.Recipe;
 import rs.apps.nn.recipes.exception.ValidateException;
 import rs.apps.nn.recipes.service.CategoryService;
 
 @Slf4j
 @Controller
-@RequestMapping(path = "/categories")
+@RequestMapping(path = "category")
 public class CategoryController {
 
 	private static final String VIEWS_CATEGORY_CREATE_OR_UPDATE_FORM = "categories/categoryCreateOrUpdateForm";
-	//private static final String VIEWS_CATEGORY_DETAILS_FORM = "categories/categoryDetails";
+	private static final String VIEWS_CATEGORY_LIST_FORM = "categories/categoryList";
 
 	private final CategoryService categoryService;
 
@@ -37,32 +41,87 @@ public class CategoryController {
 		this.categoryService = categoryService;
 	}
 
-	@RequestMapping(value = { "/","" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/list/", "/list" }, method = RequestMethod.GET)
 	public String categoriesList(Model model) {
-		List<Category> categories = categoryService.findAll();
+		List<Category> categories = categoryService.findAllByOrderByIdAsc();
 		// Set<Recipe> listOfRecipes = recipeService.getRecipes();
 		model.addAttribute("categories", categories);
 		// listOfRecipes.forEach(a->{
-		//     a.getCategories().forEach(c->{
-		//			System.out.println(c.toString());
-		//		});
+		// a.getCategories().forEach(c->{
+		// System.out.println(c.toString());
 		// });
-		//		
-		return "categories/categoryList";
+		// });
+		//
+		log.debug("CategoryController list called");
+		return VIEWS_CATEGORY_LIST_FORM;
 	}
 
-	@RequestMapping(value = { "/old/","/old" }, method = RequestMethod.GET)
-	public String oldCategoriesList(Model model) {
-		List<Category> categories = categoryService.findAll();
-		model.addAttribute("categories", categories);
-		return "categories/oldcategoriesList";
+	@InitBinder
+	public void setAllowedFields(WebDataBinder dataBinder) {
+		dataBinder.setDisallowedFields("id");
+	}
+	
+	@GetMapping({ "/new", "/new/" })
+	public String initCreationForm(Model model) {
+		log.debug("initCreationForm - GET");
+		model.addAttribute("category", Category.builder().build());
+		return VIEWS_CATEGORY_CREATE_OR_UPDATE_FORM;
 	}
 
-	@RequestMapping(value = { "/adminDefaultPage", "/adminDefaultPage/" }, method = RequestMethod.GET)
-	public String indexNewDesignAdmin(Model model) {
-		List<Category> categories = categoryService.findAll();
-		model.addAttribute("categories", categories);
-		return "categories/newDesign/indexAdminDefault";
+	@PostMapping({ "/new" })
+	public String submitCreationForm(@Valid Category category, BindingResult result, Model model, 
+			final RedirectAttributes redirectAttributes) {
+		log.debug("category add - POST");
+		if (result.hasErrors()) {
+			model.addAttribute("err", "msg.err.pleaseFix");
+			return VIEWS_CATEGORY_CREATE_OR_UPDATE_FORM;
+		} else {
+			Category c = categoryService.save(category);
+
+			// Add message to flash scope
+			redirectAttributes.addFlashAttribute("css", "success");
+			redirectAttributes.addFlashAttribute("msg", "msg.info.recordAdded");
+
+			return "redirect:/category/" + c.getId();
+		}
+	}
+
+	@GetMapping({ "/{categoryId}"})
+	public String showById(@PathVariable("categoryId") Long categoryId, Model model) {
+		log.debug("showById - GET");
+		model.addAttribute("category", categoryService.findById(categoryId));
+		return VIEWS_CATEGORY_CREATE_OR_UPDATE_FORM;
+	}
+
+	// Posto imamo @InitBinder koji onemogucava bindovanje ID-a koristi se rucno
+	// postavljanje ID u objektu
+	@PostMapping("/{categoryIdd}")
+	public String processUpdateRecipeForm(@Valid Category category, BindingResult result, Model model,
+			@PathVariable("categoryIdd") Long categoryIdd, 
+			final RedirectAttributes redirectAttributes) {
+		log.debug("processUpdateRecipeForm - POST");
+		if (result.hasErrors()) {
+			// redirectAttributes.addFlashAttribute("err", "Please fix errors!");
+			model.addAttribute("err", "msg.err.pleaseFix");
+			return VIEWS_CATEGORY_CREATE_OR_UPDATE_FORM;
+		} else {
+			// boolean isNew = category.isNew();
+
+			category.setId(categoryIdd);
+			//boolean isNew = category.isNew();
+
+			Category c = categoryService.save(category);
+
+			// Add message to flash scope
+			redirectAttributes.addFlashAttribute("css", "success");
+			if (category.isNew()) {
+				redirectAttributes.addFlashAttribute("msg", "msg.info.recordAdded");
+			} else {
+				redirectAttributes.addFlashAttribute("msg", "msg.info.recordUpdated");
+			}
+
+			return "redirect:/category/" + c.getId();
+		}
 	}
 
 	@Deprecated
@@ -71,7 +130,7 @@ public class CategoryController {
 	public List<Category> getCategories() {
 		return categoryService.findAll();
 	}
-	
+
 	@PostMapping(value = "/newJSON", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public ResponseData createCategory(@RequestBody Category cat) {
@@ -87,82 +146,6 @@ public class CategoryController {
 			rd.setDescription(e.getMessage());
 		}
 		return rd;
-	}
-	
-	//	@GetMapping()
-	//	public String processFindForm(Category category, BindingResult result, Model model){
-	//
-	//		// allow parameterless GET request for /owners to return all records
-	//		if (category.getLastName() == null) {
-	//			category.setLastName(""); // empty string signifies broadest possible search
-	//		}
-	//
-	//		// find owners by last name
-	//		List<Category> results = categoryService.findAllByName("%" + category.getName() + "%");
-	//
-	//		if (results.isEmpty()) {
-	//			// no owners found
-	//			result.rejectValue("lastName", "notFound", "not found");
-	//			return "owner/findOwners";
-	//		}
-	//		else if (results.size() == 1) {
-	//			// 1 owner found
-	//			category = results.get(0);
-	//			return "redirect:/categories/" + category.getId();
-	//		}
-	//		else {
-	//			// multiple owners found
-	//			model.addAttribute("selections", results);
-	//			return "categories/categoriesList";
-	//		}
-	//	}
-	
-	//	@GetMapping({ "/{categoryId}"})
-	//	public ModelAndView showOwner(@PathVariable("categoryId") Long categoryId) {
-	//		log.debug("showOwner", "categoryId:{}", categoryId);
-	//		ModelAndView mav = new ModelAndView(VIEWS_CATEGORY_DETAILS_FORM);
-	//		mav.addObject(categoryService.findById(categoryId));
-	//		return mav;
-	//	}
-	
-
-	@GetMapping({ "/new","/new/" })
-	public String initCreationForm(Model model) {
-		// model.addAttribute("category", Category.builder().build());
-		return VIEWS_CATEGORY_CREATE_OR_UPDATE_FORM;
-	}
-
-	//	@PostMapping("/new")
-	//	public String processCreationForm(@Valid Category category, BindingResult result) {
-	//		if (result.hasErrors()) {
-	//			return VIEWS_CATEGORY_CREATE_OR_UPDATE_FORM;
-	//		}
-	//		else {
-	//			Category c = categoryService.save(category);
-	//			return "redirect:/categories/" + c.getId();
-	//		}
-	//	}
-
-	@GetMapping("/{ownerId}/edit")
-	public String initUpdateOwnerForm(@PathVariable/*("ownerId")*/ Long categoryId, Model model) {
-		Category c = categoryService.findById(categoryId);
-		model.addAttribute(c);
-		return VIEWS_CATEGORY_CREATE_OR_UPDATE_FORM;
-	}
-
-	// Posto imamo @InitBinder koji onemogucava bindovanje ID-a koristi se rucno postavljanje ID u objektu
-	@PostMapping("/{ownerId}/edit")
-	public String processUpdateOwnerForm(@Valid Category category, BindingResult result,
-			@PathVariable("ownerId") Long ownerId) {
-//		if (result.hasErrors()) {
-//			return VIEWS_CATEGORY_CREATE_OR_UPDATE_FORM;
-//		}
-//		else {
-//			category.setId(ownerId);
-//			Category o = categoryService.save(category);
-//			return "redirect:/categories/"+o.getId();
-//		}
-		return "sdadasdas";
 	}
 
 }

@@ -163,3 +163,8 @@ html, body {
 .table-main-style {
 	text-align: center;
 }
+
+.alert-custom {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}

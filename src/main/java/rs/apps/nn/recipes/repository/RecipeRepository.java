@@ -23,4 +23,5 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long>, RecipeRep
 
 	List<Recipe> findAllByCookTimeGreaterThanEqualAndCookTimeLessThanEqual(int timeFrom, int timeTo);
 
+	List<Recipe> findAllByOrderByIdAsc();
 }

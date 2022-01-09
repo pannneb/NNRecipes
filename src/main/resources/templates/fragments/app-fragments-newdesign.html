@@ -182,7 +182,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Salsa developeri i kuvari :)</span>
                                 <img class="img-profile rounded-circle"
                                     src="/recipes/img/undraw_profile.svg">
                             </a>
@@ -554,7 +554,30 @@
                 <!-- /.container-fluid -->
 
             </div>
-            <!-- End of Main Content -->
+    <!-- End of Main Content -->
+
+	<div id="statusMsgData" th:fragment = "statusMsgData" >
+
+	    <!-- 
+	    <div class="alert alert-primary" role="alert" th:text="${msg}" th:if="${msg}"></div>
+        <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+         -->
+
+	    <div th:class="'alert alert-custom alert-success alert-' + ${css} +  ' alert-dismissible'" role="alert" th:if="${msg}">
+			<button type="button" class="close alert-custom" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div th:text="#{${msg}}"/>
+	    </div>
+
+	    <div th:class="'alert alert-custom alert-danger alert-' + ${css} +  ' alert-dismissible'" role="alert" th:if="${err}">
+			<button type="button" class="close alert-custom" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div th:text="#{${err}}"/>
+	    </div>
+
+	</div>
 
 </body>
 </html>

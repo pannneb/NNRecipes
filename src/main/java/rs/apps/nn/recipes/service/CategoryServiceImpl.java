@@ -90,4 +90,9 @@ public class CategoryServiceImpl implements CategoryService {
 		categoryRepository.deleteById(id);
 	}
 
+	@Override
+	public List<Category> findAllByOrderByIdAsc() {
+		return categoryRepository.findAllByOrderByIdAsc();
+	}
+
 }

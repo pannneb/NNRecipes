@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" 
       th:replace="~{layouts/guessme-newdesign-layout :: guessme_lo_constructor(
                                                 ~{::title},
-                                                ~{:: #home-static-resources},
+                                                ~{:: #list-static-resources},
                                                 ~{null},
                                                 ~{null},
                                                 ~{null}, 
@@ -23,7 +23,7 @@
                                                 ~{:: #home-main-content},
     -->
 
-    <title>Recipes List</title>
+    <title th:text="#{msg.recipes.list}">Recipes List</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,7 +31,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <th:block id="home-static-resources"> 
+    <th:block id="list-static-resources"> 
+    	<link rel="stylesheet" type="text/css" th:href="@{/css/datatables.min.css}" href="../../static/css/datatables.min.css" />
+		<script type="text/javascript" src="../../static/js/datatables.min.js" th:src="@{/js/datatables.min.js}"></script>
     </th:block>
 
 </head>
@@ -42,11 +44,12 @@
     
 		<script>
 			$('document').ready(function(){
+			    
+				$('#recipes-list-table').DataTable();
+			    
 				$('.table #deleteButton').on('click', function(event){
 					event.preventDefault();
 					var href = $(this).attr('href');
-					// alert('href:'+href);
-					// $('#deleteModal #delRef').attr('href', href);
 					$('#deleteModal #formDelRef').attr('action', href);
 					$('#deleteModal').modal();
 				});
@@ -81,44 +84,43 @@
                 <div th:switch="${recipes}" class="container my-2">
                 <div class="row buttonsBar">
                     <div class="nav-link">
-                        <a href="/recipes/recipe/new" class="btn btn-primary"><i
-       						class="fas fa-user-plus ml-2"> Add New Recipe</i></a>
+                        <a href="/recipes/recipe/new" class="btn btn-primary">
+                          <i class="fas fa-hamburger ml-2"  th:text="#{button.action.recipe.addNew}"></i>
+                        </a>
                     </div>
                     <div class="nav-link">
 					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuItem1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					    Dropdown List
-					    <span class="caret"></span>
+					    <span class="caret" th:text="#{label.info.dropdown}"></span>
 					  </button>
 					 <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-				          <a class="dropdown-item" href="#">Action</a>
-				          <a class="dropdown-item" href="#">Another action</a>
+				          <a class="dropdown-item" href="#" th:text="#{button.action.action}"/>
+				          <a class="dropdown-item" href="#" th:text="#{button.action.action1}"/>
 				          <div class="dropdown-divider"></div>
-				          <a class="dropdown-item" href="#">Something else here</a>
+				          <a class="dropdown-item" href="#" th:text="#{button.action.action2}"/>
 				     </div>
 					</div>
 					<div class="nav-link">
-                        <a href="/recipes/" class="btn btn-primary"><i
-       						class="fas fa-sync-alt ml-2">  Refresh</i></a>
+                        <a href="/recipes/recipe/list" class="btn btn-primary">
+                        	<i class="fas fa-sync-alt ml-2"  th:text="#{button.action.refresh}"></i></a>
                     </div>
 					
-                    </div>
-</br>
+                </div>
+			    </br>
                     <div class="col-md-12">
-                        <h2 th:case="null">No Recipes yet!</h2>
+                        <h2 th:case="null" th:text="#{label.list.noRecords}"/>
                         <div th:case="*">
-                            <table class="table table-striped table-responsive-md table-main-style">
+                            <table id = "recipes-list-table" class="table table-striped table-responsive-md table-main-style hover">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Title</th>
-                                        <th>Description</th>
-                                        <th>Prep Time</th>
-                                        <th>Cook Time</th>
-                                        <th>Servings</th>
-                                        <th>URL</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
-                                        
+                                        <th th:text="#{label.recipe.id}"/>
+                                        <th th:text="#{label.recipe.title}"/>
+                                        <th th:text="#{label.recipe.description}"/>
+                                        <th th:text="#{label.recipe.prepTime}"/>
+                                        <th th:text="#{label.recipe.cookTime}"/>
+                                        <th th:text="#{label.recipe.servings}"/>
+                                        <th th:text="#{label.recipe.url}"/>
+                                        <th th:text="#{label.recipe.edit}"/>
+                                        <th th:text="#{label.recipe.delete}"/>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -179,25 +181,25 @@
         <div class="modal-dialog" role="document">
         	<div class="modal-content">
 	        	<div class="modal-header">
-		            <h3 class="modal-title">Delete Confirmation</h3>
+		            <h3 class="modal-title" th:text="#{button.action.confirm}"></h3>
 		            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		                <span aria-hidden="true">&times;</span>
 		            </button>
 			    </div>
         		<div class="modal-body">
-        		    <p>Are you sure you want to delete the object?</p>
+        		    <p th:text="#{button.action.delete.confirm}"></p>
         		</div>
 		        <div class="modal-footer">
 
                     <form id="formDelRef" action="" method="post" >
                         <button class="btn btn-primary" type="submit">
-							<i class="" >Yes, Delete</i>
+							<i class="" th:text="#{button.action.confirm.yes}"></i>
 							<!-- <i class="" >Yes, Delete</i>-->
                    		</button>
                     </form>
 
 		       		<!--     <a href="" class="btn btn-primary" id="delRef">Yes, Delete</a> -->
-		            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		            <button type="button" class="btn btn-secondary" data-dismiss="modal"  th:text="#{button.action.confirm.close}"></button>
 
 		        </div>
 		    </div>

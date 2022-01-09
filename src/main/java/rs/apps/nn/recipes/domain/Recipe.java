@@ -4,9 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,11 +16,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,7 +47,7 @@ public class Recipe extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	@NotNull
-	@Size(min = 10, max=250)
+	@Size(min = 5, max=250)
 	private String title;
 	private String description;
 	private Integer prepTime;
@@ -55,8 +61,6 @@ public class Recipe extends BaseEntity{
 	@Lob
 	private String directions;
 
-//	// private Difficulty difficulty;
-//
 //	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
 //	private Set<Ingredient> ingredients = new HashSet<Ingredient>();
 //
@@ -64,23 +68,31 @@ public class Recipe extends BaseEntity{
 //	@Lob
 //	private Byte[] image;
 //
-//	/**
-//	 * // ORDINAL - ide u bazu kao 1, 2, 3 (problem ako se doda novi tip, poremete
-//	 * se identi) // STRING - ide u bazu kao text
-//	 */
-//	@Enumerated(value = EnumType.STRING)
-//	private Difficulty difficulty;
-//
+	/**
+	 * // ORDINAL - ide u bazu kao 1, 2, 3 (problem ako se doda novi tip, poremete
+	 * se identi) // STRING - ide u bazu kao text
+	 */
+	@Enumerated(value = EnumType.STRING)
+	private Difficulty difficulty;
 
 	// @OneToOne(cascade = CascadeType.ALL)
 	// @ManyToMany
 	// @JoinTable(schema="recipes", name = "recipe_note", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "note_id"))
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-	private Set<Note> notes = new HashSet<Note>();
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipes")
+//	private Set<Note> notes = new HashSet<Note>();
 
-	@ManyToMany
-	@JoinTable(schema="recipes", name = "recipe_category", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private Set<Category> categories = new HashSet<Category>();
+//	@Column
+// 	private Long categoryFk;
+
+    // @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY /* , optional = false*/ )
+    @JoinColumn(name="categoryFk", referencedColumnName = "ID", nullable=true)
+    // @JoinColumn(name="categoryFk", referencedColumnName = "ID", nullable=false, insertable = false,  updatable=false)
+    private Category category;
+    
+//	@ManyToMany
+//	@JoinTable(schema="recipes", name = "recipe_category", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+//	private Set<Category> categories = new HashSet<Category>();
 
 	// public String getDescription() {
 	// return description;

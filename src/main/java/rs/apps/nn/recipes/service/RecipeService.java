@@ -17,4 +17,5 @@ public interface RecipeService extends CrudServiceRecipes<Recipe, Long> {
 
 	List<Recipe> findAllByCookTimeGreaterThanEqualAndLessThanEqual(int timeFrom, int timeTo);
 
+	List<Recipe> findAllByOrderByIdAsc();
 }

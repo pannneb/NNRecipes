@@ -50,6 +50,13 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 
 	@Override
+	public List<Recipe> findAllByOrderByIdAsc() {
+		List<Recipe> recipes = new ArrayList<>();
+		recipeRepository.findAllByOrderByIdAsc().forEach(recipes::add);
+		return recipes.size() > 0 ? recipes : null;
+	}
+
+	@Override
 	public Recipe findById(Long id) {
 		return recipeRepository.findById(id).orElse(null);
 	}

@@ -5,7 +5,7 @@
     <th:block th:fragment="input (label, name, type)"  th:with="classCustom=${classCustom} ?: '', readOnly=${readOnly} ?: ''">
       <div th:with="valid=${!#fields.hasErrors(name)}"
         th:class="${'form-group' + (valid ? '' : ' has-error')}" class="form-group">
-        <label class="col-sm-12 control-label" th:text="${label}">Label</label>
+        <label class="col-sm-12 control-label" th:text="(#{'label.'+${label}})">Label</label>
 
         <div th:class="'col-sm-12' + ' ' + ${(classCustom=='' ? '' : classCustom)}" >
             <div th:switch="${type}" >

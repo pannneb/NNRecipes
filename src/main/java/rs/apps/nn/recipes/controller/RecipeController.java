@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import lombok.extern.slf4j.Slf4j;
+import rs.apps.nn.recipes.domain.Category;
 import rs.apps.nn.recipes.domain.Recipe;
+import rs.apps.nn.recipes.service.CategoryService;
 import rs.apps.nn.recipes.service.RecipeService;
 
 @Slf4j
@@ -26,17 +28,18 @@ public class RecipeController {
 	private static final String VIEWS_RECIPE_CREATE_OR_UPDATE_FORM = "recipes/recipeCreateOrUpdateForm";
 
 	private final RecipeService recipeService;
+	private final CategoryService categoryService;
 
-
-	public RecipeController(RecipeService recipeService) {
+	public RecipeController(RecipeService recipeService, CategoryService categoryService) {
 		super();
 		this.recipeService = recipeService;
+		this.categoryService = categoryService;
 		log.debug("RecipeController constructor called");
 	}
 	
 	@RequestMapping(value = { "/list/", "/list" }, method = RequestMethod.GET)
 	public String recipesList(Model model) {
-		List<Recipe> recipes = recipeService.findAll();
+		List<Recipe> recipes = recipeService.findAllByOrderByIdAsc();
 		// Set<Recipe> listOfRecipes = recipeService.getRecipes();
 		model.addAttribute("recipes", recipes);
 		// listOfRecipes.forEach(a->{
@@ -53,7 +56,14 @@ public class RecipeController {
 	@GetMapping({ "/new" })
 	public String initCreationForm(Model model) {
 		model.addAttribute("recipe", Recipe.builder().build());
+		prepareModelForAddUpdateView(model);
 		return VIEWS_RECIPE_CREATE_OR_UPDATE_FORM;
+	}
+
+	private void prepareModelForAddUpdateView(Model model) {
+		List<Category> l = categoryService.findAll();
+		model.addAttribute("categoryList", l);
+		log.debug("prepareModelForAddUpdateView, categories size: " + l.size());
 	}
 
 	@PostMapping({ "/new" })
@@ -74,6 +84,7 @@ public class RecipeController {
 	@GetMapping({ "/{recipeId}"})
 	public String showById(@PathVariable("recipeId") Long recipeId, Model model) {
 		model.addAttribute("recipe", recipeService.findById(recipeId));
+		prepareModelForAddUpdateView(model);
 		return VIEWS_RECIPE_CREATE_OR_UPDATE_FORM;
 	}
 	

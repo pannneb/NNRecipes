@@ -1,16 +1,15 @@
 <html>
 <body>
   <form>
-    <th:block th:fragment="select (label, name, items)">
+    <th:block th:fragment="select (label, name, items)"  th:with="classCustom=${classCustom} ?: '', readOnly=${readOnly} ?: ''">
       <div th:with="valid=${!#fields.hasErrors(name)}"
-        th:class="${'form-group' + (valid ? '' : ' has-error')}"
-        class="form-group">
-        <label class="col-sm-2 control-label" th:text="${label}">Label</label>
+        th:class="${'form-group' + (valid ? '' : ' has-error')}" class="form-group">
+        <label class="col-sm-12 control-label" th:text="(#{'label.'+${label}})">Label</label>
 
-        <div class="col-sm-10">
-          <select th:field="*{__${name}__}">
-            <option th:each="item : ${items}" th:value="${item}"
-              th:text="${item}">dog</option>
+        <div th:class="'col-sm-12' + ' ' + ${(classCustom=='' ? '' : classCustom)}" >
+          <select th:field="*{__${name}__}" class="form-control">
+            <option th:each="item : ${items}" th:value="${item.id}"
+              th:text="${item.label}">dog</option>
           </select>
           <span th:if="${valid}"
             class="glyphicon glyphicon-ok form-control-feedback"

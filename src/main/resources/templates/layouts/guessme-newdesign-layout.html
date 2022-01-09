@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>GuessMe - main layout</title>
+    <title>Recipes - main layout</title>
 
     <!-- Custom fonts for this template-->	
 	<link rel="stylesheet" type="text/css" th:href="@{/vendor/fontawesome-free/css/all.min.css}" href="../../static/vendor/fontawesome-free/css/all.min.css" />
@@ -20,6 +20,9 @@
 
     <!-- Custom styles for this template-->
 	<link rel="stylesheet" type="text/css" th:href="@{/css/sb-admin-2.min.css}" href="../../static/css/sb-admin-2.min.css" />
+
+    <!-- Main styles for this template (for Recipe application) -->
+	<link rel="stylesheet" type="text/css" th:href="@{/myStyles.css}" href="../../static/myStyles.css" />
 
     <!-- Page level plugins -->
     <script type="text/javascript" src="../../static/vendor/chart.js/Chart.min.js" th:src="@{/vendor/chart.js/Chart.min.js}"></script>
@@ -46,6 +49,7 @@
 
 	<!-- <div class="headerHorNavAAA" th:include="${header} ?: ~{}"></div> -->
     <!-- Page Wrapper -->
+    
     <div id="wrapper">
 
 	<div th:replace="${navMenuMain} ?: ~{/fragments/app-fragments-newdesign-menu :: accordionSidebar}"></div>
@@ -60,6 +64,9 @@
             <!-- Main Topbar -->
 			<div th:replace="${topbarMain} ?: ~{/fragments/app-fragments-newdesign :: topbarMain}"></div>
 
+            <!-- Status Messages -->
+			<div th:replace="${statusMsgData} ?: ~{/fragments/app-fragments-newdesign :: statusMsgData}"></div>
+
             <!-- Main Content -->
 			<div th:replace="${mainContent} ?: ~{/fragments/app-fragments-newdesign :: contentDashboardMain}"></div>
 
@@ -67,7 +74,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; Recipes 2022</span>
                     </div>
                 </div>
             </footer>
