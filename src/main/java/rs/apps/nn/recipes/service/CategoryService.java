@@ -9,7 +9,7 @@ public interface CategoryService extends CrudServiceRecipes<Category, Long>{
 
 	List<Category> findAllByDescriptionLike(String desc);
 
-	Category createOrUpdateCategory(Category entity) throws ValidateException;
+	// Category createOrUpdateCategory(Category entity) throws ValidateException;
 
 	List<Category> findAllByOrderByIdAsc();
 

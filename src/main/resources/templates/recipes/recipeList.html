@@ -117,21 +117,20 @@
                                         <th th:text="#{label.recipe.description}"/>
                                         <th th:text="#{label.recipe.prepTime}"/>
                                         <th th:text="#{label.recipe.cookTime}"/>
-                                        <th th:text="#{label.recipe.servings}"/>
+                                        <th th:text="#{label.recipe.portions}"/>
                                         <th th:text="#{label.recipe.url}"/>
                                         <th th:text="#{label.recipe.edit}"/>
                                         <th th:text="#{label.recipe.delete}"/>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                
                                     <tr th:each="recipe:${recipes}">
                                         <td th:text="${recipe?.id}">111</td>
                                         <td th:text="${recipe?.title}">789</td>
                                         <td th:text="${recipe?.description}">222</td>
                                         <td th:text="${recipe?.prepTime}">333</td>
                                         <td th:text="${recipe?.cookTime}">444</td>
-                                        <td th:text="${recipe?.servings}">555</td>
+                                        <td th:text="${recipe?.portions}">555</td>
                                         <td th:text="${recipe?.url}">567</td>
                                         
                                         <td>

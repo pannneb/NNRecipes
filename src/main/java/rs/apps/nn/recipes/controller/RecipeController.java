@@ -1,24 +1,34 @@
 package rs.apps.nn.recipes.controller;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import lombok.extern.slf4j.Slf4j;
 import rs.apps.nn.recipes.domain.Category;
+import rs.apps.nn.recipes.domain.Comment;
+import rs.apps.nn.recipes.domain.EnumUnitOfMeasure;
 import rs.apps.nn.recipes.domain.Recipe;
+import rs.apps.nn.recipes.domain.UnitOfMeasure;
 import rs.apps.nn.recipes.service.CategoryService;
+import rs.apps.nn.recipes.service.CommentService;
 import rs.apps.nn.recipes.service.RecipeService;
+import rs.apps.nn.recipes.service.UnitOfMeasureService;
 
 @Slf4j
 @Controller
@@ -26,14 +36,19 @@ import rs.apps.nn.recipes.service.RecipeService;
 public class RecipeController {
 
 	private static final String VIEWS_RECIPE_CREATE_OR_UPDATE_FORM = "recipes/recipeCreateOrUpdateForm";
+	private static final String VIEWS_RECIPE_COMMENTS_LIST = "comments/recipeCommentsList";
 
 	private final RecipeService recipeService;
 	private final CategoryService categoryService;
+	private final UnitOfMeasureService uomService;
+	private final CommentService commentService;
 
-	public RecipeController(RecipeService recipeService, CategoryService categoryService) {
+	public RecipeController(RecipeService recipeService, CategoryService categoryService, UnitOfMeasureService uomService, CommentService commentService) {
 		super();
 		this.recipeService = recipeService;
 		this.categoryService = categoryService;
+		this.uomService = uomService;
+		this.commentService = commentService;
 		log.debug("RecipeController constructor called");
 	}
 	
@@ -64,12 +79,25 @@ public class RecipeController {
 		List<Category> l = categoryService.findAll();
 		model.addAttribute("categoryList", l);
 		log.debug("prepareModelForAddUpdateView, categories size: " + l.size());
+
+		List<EnumUnitOfMeasure> unitOfMeasuresList = Arrays.asList(EnumUnitOfMeasure.values());
+		model.addAttribute("unitOfMeasuresList", unitOfMeasuresList);
+		log.debug("prepareModelForAddUpdateView, unitOfMeasuresList size: " + unitOfMeasuresList.size());
+
+		List<UnitOfMeasure> allUnitOfMeasuresList = uomService.findAllByOrderByIdAsc();
+		model.addAttribute("allUnitOfMeasuresList", allUnitOfMeasuresList);
+		log.debug("prepareModelForAddUpdateView, allUnitOfMeasuresList size: " + allUnitOfMeasuresList.size());
+
 	}
 
 	@PostMapping({ "/new" })
 	public String submitCreationForm(@Valid Recipe recipe, BindingResult result) {
 		log.debug("recipe new POST");
 		if (result.hasErrors()) {
+			result.getAllErrors().forEach(error->{
+				log.debug(error.toString());
+			});
+
 			// result.geterr
 			return VIEWS_RECIPE_CREATE_OR_UPDATE_FORM;
 		} else {
@@ -83,7 +111,8 @@ public class RecipeController {
 
 	@GetMapping({ "/{recipeId}"})
 	public String showById(@PathVariable("recipeId") Long recipeId, Model model) {
-		model.addAttribute("recipe", recipeService.findById(recipeId));
+		Recipe r = recipeService.findById(recipeId);
+		model.addAttribute("recipe", r);
 		prepareModelForAddUpdateView(model);
 		return VIEWS_RECIPE_CREATE_OR_UPDATE_FORM;
 	}
@@ -93,7 +122,26 @@ public class RecipeController {
 	@PostMapping("/{recipeId}")
 	public String processUpdateRecipeForm(@Valid Recipe recipe, BindingResult result,
 			@PathVariable("recipeId") Long recipeId) {
+		log.debug("recipe update POST");
+		log.debug("recipe ingredients count:"+recipe.getIngredients().size());
+		log.debug("recipe ingredients:"+recipe.getIngredients());
+
+		// V1 - remove empty elements using Iterator - avoid ConcurrentModificationException
+		// Empty Objects remains (Object with all fields equal to null) in the list after some row is deleted on the form.
+		//		ListIterator<Ingredient> iter = recipe.getIngredients().listIterator();
+		//		while(iter.hasNext()){
+		//			if (Stream.of(iter.next().getId(), iter.next().getUom(), iter.next().getIngredientName(), iter.next().getAmount()).allMatch(Objects::isNull)) {
+		//				iter.remove();
+		//			}
+		//		}
+
+		// V2 - remove empty elements using Streams - avoid ConcurrentModificationException
+		recipe.getIngredients().removeIf(i -> Stream.of(i.getId(), i.getUom(), i.getIngredientName(), i.getAmount()).allMatch(Objects::isNull));
+		
 		if (result.hasErrors()) {
+			result.getAllErrors().forEach(error->{
+				log.debug(error.toString());
+			});
 			return VIEWS_RECIPE_CREATE_OR_UPDATE_FORM;
 		} else {
 			recipe.setId(recipeId);
@@ -119,6 +167,48 @@ public class RecipeController {
 //		return "recipes/recipeList";
 		
 	}
+	              //recipe/-133/      comment/list
+	@GetMapping({ "/{recipeId}/comment/list"})
+	public String showAllRecipeComments(@PathVariable("recipeId") Long recipeId, Model model) {
+		log.debug("recipe showAllRecipeComments GET, recipeId:{}", recipeId);
+		Recipe r = recipeService.findById(recipeId);
+		model.addAttribute("recipeComments", r.getComments());
+		model.addAttribute("commentsRecipeId", recipeId);
+		// prepareModelForAddUpdateView(model);
+		return VIEWS_RECIPE_COMMENTS_LIST;
+	}
+	
+	@RequestMapping(value = { "/{recipeId}/comment/new" }, method = RequestMethod.POST)
+	public String onlineSbWebtestPreviewJSONAjax(@RequestBody Comment comment,  @PathVariable("recipeId") Long recipeId) {
+		log.debug("recipe processNewCommentForm POST, comment: {} ", comment);
+//        if (result.hasErrors()) {
+//            return "pets/createOrUpdateCommentForm";
+//        } else {
+        	Recipe r = recipeService.findById(recipeId);
+        	// TODO Move to DB - if not populated -> set Default=current timestamp in DB.
+        	// (Joda dateTime option)
+        	comment.setInsertedDt(Timestamp.valueOf(LocalDateTime.now()));
+        	comment.setRecipe(r);
+            commentService.save(comment);
+            return "redirect:/recipe/"+recipeId+"/comment/list";
+//        }
+		
+	}
+
+//	 // Spring MVC calls method loadPetWithVisit(...) before processNewVisitForm is called
+//    @PostMapping(path="/{recipeId}/comment/new", consumes = { "application/json" })
+//    public String processNewCommentForm(@Valid Valid Comment comment, BindingResult result,  @PathVariable("recipeId") Long recipeId) {
+//		log.debug("recipe processNewCommentForm POST, comment: {} ", comment);
+//        if (result.hasErrors()) {
+//            return "pets/createOrUpdateCommentForm";
+//        } else {
+//        	Recipe r = recipeService.findById(recipeId);
+//        	comment.setRecipe(r);
+//            commentService.save(comment);
+//            return "redirect:/recipe/{recipeId}";
+//        }
+//    }
+	
 
 	//	public ModelAndView showOwner(@PathVariable("recipeId") Long ownerId) {
 	//		System.out.println("RecipeController showOwner");

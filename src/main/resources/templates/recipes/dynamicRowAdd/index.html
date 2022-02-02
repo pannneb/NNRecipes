@@ -1,0 +1,290 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Spring Boot Thymeleaf Hello World Example</title>
+
+	<link rel="stylesheet" type="text/css" href="/bootstrap4.6.0/css/bootstrap.min.css" th:href="@{/bootstrap4.6.0/css/bootstrap.min.css}">
+	<link rel="stylesheet" type="text/css" href="/fontawesome/css/all.min.css" th:href="@{/fontawesome/css/all.min.css}">
+
+<!--    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.6.0/css/bootstrap.min.css}"/> -->
+<!--	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/> -->
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-info fixed-top">
+    <a class="navbar-brand" href="#">Sender simulator (for different packagers) </a>
+</nav>
+
+<!-- <main role="main" class="container"> -->
+<main role="main" class="container">
+
+    <div class="starter-template">
+        <h3>Transaction parser and  aaa online simulator</h3>
+<!--         <h2>
+            <span th:text="'Hello, ' + ${message}"></span>
+        </h2> -->
+    </div>
+
+	<form th:action="@{/packager/bps/submit}"  th:object="${transData}" method="post" class="col-12">
+    <div class="row col-md-12 col-sm-12">
+    	<div class="col-md-6 col-sm-12 ">
+	  		<div class="card">
+  				<div class="card-header text-white bg-info mb-3 border-info" >
+    				Original transaction:
+  				</div>
+			    <div class="card-body">
+ 				    <h5 class="card-title">Select corresponding packager and : </h5>
+ 				    <ul class="listelemcircle">
+ 				       <li><p class="card-text">parse original transaction using Preview button</p></li>
+ 				       <li><p class="card-text">send trs using Send button</p></li>
+ 				    </ul>
+    			    
+				  	<div >
+					  <div class="form-group">
+					    <label for="exampleFormControlSelect1">Packagers:</label>
+					    <select class="form-control  col-12 col-md-8" id="dropPackager" th:field="*{packager}" >
+					   		<option value="0">select packager</option>
+					    	<option th:each="pack : ${packagers}" th:value="${pack}" th:text="${pack}"></option>
+					    </select>
+					  </div>
+					  <div class="form-group">
+					    <label for="textUnparsedTransactionData">Transaction hex:</label>
+					    <textarea class="form-control" id="textUnparsedTransactionData" rows="7"  th:field="*{unparsedTransactionData}"></textarea>
+					  </div>
+					  <div class="form-group">
+		                    <label for="dips">Select transactions:</label>
+		                    <select class="form-control selectpicker" th:field="*{selectedTransactions}" id="selectedTransactions" size="5" multiple>
+			                  <option th:each="transaction :  ${testTransactions}"
+		                                th:value="${transaction.hexData}"
+		                                th:text="|${transaction.name} - ${transaction.hexDataShort}|">text
+		                      </option>
+		                    </select>
+		              </div>
+					  <div class="form-group">
+					    <input type="checkbox" checked="checked" id="exampleCheck1"  th:field="*{genRandomStanRefNumber}" >
+					    <label class="" for="exampleCheck1">Generate Stan/RefNo</label>
+					  </div>
+					  
+					  <button type="submit" class="btn btn-outline-info">Submit</button>
+					  <button type="button" class="btn btn-outline-info" onClick="previewOnClick()">Preview</button>
+					</div>
+		
+			   </div>
+			</div>
+		</div>
+		
+	  	<div class="col-md-6 col-sm-12">
+	  		<div class="card">
+	  		
+		  		<h5 class="card-header text-white bg-info mb-3 border-info">
+	        		<a class="collapsed d-block text-white " data-toggle="collapse" href="#collapse-collapsed" aria-expanded="true" aria-controls="collapse-collapsed" id="heading-collapsed">
+	        		    <i class="fa fa-chevron-down pull-right"></i>
+	            			Parsed transaction:
+	        		</a>
+	    		</h5>
+
+  				<!-- 
+  				<div class="card-header text-white bg-info mb-3 border-info" >
+    				Parsed transaction:
+  				</div>
+  				 -->
+
+			    <div id="collapse-collapsed" class="collapse" aria-labelledby="heading-collapsed">
+			        <div class="card-body">
+					    <div class="card-body">
+						  <h5 class="card-title">Details:</h5>
+		    			  <p class="card-text">(override some fields if you want and do the tests)</p>
+						  <div class="form-group">
+		<!-- 				    <label for="textParsedTransactionData">Details:</label> -->
+						    <textarea class="form-control" id="textParsedTransactionData" rows="17"  th:field="*{parsedTransactionData}"></textarea>
+						  </div>
+					   </div>
+					</div>
+				</div>
+			</div>
+			
+			
+	  		<div class="card">
+	  		
+		  		<h5 class="card-header text-white bg-info mb-3 border-info">
+ 	        		<a class="collapse d-block text-white " data-toggle="collapse" href="#collapse-collapsed2" aria-expanded="true" aria-controls="collapse-collapsed2" id="heading-collapsed2">
+	        		    <i class="fa fa-chevron-down pull-right"></i>
+	            			Response data:
+	        		</a>
+	    		</h5>
+
+  				<!-- 
+  				<div class="card-header text-white bg-info mb-3 border-info" >
+    				Parsed transaction:
+  				</div>
+  				 -->
+
+			    <div id="collapse-collapsed2" class="collapse show" aria-labelledby="heading-collapsed2">
+			        <div class="card-body">
+					    <div class="card-body">
+						  <h5 class="card-title">ISO MSG:</h5>
+						  <div class="form-group">
+						    <textarea class="form-control" id="responseTransactionData" rows="17"  th:field="*{responseTransactionData}"></textarea>
+						  </div>
+					   </div>
+					</div>
+				</div>
+		</div>
+		</div>
+		
+		
+		
+		
+	  </div>
+	  
+	  <br/>
+	  
+	  <div class="row col-md-12 col-sm-12">
+	  		<div class="card col-md-12 col-sm-12 zero-margin">
+  				<div class="card-header text-white bg-info mb-3 border-info" >
+    				Overriden fields:
+  				</div>
+			    <div class="card-body">
+	  
+					  <div>
+						  <table border="1" cellspacing="0" class="table table-hover">
+							  <thead class="thead-light">
+						        <tr>
+						            <th></th>
+						            <th>Row Number</th>
+						            <th>Element ID</th>
+						            <th>Element Value</th>
+						            <th>Checked</th>
+						        </tr>
+						      </thead>
+					      </table>
+					  </div>
+				      <div class="btn-container">
+				        <button type="button" class='btn delete'>- Delete</button>
+				        <button type="button" class='btn addmore'>+ Add More</button>
+				      </div>
+	  
+	  			</div>
+	  		</div>
+	  </div>
+	</form>
+		
+	<div id="divCheckbox" style="display: none;">	
+	    <select class="form-control col-12 col-md-8" id="dropIsoMsgFields" >
+	   		<option value="-1">select iso msg field</option>
+	    	<option th:each="isomsgfield : ${isomsgfields}" th:value="${isomsgfield.id}" th:text="${isomsgfield.label}"></option>
+	    </select>
+	</div>
+	
+	<br/>
+</main>
+	
+	<!-- /.container -->
+    <script type="text/javascript" th:src="@{/jquery3.6.0/jquery-3.6.0.min.js}" ></script>
+  	<script type="text/javascript" th:src="@{/bootstrap4.6.0/js/bootstrap.min.js}" ></script>
+	<script type="text/javascript" th:src="@{/fontawesome/js/fontawesome.min.js}" ></script>
+	
+	<script>
+		var i=2;
+		$(".addmore").on('click',function(){
+		    addMoreFunc();
+		});
+
+		function addMoreFunc(){
+		    var rowCount = $('.row_no').length + 1;
+		    var data="<tbody><tr><td><input type='checkbox' class='case'/></td><td><span class='row_no'>"+rowCount+".</span></td>";
+		    data +="<td> <select class='form-control  col-12 col-md-12' id='element_name"+i+"' name='element_name[]' th:field='*{element_name}' ><option value='0'>select packager</option><option value='1'>select packager 1</option></option></select></td>   <td><input type='text' id='element_value"+i+"' name='element_value[]'/></td><td><p><input type='checkbox' /><input type='hidden' name='element_checked[]' value='0' /></p></td>  </tr></tbody>";
+		    $('table').append(data);
+		    populateSelectBox(i);
+		    onAddCheckboxRefresh();
+		    i++;
+		}
+
+	    addMoreFunc();
+		
+		$(".delete").on('click', function() {
+		    $('.case:checkbox:checked').parents("tr").remove();
+		    changeAllRowNo();
+		});
+
+		function changeAllRowNo() {
+		    $('.row_no').each((k,ele)=>{
+		        $(ele).html(k+1+'.')
+		    });
+		}
+		
+		function populateSelectBox(i) {
+			var finalcel = document.getElementById('element_name'+i);
+			var copycel = document.getElementById('dropIsoMsgFields').innerHTML;
+			// alert(copycel);
+			finalcel.innerHTML=copycel;
+		}
+
+		function onAddCheckboxRefresh(){
+			$('input[type=checkbox]').on("change",function(){
+			    // alert('aaa');
+			    var target = $(this).parent().find('input[type=hidden]').val();
+			    // alert('target:'+target);
+			    if(target == 0)
+			    {
+			        target = 1;
+			    }
+			    else
+			    {
+			        target = 0;
+			    }
+			    $(this).parent().find('input[type=hidden]').val(target);
+			});
+		}
+
+		function previewOnClick() {
+			  //Prevent default submission of form
+			 //  e.preventDefault();
+			  
+			  var e = document.getElementById("dropPackager");
+			  var strPackager = e.value;
+			  var e1 = document.getElementById("textUnparsedTransactionData");
+			  var strMsg = e1.value;
+			  
+			  // alert("korak1:"+strMsg);
+			  
+			  if (strMsg == null ||strMsg == "" || strMSg.length==0) {
+				  // alert("korak2");
+				  var e2 = document.getElementById("selectedTransactions");
+				  // alert("korak3 e2:"+e2);
+				  strMsg = e2.value;
+				  // alert("korak4 strMsg:"+strMsg)
+			  }
+			  
+			  var json = {"packager":strPackager, "unparsedTransactionData":strMsg};
+			  
+			  // alert("json:"+json);
+			  $.ajax({
+				 type: "POST",
+			     url : '/onltst/packager/preview',
+			     //dataType: "json",
+			     //accepts: "text/plain",
+			     contentType: "application/json; charset=utf-8",
+			     data : JSON.stringify(json),
+			     success : function(res) {
+					$("#textParsedTransactionData").html(res);
+			        // alert('success:'+res);
+			     },
+			     error :  function(res) {
+			         alert('error:'+res);
+			     } 
+			  });
+			}
+
+	</script>
+
+</body>
+</html>

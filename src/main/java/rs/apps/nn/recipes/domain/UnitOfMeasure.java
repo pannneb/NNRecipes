@@ -9,14 +9,14 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-//@Table(name = "unit_of_measure", schema = "recipes")
-//@Getter
-//@Setter
-//@Entity
+@Table(name = "unit_of_measure", schema = "recipes")
+@Getter
+@Setter
+@Entity
 public class UnitOfMeasure {
 
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String description;

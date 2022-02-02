@@ -66,7 +66,7 @@
 						
 						<div class="nav-link">
 						    <a href="/recipes/recipe/new" class="btn btn-primary"><i
-	       						class="fas fa-sync-alt ml-2"> Refresh</i></a>
+	       						class="fas fa-sync-alt ml-2"  th:text="#{button.action.refresh}"></i></a>
 	                    </div>
 						
 	               </div>
@@ -75,7 +75,7 @@
                     <div class="col-md-12 col-xl-12 col-lg-12">
                       <div class="card">    
                           <div class="card-header">
-						 	  New Recipe
+                          	  <span th:text="( (${recipe.id==null}) ? #{label.recipe.newRecipe} : (#{label.recipe.updateRecipe} + ' : [ ' + ${recipe.id} + ' ]' ) )"></span> 
 						  </div>
 					      <div class="card-body">
  
@@ -83,30 +83,43 @@
                             <div class="row">
                             <div class="col-md-12 col-lg-6">
 							    <div class="form-group has-feedback">
-							      <input
-							        th:replace="~{fragments/inputField :: input (label='recipe.id', name='id', type='number', classCustom='col-md-5 col-lg-5', readOnly='true')}" />
+								  
+								  <input type="hidden" th:field="*{id}" id="id">
+
+								  <!--
+		 					 	    <input
+								      th:replace="~{fragments/inputField :: input (label='recipe.id', name='id', type='number', classCustom='col-md-5 col-lg-5', readOnly='true')}" />					       
+								  -->
+								  
 							      <input
 							        th:replace="~{fragments/inputField :: input ('recipe.title', 'title', 'text')}" />
-							      <input
-							        th:replace="~{fragments/inputField :: input ('recipe.source', 'source', 'text')}" />
+							      
+							      <div class="form-group has-feedback row rowStyle" >
+		                            <div class="col-md-6 col-lg-6">
+		                              	<div class="col-md-12 form-group">
+		                                    <label th:text="#{label.recipe.difficulty}"></label>
+		                                    	<select class="form-control" th:field="*{enumDifficulty}">
+		      										<option th:each="item:${T(rs.apps.nn.recipes.domain.EnumDifficulty).values()}"
+		      											th:value="${item.name()}"
+		      											th:text="(#{label.enum.difficulty.+${item.name()}})"> val
+		      									</option>
+		                                    </select>
+		                                    <select class="form-control" th:remove="all">
+		                                        <option>Easy dummy</option>
+		                                        <option>Medium dummy</option>
+		                                        <option>Hard dummy</option>
+		                                    </select>
+		                                </div>
+                                	</div>
+                                	<div class="col-md-6 col-lg-6">
+                                		<input
+							    		    th:replace="~{fragments/inputField :: input ('recipe.portions', 'portions', 'number')}" />
+                                		
+									</div>
+								</div>
+							      
 							      <input
 							        th:replace="~{fragments/inputField :: input ('recipe.url', 'url', 'text')}" />
-
-								  <div class="col-md-12 form-group">
-                                    <label th:text="#{label.recipe.difficulty}"></label>
-                                    <select class="form-control" th:field="*{difficulty}">
-      									<option th:each="item:${T(rs.apps.nn.recipes.domain.Difficulty).values()}"
-      										th:value="${item.name()}"
-      										th:text="(#{label.enum.difficulty.+${item.name()}})"
-      									>val
-      									</option>
-                                    </select>
-                                    <select class="form-control" th:remove="all">
-                                        <option>Easy dummy</option>
-                                        <option>Medium dummy</option>
-                                        <option>Hard dummy</option>
-                                    </select>
-                                  </div>
 
 							    </div>
 						    </div>
@@ -116,22 +129,116 @@
 							    
 							      <input
 							        th:replace="~{fragments/selectField :: select ('recipe.category', 'category', ${categoryList})}" />
-							      <input
-							        th:replace="~{fragments/inputField :: input ('recipe.prepTime', 'prepTime', 'number')}" />
-							      <input
-							        th:replace="~{fragments/inputField :: input ('recipe.cookTime', 'cookTime', 'number')}" />
-							      <input
-							        th:replace="~{fragments/inputField :: input ('recipe.servings', 'servings', 'number')}" />
-							    </div>
-						    </div>
 
+							    </div>
+							    <div class="form-group has-feedback row rowStyle" >
+		                              <div class="col-md-6 col-lg-6">
+								          <input
+									        th:replace="~{fragments/inputField :: input ('recipe.prepTime', 'prepTime', 'number')}" />
+									  </div>
+		                              <div class="col-md-6 col-lg-6">
+									      <input
+									        th:replace="~{fragments/inputField :: input ('recipe.cookTime', 'cookTime', 'number')}" />
+									  </div>
+								</div>
+								
+								<input
+							        th:replace="~{fragments/inputField :: input ('recipe.source', 'source', 'text')}" />
+								
+								
+							    
+								
+							    
+						    </div>
+						
+        					<br>
+        					<br>
+        					
+        					
+        					<br>
+        					
+                            <div class="col-md-12 col-lg-12">
+							    <div class="form-group has-feedback">
+									<div class="col-md-12 col-lg-12">
+									  		<div class="card col-md-12 col-lg-12 zeroPadding">
+								  				<div class="card-header"  th:text="#{label.recipe.dynRow.ingredients}">
+								    				Ingredients:
+								  				</div>
+											    <div class="card-body">
+									  
+													  <div>
+													  
+													  <div class="card card-default margin-bottom-20">
+
+														  <table border="1" cellspacing="0" id="tableDynRows" name="tableDynRows" class="table table-bordered table-hover table-sm margin-bottom-zero">
+															  <thead class="thead-light" >
+														        <tr>
+														            <th></th>
+														            <th th:text="#{label.recipe.dynRow.rowNum}" class="innerTableTh">Row Number</th>
+														            <th th:text="#{label.recipe.dynRow.quantity}" class="innerTableTh">Quantity</th>
+														            <th th:text="#{label.recipe.dynRow.measure}" class="innerTableTh">Measure</th>
+														            <th th:text="#{label.recipe.dynRow.ingredient}" class="innerTableTh">Ingredient</th>
+														        <!--    <th th:text="#{label.recipe.dynRow.checked}" class="innerTableTh">Checked</th>  -->
+														        </tr>
+														      </thead>
+														      <tbody>
+															    <tr th:each="row,rowStat : *{ingredients}">
+
+																  <td><input type='checkbox' class='case'/>
+															        <input type="hidden" th:field="*{ingredients[__${rowStat.index}__].id}" />
+															        <input type="hidden" th:field="*{ingredients[__${rowStat.index}__].recipe.id}" />
+															        <!-- <input type="hidden" th:field="*{ingredients[__${rowStat.index}__].recipeFk}" /> -->
+															      </td>
+															      
+															      <td  class='row_no' th:text="(${rowStat.count}+'.')">1</td>
+
+															      <td>
+															        <input type="text" size='3' class="text-field-dynamicrow form-control" th:field="*{ingredients[__${rowStat.index}__].amount}" />
+															      </td>
+
+															      <td>
+															        <select class="form-control-sm col-12 col-md-12 form-control" th:field="*{ingredients[__${rowStat.index}__].uom}">
+															          <option th:each="var : ${allUnitOfMeasuresList}" 
+															                  th:value="${var.id}" 
+															                  th:text="(#{label.enum.unitOfMeasure.+${var.description}})"
+															                  >Cup</option>
+															        </select>
+															      </td>
+
+															      <td>
+															        <input type="text" class="text-field-dynamicrow form-control" th:field="*{ingredients[__${rowStat.index}__].ingredientName}" />
+															      </td>
+
+															    </tr>
+															  </tbody>
+													      </table>
+													  </div>
+													      
+													  </div>
+												      <div class="btn-container">
+												        <button type="button" class='btn addmore btn-outline-info'  th:text="#{button.action.addMoreRows}">+ Add More</button>
+												        <button type="button" class='btn delete btn-outline-danger'  th:text="#{button.action.deleterows}" >- Delete</button>
+												      </div>
+									  
+									  			</div>
+									  		</div>
+								    </div>
+								</div>
+						    </div>
+        					
+        					<br>
+        					<br>
+        					<br>
+        					
                             <div class="col-md-12 col-lg-12">
 							    <div class="form-group has-feedback">
 							      <input
-							        th:replace="~{fragments/inputField :: input ('recipe.description', 'description', 'textarea')}" />
+							        th:replace="~{fragments/inputField :: input ('recipe.instructions', 'description', 'textarea')}" />
 							    </div>
 						    </div>
 
+        					<br>
+        
 						    </div>
 						    <div class="form-group">
 						      <div class="col-sm-offset-2 col-sm-10">
@@ -148,7 +255,121 @@
 						    </div>
 						    
 						  </form>
-						  </div>
+
+
+							<div class="col-md-12 col-lg-12">
+								<div class="form-group has-feedback">
+									<div class="card col-md-12 col-lg-12 zeroPadding">
+										<div class="card-header" th:text="#{label.recipe.addInfo}">Additional:</div>
+										<div class="card-body">
+	
+											<div>
+												<div>
+												  <!-- Nav tabs -->
+												  <ul class="nav nav-tabs mt-2" role="tablist">
+												    <li role="presentation" class="nav-item active"> <a href="#comments" class="nav-link active" aria-controls="home" role="tab" data-toggle="tab" th:text="#{label.recipe.commentsData}">Comments</a></li>
+												    <li role="presentation" class="nav-item" > <a href="#images" class="nav-link" aria-controls="profile" role="tab" data-toggle="tab" th:text="#{label.recipe.images}">Images</a></li>
+												    <li role="presentation" class="nav-item" ><a href="#addAdvices" class="nav-link" aria-controls="messages" role="tab" data-toggle="tab" th:text="#{label.recipe.addTips}">Additional tips</a></li>
+												  </ul>
+												  
+												  <!-- Tab panes -->
+												  <div class="tab-content tabsContent">												  
+												    <br/>
+												    <div role="tabpanel" class="tab-pane fade show active" id="comments" aria-labelledby="home-tab">
+													    <div id="commentDataAJAX" name="commentDataAJAX" >
+														    <div th:switch="${recipe?.comments}" class="container padding10 my-2">
+													        	<div class="form-group row zeroMargin">
+																	<div class=" col-md-12 col-lg-8 zeroPaddingLeft paddingRight20">
+																		<div class="col-md-12 border" style="overflow: auto; height: 350px; border-radius: 5px; border-color: #91d8e3 !important " >
+													                        <h2 th:case="null" th:text="#{label.list.noCommentsYet}"/>
+													                        <div th:case="*">
+													                            <table class="table table-comments table-borderless table-responsive-md table-main-style hover">
+													                                <thead>
+													                                    <tr>
+													                                    </tr>
+													                                </thead>
+													                                <tbody>
+													                                    <tr th:each="com, comStat:${recipe?.comments}">
+													                                        <td th:if="${comStat.odd}" >
+													                                        	<div class="message-text-ballon col-md-9 col-lg-9 table-striped-comments-odd" >
+													                                        	
+													                                        		<div class="col-md-12 col-lg-12 row zeroMargin" >
+														                                       			<div th:text="' [ ' + ${com.id} + ' ] : ' + ${com.text}"></div>
+														                                        	</div>
+													                                        		<div class="col-md-12 col-lg-12 row zeroMargin" style="font-style: oblique;" >
+													                                        	  		<div class="col-md-6 col-lg-6 zeroPadding" >
+													                                        	  			<span th:text="${com.username}"></span>
+													                                        			</div>
+													                                        	  		<div class="col-md-6 col-lg-6 textRight zeroPadding" >
+															                                        		<span th:text="${#dates.format(com.insertedDt, #messages.msg('date.timestamp.format.main') )}" ></span>
+													                                        			</div>
+													                                        		</div>
+													                                        	
+													                                        	</div>																				  
+																							</td>
+													                                        <td th:if="${comStat.even}">
+													                                        	<div class="row">
+														                                        	<div class="col-md-2 col-lg-2" >
+														                                        	  
+														                                        	</div>
+														                                        	<div class="message-text-ballon col-md-9 col-lg-9 table-striped-comments-even">
+														                                        		<div class="col-md-12 col-lg-12 row zeroMargin" >
+														                                        			<div th:text="' [ ' + ${com.id} + ' ] : ' + ${com.text}"></div>
+														                                        		</div>
+														                                        		<div class="col-md-12 col-lg-12 row zeroMargin" style="font-style: oblique;" >
+														                                        	  		<div class="col-md-6 col-lg-6 zeroPadding" >
+														                                        	  			<span th:text="${com.username}"></span>
+														                                        			</div>
+														                                        	  		<div class="col-md-6 col-lg-6 textRight zeroPadding" >
+																                                        		<span style="font-style: oblique;"  th:text="${#dates.format(com.insertedDt, #messages.msg('date.timestamp.format.main') )}" ></span>
+														                                        			</div>
+														                                        		</div>
+														                                        	</div>			
+													                                        	</div>																	  
+													                                        </td>
+													                                    </tr>
+													                                </tbody>
+													                            </table>
+													                        </div>
+													
+													                    </div>
+																		
+																		</div>
+																		<div class=" col-md-12 col-lg-4 zeroPadding">
+																			<textarea class="form-control" id="newCommentText" rows="7"	name="newCommentText" th:placeholder="#{label.recipe.newComment}" required="required"></textarea>
+																			<br/>
+																			<input class="form-control" id="newCommentUsername"	name="newCommentUsername" th:placeholder="#{label.recipe.newCommentUsername}" required="required"></input>
+																			<br/>
+																   		    <input type="hidden" id="newCommentRecipeId" name="newCommentRecipeId" th:value="${recipe.id}">
+																			
+												                            <div class="btn-container">
+																				<button type="button" onClick="addNewCommentOnClick()" class='btn addmore btn-outline-info'
+																					th:text="#{button.action.insertComment}">+ Insert Comment</button>
+																			</div>
+											                            </div>
+																    </div>
+															    
+															    </div>
+													    	</div>
+												    	</div>
+													    <div role="tabpanel" class="tab-pane fade" id="images">
+													    	aaa
+													    </div>
+													    <div role="tabpanel" class="tab-pane fade" id="addAdvices">
+													    	bbb
+													    </div>
+												  	</div>
+											    </div>
+											    <br/>
+										    </div>
+										</div>
+									</div>
+									
+									
+									
+								</div>
+							</div>
+						</div>
 					  </div>
                     </div>
                 </div>
@@ -166,6 +387,133 @@
         <br>
         <br>
         <br>
+
+	<div id="divUnitOfMeasures" style="display: none;">	
+	   		<select class="form-control-sm col-12 col-md-12 form-control" id="dropdownUnitOfMeasures" >
+	          <option th:each="var : ${allUnitOfMeasuresList}" 
+	                  th:value="${var.id}" 
+	                  th:text="(#{label.enum.unitOfMeasure.+${var.description}})"
+	                  >Cup
+	          </option>
+	        </select>
+	</div>
+        
+	<script>
+		var i=0;
+		var deleted=0;
+		$(".addmore").on('click',function(){
+		    addMoreFunc();
+		});
+
+/* 		<input type="text" class="text-field-dynamicrow form-control" id="ingQuantityList2" size="3" name="ingQuantityList[]" th:field="*{ingQuantityList}">
+		<input type="text" class="text-field-dynamicrow form-control" id="ingIngredientList1" name="ingIngredientList" value="">
+ */
+		function addMoreFunc() {
+		    var rowCount = $('.row_no').length + 1;
+		    var newRowId = rowCount+deleted;
+		    var data="<tbody><tr style='line-height: 1;'>";
+		    data+="<td><input type='checkbox' class='case'/></td>";
+		    data +=" <td> <span class='row_no'>"+rowCount+".</span> </td>";
+		    data +=" <td> <input type='text' class='text-field-dynamicrow form-control' id='ingredients"+(newRowId-1)+".amount' size='3' name='ingredients["+(newRowId-1)+"].amount'/> </td>";
+		    data +=" <td> <select class='form-control-sm col-12 col-md-12 form-control' id='ingredients"+(newRowId-1)+".uom' name='ingredients["+(newRowId-1)+"].uom' ><option value='0'>pick packager</option></select> </td> ";
+		    data +=" <td> <input type='text' class='text-field-dynamicrow form-control' id='ingredients"+(newRowId-1)+".ingredientName' name='ingredients["+(newRowId-1)+"].ingredientName'  /></td>";
+		    data +=" </tr></tbody>";
+		    // $('table').append(data);
+		    $("#tableDynRows").append(data);
+		    populateSelectBox(newRowId);
+		    onAddCheckboxRefresh();
+		    i++;
+		}
+/*
+ function addMoreFunc() {
+	    var rowCount = $('.row_no').length + 1;
+	    var data="<tbody><tr style='line-height: 1;'>";
+<!--		    data+="<td><input type='checkbox' class='case'/></td>";
+	    data +=" <td> <span class='row_no'>"+rowCount+".</span> </td>";
+-->
+	    data +=" <td> <input type='text' class='text-field-dynamicrow form-control' id='ingQuantityList"+i+"' size='3' name='ingQuantityList[]' th:field='*{ingQuantityList}' /> </td>";
+<!--		    data +=" <td> <select class='form-control-sm col-12 col-md-12 form-control' id='ingMeasureList"+i+"' name='ingMeasureList[]' th:field='*{ingMeasureList}' ><option value='0'>pick packager</option></select> </td> ";
+	    data +=" <td> <input type='text' class='text-field-dynamicrow form-control' id='ingIngredientList"+i+"' name='ingIngredientList[]' th:field='*{ingIngredientList}' /></td>";
+-->		    data +=" </tr></tbody>";
+	    $('table').append(data);
+	    //populateSelectBox(i);
+	    onAddCheckboxRefresh();
+	    i++;
+	}*/
+ 
+		
+	    // addMoreFunc();
+		
+		$(".delete").on('click', function() {
+		    $('.case:checkbox:checked').parents("tr").remove();
+			deleted=deleted+1;
+		    changeAllRowNo();
+		});
+
+		function changeAllRowNo() {
+		    $('.row_no').each((k,ele)=>{
+		        $(ele).html(k+1+'.')
+		    });
+		}
+
+		function populateSelectBox(i) {
+			var finalcel = document.getElementById('ingredients'+(i-1)+'.uom');
+			var copycel = document.getElementById('dropdownUnitOfMeasures').innerHTML;
+			// alert(copycel);
+			finalcel.innerHTML=copycel;
+		}
+
+		function onAddCheckboxRefresh(){
+			$('input[type=checkbox]').on("change",function(){
+			    // alert('aaa');
+			    var target = $(this).parent().find('input[type=hidden]').val();
+			    // alert('target:'+target);
+			    if(target == 0)
+			    {
+			        target = 1;
+			    }
+			    else
+			    {
+			        target = 0;
+			    }
+			    $(this).parent().find('input[type=hidden]').val(target);
+			});
+		}
+		
+		function addNewCommentOnClick() {
+			  //Prevent default submission of form
+			 //  e.preventDefault();
+			  
+			  var e = document.getElementById("newCommentText");
+			  var strCommentText = e.value;
+			  var e1 = document.getElementById("newCommentUsername");
+			  var strCommentUsername = e1.value;
+			  var e2 = document.getElementById("newCommentRecipeId");
+			  var newCommentRecipeId = e2.value;
+			  
+			  var json = {"recipeFk":newCommentRecipeId, "text":strCommentText, "username":strCommentUsername};
+
+			  alert("json:"+JSON.stringify(json));
+			  $.ajax({
+				 type: "POST",
+			     url : '/recipes/recipe/'+newCommentRecipeId+'/comment/new',
+			     //dataType: "json",
+			     //accepts: "text/plain",
+			     contentType: "application/json; charset=utf-8",
+			     data : JSON.stringify(json),
+			     success : function(res) {
+					$("#commentDataAJAX").html(res);
+			        // alert('success:'+res);
+			     },
+			     error :  function(res) {
+			         alert('error:'+res);
+			     } 
+			  });
+			}
+		
+		</script>
+		
+        
     </div>
 
 	<!-- 

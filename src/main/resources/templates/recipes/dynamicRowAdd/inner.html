@@ -1,0 +1,54 @@
+		function addMoreFunc() {
+		    var rowCount = $('.row_no').length + 1;
+		    var data="<tbody><tr style='line-height: 1;'>";
+<!--		    data+="<td><input type='checkbox' class='case'/></td>";
+		    data +=" <td> <span class='row_no'>"+rowCount+".</span> </td>";
+-->
+		    data +=" <td> <input type='text' class='text-field-dynamicrow form-control' id='ingQuantityList"+i+"' size='3' name='ingQuantityList[]' th:field='*{ingQuantityList}' /> </td>";
+<!--		    data +=" <td> <select class='form-control-sm col-12 col-md-12 form-control' id='ingMeasureList"+i+"' name='ingMeasureList[]' th:field='*{ingMeasureList}' ><option value='0'>pick packager</option></select> </td> ";
+		    data +=" <td> <input type='text' class='text-field-dynamicrow form-control' id='ingIngredientList"+i+"' name='ingIngredientList[]' th:field='*{ingIngredientList}' /></td>";
+-->		    data +=" </tr></tbody>";
+		    $('table').append(data);
+		    //populateSelectBox(i);
+		    onAddCheckboxRefresh();
+		    i++;
+		}
+
+<input type="text" class="text-field-dynamicrow form-control" id="ingIngredientList1" name="ingIngredientList" value="">
+<input type="text" class="text-field-dynamicrow form-control" id="ingQuantityList2"   name="ingQuantityList[]">
+
+<input type="text" class="text-field-dynamicrow form-control" id="ingQuantityList2" size="3" name="ingQuantityList[]" th:field="*{ingQuantityList}">
+<input type="text" class="text-field-dynamicrow form-control" id="ingIngredientList1" name="ingIngredientList" value="">
+
+<!--
+		function addMoreFunc(){
+		    var rowCount = $('.row_no').length + 1;
+		    var data="
+		      <tbody><tr><td><input type='checkbox' class='case'/></td>
+		    	    <td> <span class='row_no'>"+rowCount+".</span> </td>
+		            <td> <select class='form-control  col-12 col-md-12' id='element_name"+i+"' name='element_name[]' th:field='*{element_name}' ><option value='0'>select packager</option><option value='1'>select packager 1</option></option></select></td>   
+		            <td> <input type='text' id='element_value"+i+"' name='element_value[]'/> </td>
+		            <td> <p><input type='checkbox' /><input type='hidden' name='element_checked[]' value='0' /></p> </td>  
+		      </tr></tbody>";
+		    $('table').append(data);
+		    populateSelectBox(i);
+		    onAddCheckboxRefresh();
+		    i++;
+		}
+		-->
+
+		<!--		
+		function addMoreFunc(){
+				    var rowCount = $('.row_no').length + 1;
+				    var data="<tbody><tr style='line-height: 1;'>";
+				    data +=" <td><input type='checkbox' class='case'/></td><td><span class='row_no'>"+rowCount+".</span></td>";
+				    data +=" <td><input type='text' class='text-field-dynamicrow form-control' id='ing_quantity"+i+"' size='3' name='ing_quantity[]'/></td>";
+				    data +=" <td><select class='form-control-sm col-12 col-md-12 form-control' id='ing_measure"+i+"' name='ing_measure[]' th:field='*{ing_measure}' ></select></td> ";
+				    data +=" <td><input type='text' class='text-field-dynamicrow form-control' id='ing_ingredient"+i+"' name='ing_ingredient[]'/></td>";
+				    data +="</tr></tbody>";
+				    $('table').append(data);
+				    populateSelectBox(i);
+				    onAddCheckboxRefresh();
+				    i++;
+		}
+		-->

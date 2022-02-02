@@ -4,10 +4,6 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -20,50 +16,34 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Table(name = "category", schema = "recipes")
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"recipes"})
+@EqualsAndHashCode(exclude = { "recipes" })
 @Entity
 @Data
+@ToString(exclude = { "recipes" })
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Category extends BaseEntity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@NotNull
-	@Size(min = 5, max=250)
+	@Size(min = 5, max = 250)
 	private String description;
 
 	// @ManyToMany(mappedBy = "categories")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
 	private Set<Recipe> recipes;
 
-//	//public Long getId() {
-//	//	return id;
-//	// }
-//
-//	public void setId(Long id) {
-//		this.id = id;
-//	}
-//
-//	public String getDescription() {
-//		return description;
-//	}
-//
-//	public void setDescription(String description) {
-//		this.description = description;
-//	}
-//
-//	public Set<Recipe> getRecipes() {
-//		return recipes;
-//	}
-//
-//	public void setRecipes(Set<Recipe> recipes) {
-//		this.recipes = recipes;
-//	}
-
 	public String getLabel() {
 		return description;
 	}
+
 }

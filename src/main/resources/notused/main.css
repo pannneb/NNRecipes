@@ -120,6 +120,11 @@ html, body {
 	margin-left: 10px;
 }
 
+.zeroPadding{  
+	style="padding-left: 0px;   
+	padding-right: 0px;"
+}
+
 .right {
   position: absolute;
   right: 0px;

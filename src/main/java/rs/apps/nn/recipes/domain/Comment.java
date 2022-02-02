@@ -1,34 +1,42 @@
 package rs.apps.nn.recipes.domain;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@Table(name = "note", schema = "recipes")
+@Table(name = "comment", schema = "recipes")
 @Getter
 @Setter
 @EqualsAndHashCode(exclude = { "recipe" })
 @Entity
-public class Note {
+public class Comment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY /* , optional = false*/ )
+    @JoinColumn(name="recipeFk", referencedColumnName = "ID", nullable=true)
 	private Recipe recipe;
 
 	@Lob
 	private String text;
+
+	private Timestamp insertedDt;
+
+	private String username;
 
 	//	public Recipe getRecipe() {
 	//		return recipe;

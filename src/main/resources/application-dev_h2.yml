@@ -11,7 +11,7 @@ spring:
       path: /h2-console
   datasource:
     platform: H2
-    url: jdbc:h2:mem:asocdb;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL;INIT=CREATE SCHEMA IF NOT EXISTS recipes
+    url: jdbc:h2:mem:recdb;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL;INIT=CREATE SCHEMA IF NOT EXISTS recipes
     username: sa
     password:
     driverClassName: org.h2.Driver

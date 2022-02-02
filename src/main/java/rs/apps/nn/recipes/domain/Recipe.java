@@ -1,6 +1,6 @@
 package rs.apps.nn.recipes.domain;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,28 +9,21 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 @Table(name = "recipe", schema = "recipes")
@@ -41,185 +34,65 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @AllArgsConstructor
 @RequiredArgsConstructor
+@ToString
 // @NoArgsConstructor
-public class Recipe extends BaseEntity{
+public class Recipe extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	@NotNull
-	@Size(min = 5, max=250)
+	@Size(min = 5, max = 250)
 	private String title;
 	private String description;
 	private Integer prepTime;
 	private Integer cookTime;
 //	private Integer servTime;
-	private Integer servings;
+	private Integer portions;
 	@NotNull
 	private String source;
 	private String url;
 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+	private List<Ingredient> ingredients;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+	private Set<Comment> comments;
+
+	@Transient
+	private RecipeIngredientsData recipeIngredientsData;
+
 	@Lob
 	private String directions;
 
-//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-//	private Set<Ingredient> ingredients = new HashSet<Ingredient>();
-//
-//	// Za cuvanje slike
-//	@Lob
-//	private Byte[] image;
-//
+	//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+	//	private Set<Ingredient> ingredients = new HashSet<Ingredient>();
+	//
+	//	// Za cuvanje slike
+	//	@Lob
+	//	private Byte[] image;
+	//
 	/**
 	 * // ORDINAL - ide u bazu kao 1, 2, 3 (problem ako se doda novi tip, poremete
 	 * se identi) // STRING - ide u bazu kao text
 	 */
 	@Enumerated(value = EnumType.STRING)
-	private Difficulty difficulty;
+	@Column(name = "difficulty")
+	private EnumDifficulty enumDifficulty;
 
 	// @OneToOne(cascade = CascadeType.ALL)
 	// @ManyToMany
-	// @JoinTable(schema="recipes", name = "recipe_note", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "note_id"))
-//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipes")
-//	private Set<Note> notes = new HashSet<Note>();
+	// @JoinTable(schema="recipes", name = "recipe_note", joinColumns =
+	// @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name =
+	// "note_id"))
+	//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipes")
+	//	private Set<Note> notes = new HashSet<Note>();
+	
+	//	@Column
+	// 	private Long categoryFk;
 
-//	@Column
-// 	private Long categoryFk;
-
-    // @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY /* , optional = false*/ )
-    @JoinColumn(name="categoryFk", referencedColumnName = "ID", nullable=true)
-    // @JoinColumn(name="categoryFk", referencedColumnName = "ID", nullable=false, insertable = false,  updatable=false)
-    private Category category;
-    
-//	@ManyToMany
-//	@JoinTable(schema="recipes", name = "recipe_category", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-//	private Set<Category> categories = new HashSet<Category>();
-
-	// public String getDescription() {
-	// return description;
-	// }
-	//
-	// public void setDescription(String description) {
-	// this.description = description;
-	// }
-	//
-	// public Integer getPrepTime() {
-	// return prepTime;
-	// }
-	//
-	// public void setPrepTime(Integer prepTime) {
-	// this.prepTime = prepTime;
-	// }
-	//
-	// public Integer getCookTime() {
-	// return cookTime;
-	// }
-	//
-	// public void setCookTime(Integer cookTime) {
-	// this.cookTime = cookTime;
-	// }
-	//
-	// public Integer getServTime() {
-	// return servTime;
-	// }
-	//
-	// public void setServTime(Integer servTime) {
-	// this.servTime = servTime;
-	// }
-	//
-	// public String getSource() {
-	// return source;
-	// }
-	//
-	// public void setSource(String source) {
-	// this.source = source;
-	// }
-	//
-	// public String getUrl() {
-	// return url;
-	// }
-	//
-	// public void setUrl(String url) {
-	// this.url = url;
-	// }
-	//
-	// public String getDirection() {
-	// return direction;
-	// }
-	//
-	// public void setDirection(String direction) {
-	// this.direction = direction;
-	// }
-	//
-	// public Byte[] getImage() {
-	// return image;
-	// }
-	//
-	// public void setImage(Byte[] image) {
-	// this.image = image;
-	// }
-	//
-	// public Notes getNotes() {
-	// return notes;
-	// }
-	//
-	// public void setNotes(Notes notes) {
-	// this.notes = notes;
-	// notes.setRecipe(this);
-	// }
-
-//	public Recipe addIngredient(Ingredient i) {
-//		log.info("Info Recipe, id: {} desc: {}, added Ingredient: {} ", this.getId(), this.getDescription(),
-//				i.getDescription());
-//		log.debug("Debug Recipe, id: {} desc: {}, added Ingredient: {} ", this.getId(), this.getDescription(),
-//				i.getDescription());
-//		i.setRecipe(this);
-//		this.ingredients.add(i);
-//		return this;
-//	}
-
-	// @Override
-	// public String toString() {
-	// StringBuilder builder = new StringBuilder();
-	// builder.append("Recipe [description=").append(description).append(",
-	// prepTime=").append(prepTime)
-	// .append(", cookTime=").append(cookTime).append(",
-	// servTime=").append(servTime).append(", source=")
-	// .append(source).append(", url=").append(url).append(",
-	// direction=").append(direction).append(", image=")
-	// .append(Arrays.toString(image)).append(", notes=").append(notes).append("]");
-	// return builder.toString();
-	// }
-	//
-	// public Long getId() {
-	// return id;
-	// }
-	//
-	// public void setId(Long id) {
-	// this.id = id;
-	// }
-	//
-	// public Set<Ingredient> getIngredients() {
-	// return ingredients;
-	// }
-	//
-	// public void setIngredients(Set<Ingredient> ingredients) {
-	// this.ingredients = ingredients;
-	// }
-	//
-	// public Difficulty getDifficulty() {
-	// return difficulty;
-	// }
-	//
-	// public void setDifficulty(Difficulty difficulty) {
-	// this.difficulty = difficulty;
-	// }
-	//
-	// public Set<Category> getCategories() {
-	// return categories;
-	// }
-	//
-	// public void setCategories(Set<Category> categories) {
-	// this.categories = categories;
-	// }
+	// @JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY /* , optional = false */ )
+	@JoinColumn(name = "categoryFk", referencedColumnName = "ID", nullable = true)
+	private Category category;
 
 }

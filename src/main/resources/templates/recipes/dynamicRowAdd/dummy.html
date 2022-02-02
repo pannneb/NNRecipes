@@ -1,0 +1,113 @@
+
+							<div class="col-md-12 col-lg-12">
+								<div class="form-group has-feedback">
+									<div class="card col-md-12 col-lg-12 zeroPadding">
+										<div class="card-header" th:text="#{label.recipe.comments}">Comments:</div>
+										<div class="card-body">
+	
+											<div>
+												<div>
+												  <!-- Nav tabs -->
+												  <ul class="nav nav-tabs mt-2" role="tablist">
+												    <li role="presentation" class="nav-item active"><a href="#home" class="nav-link active" aria-controls="home" role="tab" data-toggle="tab" th:text="#{label.recipe.commentsData}">Comments</a></li>
+												    <li role="presentation" class="nav-item" ><a href="#profile" class="nav-link" aria-controls="profile" role="tab" data-toggle="tab" th:text="#{label.recipe.images}">Images</a></li>
+												    <li role="presentation" class="nav-item" ><a href="#messages" class="nav-link" aria-controls="messages" role="tab" data-toggle="tab" th:text="#{label.recipe.addAdvices}">Messages</a></li>
+												  </ul>
+												  <!-- Tab panes -->
+												  <div class="tab-content">												  
+												    <br/>
+												    <div role="tabpanel" class="tab-pane show fade active" id="home">ccc</div>
+												    <div role="tabpanel" class="tab-pane fade" id="profile">aaa</div>
+												    <div role="tabpanel" class="tab-pane fade" id="messages">bbb</div>
+												  </div>
+											    </div>
+											    <br/>
+										    </div>
+											
+											<div class="btn-container">
+												<button type="button" class='btn addmore btn-outline-info'
+													th:text="#{button.action.addMoreRows}">+ Add
+													More</button>
+												<button type="button"
+													class='btn delete btn-outline-danger'
+													th:text="#{button.action.deleterows}">- Delete</button>
+											</div>
+	
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+
+
+
+
+
+
+<div class="form-group row zeroMargin">
+															<div class=" col-md-12 col-lg-8 zeroPaddingLeft paddingRight20">
+															<div class="col-md-12 border" style="overflow: auto; height: 350px; border-radius: 5px; border-color: #91d8e3 !important " >
+										                        <h2 th:case="null" th:text="#{label.list.noCommentsYet}"/>
+										                        <div th:case="*">
+										                            <table class="table table-comments table-borderless table-responsive-md table-main-style hover">
+										                                <thead>
+										                                    <tr>
+										                                    </tr>
+										                                </thead>
+										                                <tbody>
+										                                    <tr th:each="com, comStat:${recipe?.comments}">
+										                                        <td th:if="${comStat.odd}" >
+										                                        	<div class="message-text-ballon col-md-9 col-lg-9 table-striped-comments-odd" >
+										                                        	
+										                                        		<div class="col-md-12 col-lg-12 row zeroMargin" >
+											                                       			<div th:text="' [ ' + ${com.id} + ' ] : ' + ${com.text}"></div>
+											                                        	</div>
+										                                        		<div class="col-md-12 col-lg-12 row zeroMargin" style="font-style: oblique;" >
+										                                        	  		<div class="col-md-6 col-lg-6 zeroPadding" >
+										                                        	  			<span th:text="${com.username}"></span>
+										                                        			</div>
+										                                        	  		<div class="col-md-6 col-lg-6 textRight zeroPadding" >
+												                                        		<span th:text="${#dates.format(com.insertedDt, #messages.msg('date.timestamp.format.main') )}" ></span>
+										                                        			</div>
+										                                        		</div>
+										                                        	
+										                                        	</div>																				  
+																				</td>
+										                                        <td th:if="${comStat.even}">
+										                                        	<div class="row">
+											                                        	<div class="col-md-2 col-lg-2" >
+											                                        	  
+											                                        	</div>
+											                                        	<div class="message-text-ballon col-md-9 col-lg-9 table-striped-comments-even">
+											                                        		<div class="col-md-12 col-lg-12 row zeroMargin" >
+											                                        			<div th:text="' [ ' + ${com.id} + ' ] : ' + ${com.text}"></div>
+											                                        		</div>
+											                                        		<div class="col-md-12 col-lg-12 row zeroMargin" style="font-style: oblique;" >
+											                                        	  		<div class="col-md-6 col-lg-6 zeroPadding" >
+											                                        	  			<span th:text="${com.username}"></span>
+											                                        			</div>
+											                                        	  		<div class="col-md-6 col-lg-6 textRight zeroPadding" >
+													                                        		<span style="font-style: oblique;"  th:text="${#dates.format(com.insertedDt, #messages.msg('date.timestamp.format.main') )}" ></span>
+											                                        			</div>
+											                                        		</div>
+											                                        	</div>			
+										                                        	</div>																	  
+										                                        </td>
+										                                    </tr>
+										                                </tbody>
+										                            </table>
+										                        </div>
+										
+										                    </div>
+															
+															</div>
+															<div class=" col-md-12 col-lg-4 zeroPadding">
+																<textarea class="form-control" id="newComment" rows="7"	name="newComment" th:placeholder="#{label.recipe.newComment}" required="required"></textarea>
+																<br/>
+									                            <div class="btn-container">
+																	<button type="button" class='btn addmore btn-outline-info'
+																		th:text="#{button.action.insertComment}">+ Insert Comment</button>
+																</div>
+								                            </div>
+													    </div>

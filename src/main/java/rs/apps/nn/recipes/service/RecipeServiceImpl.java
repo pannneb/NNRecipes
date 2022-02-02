@@ -5,17 +5,25 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
+import rs.apps.nn.recipes.controller.RecipeController;
+import rs.apps.nn.recipes.domain.Ingredient;
 import rs.apps.nn.recipes.domain.Recipe;
 import rs.apps.nn.recipes.exception.ValidateException;
+import rs.apps.nn.recipes.repository.IngredientRepository;
 import rs.apps.nn.recipes.repository.RecipeRepository;
 
 @Service
+@Slf4j
 public class RecipeServiceImpl implements RecipeService {
 
 	private RecipeRepository recipeRepository;
+	private IngredientRepository ingredientRepository;
 
-	public RecipeServiceImpl(RecipeRepository recipeRepository) {
+	public RecipeServiceImpl(RecipeRepository recipeRepository, IngredientRepository ingredientRepository) {
 		this.recipeRepository = recipeRepository;
+		this.ingredientRepository = ingredientRepository;
 	}
 
 	@Override
@@ -63,7 +71,42 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Override
 	public Recipe save(Recipe object) {
-		return recipeRepository.save(object);
+		List<Ingredient> lst = ingredientRepository.findAllByRecipeId(object.getId());
+		
+		lst.stream().forEach(i -> 
+		{
+			if (!object.getIngredients().contains(i)) {					
+				ingredientRepository.delete(i);
+			}
+		}	
+		); 
+		
+		object.getIngredients().stream().forEach(i -> 
+		{
+			if (i.getId() == null) {
+				i.setRecipe(object);
+			}
+		}	
+		); 
+		Recipe r = recipeRepository.save(object);
+//		List<Ingredient> lst = ingredientRepository.findAllByRecipeId(object.getId());
+//		r.getIngredients().stream().forEach(i -> 
+//			{
+//				if (i.getId() == null) {
+//					i.setRecipe(object);
+//					log.info("Recipe.save -> ing:{}, ing.rec.id:{}", i.getIngredientName(),
+//						i.getRecipe() == null ? "recipe==null" : i.getRecipe().getId());
+//					ingredientRepository.save(i);
+//				} else if (lst.contains(i)) {					
+//					ingredientRepository.save(i);
+//				} else {
+//					ingredientRepository.delete(i);
+//				}
+//			}	
+//		); 
+
+		return r;// recipeRepository.getOne(object.getId());
+
 	}
 
 	@Override

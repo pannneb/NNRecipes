@@ -34,8 +34,8 @@ public class CategoryServiceImpl implements CategoryService {
 //		return categoryRepository.findAll();
 //	}
 
-	@Override
-	public Category createOrUpdateCategory(Category entity) throws ValidateException {
+//	@Override
+//	public Category createOrUpdateCategory(Category entity) throws ValidateException {
 //		// Optional<Word> word = wordRepository.findById(entity.getId());
 //		Optional<Category> category = categoryRepository.findByName(entity.getName());
 //
@@ -55,8 +55,8 @@ public class CategoryServiceImpl implements CategoryService {
 //			entity = categoryRepository.save(entity);
 //			return entity;
 //		}
-		return null;
-	}
+//		return null;
+//	}
 
 	@Override
 	public List<Category> findAllByDescriptionLike(String name) {

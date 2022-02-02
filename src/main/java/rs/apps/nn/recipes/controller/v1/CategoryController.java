@@ -32,21 +32,21 @@ public class CategoryController {
 		return categoryService.findAll();
 	}
 
-	@PostMapping(value = "/new", consumes = "application/json", produces = "application/json")
-	@ResponseBody
-	public ResponseData createCategory(@RequestBody Category cat) {
-		ResponseData rd = new ResponseData();
-		try {
-			categoryService.createOrUpdateCategory(cat);
-			rd.setStatus(EnumResponseStatus.RESP_OK.getId());
-		} catch (ValidateException e) {
-			rd.setStatus(e.getValExcCode());
-			rd.setDescription(e.getValExcDesc());
-		} catch (Exception e) {
-			rd.setStatus(EnumResponseStatus.RESP_GENERAL_ERR.getId());
-			rd.setDescription(e.getMessage());
-		}
-		return rd;
-	}
+//	@PostMapping(value = "/new", consumes = "application/json", produces = "application/json")
+//	@ResponseBody
+//	public ResponseData createCategory(@RequestBody Category cat) {
+//		ResponseData rd = new ResponseData();
+//		try {
+//			categoryService.createOrUpdateCategory(cat);
+//			rd.setStatus(EnumResponseStatus.RESP_OK.getId());
+//		} catch (ValidateException e) {
+//			rd.setStatus(e.getValExcCode());
+//			rd.setDescription(e.getValExcDesc());
+//		} catch (Exception e) {
+//			rd.setStatus(EnumResponseStatus.RESP_GENERAL_ERR.getId());
+//			rd.setDescription(e.getMessage());
+//		}
+//		return rd;
+//	}
 
 }

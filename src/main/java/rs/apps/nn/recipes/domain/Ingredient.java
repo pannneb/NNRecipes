@@ -2,11 +2,15 @@ package rs.apps.nn.recipes.domain;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -14,95 +18,63 @@ import javax.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-//@Table(name = "ingredient", schema = "recipes")
-//@Getter
-//@Setter
-//@EqualsAndHashCode(exclude = { "recipe" })
-//@Entity
+@Table(name = "ingredient", schema = "recipes")
+@Getter
+@Setter
+@EqualsAndHashCode (exclude = { "recipe" })
+@Entity
+@ToString(exclude = { "recipe" })
 public class Ingredient {
 
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String description;
+	// private Long recipeFk;
 
+	private String ingredientName;
+	
 	private BigDecimal amount;
 
 //	@OneToOne(fetch = FetchType.EAGER)
-	private UnitOfMeasure uom;
+	@Enumerated(value = EnumType.STRING)
+	@Column(name="unitOfMeasure")
+	private EnumUnitOfMeasure enumUnitOfMeasure;
+ 
+	private String uom;
 
-//	@ManyToOne
-	private Recipe recipe;
+	@ManyToOne(fetch = FetchType.LAZY /* , optional = false*/ )
+    @JoinColumn(name="RECIPE_FK", referencedColumnName = "ID", nullable=true, unique = false, insertable = false, updatable = false)
+   	private Recipe recipe;
 
+	@Column(name = "RECIPE_FK", nullable = true, unique = false)
+	private Long recipeFk;
+
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "APP_PANEL_FK", referencedColumnName = "ID", nullable = true, unique = false, insertable = false, updatable = false)
+//	private AppPanel appPanel;
+
+	
 	public Ingredient() {
 		super();
 	}
 
-	public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom) {
+	public Ingredient(String ingredientName, BigDecimal amount, EnumUnitOfMeasure enumUnitOfMeasure, String uom) {
 		super();
-		this.description = description;
+		this.ingredientName = ingredientName;
 		this.amount = amount;
+		this.enumUnitOfMeasure = enumUnitOfMeasure;
 		this.uom = uom;
 	}
 
-	public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom, Recipe recipe) {
-		super();
-		this.description = description;
-		this.amount = amount;
-		this.uom = uom;
-		this.recipe = recipe;
-	}
-
-	// public String getDescription() {
-	// return description;
-	// }
-	//
-	// public void setDescription(String description) {
-	// this.description = description;
-	// }
-	//
-	// public BigDecimal getAmount() {
-	// return amount;
-	// }
-	//
-	// public void setAmount(BigDecimal amount) {
-	// this.amount = amount;
-	// }
-	//
-	// public Recipe getRecipe() {
-	// return recipe;
-	// }
-	//
-	// public void setRecipe(Recipe recipe) {
-	// this.recipe = recipe;
-	// }
-	//
-	// public Long getId() {
-	// return id;
-	// }
-	//
-	// public void setId(Long id) {
-	// this.id = id;
-	// }
-	//
-	// @Override
-	// public String toString() {
-	// StringBuilder builder = new StringBuilder();
-	// builder.append("Ingredient [description=").append(description).append(",
-	// amount=").append(amount)
-	// .append(", recipe=").append(recipe).append(", id=").append(id).append(",
-	// uom=").append(uom).append("]");
-	// return builder.toString();
-	// }
-	//
-	// public UnitOfMeasure getUom() {
-	// return uom;
-	// }
-	//
-	// public void setUom(UnitOfMeasure uom) {
-	// this.uom = uom;
-	// }
+//	public Ingredient(String description, BigDecimal amount, EnumUnitOfMeasure uom, Recipe recipe) {
+//		super();
+//		this.description = description;
+//		this.amount = amount;
+//		this.uom = uom;
+//		this.recipe = recipe;
+//	}
 
 }
