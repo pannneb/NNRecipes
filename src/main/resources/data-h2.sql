@@ -100,6 +100,15 @@ INSERT INTO RECIPES.INGREDIENT(ID,AMOUNT,ingredient_Name,unit_Of_Measure,RECIPE_
 INSERT INTO RECIPES.INGREDIENT(ID,AMOUNT,ingredient_Name,unit_Of_Measure,RECIPE_FK)VALUES(-124,3,'Jaja','EACH',-133);
 INSERT INTO RECIPES.INGREDIENT(ID,AMOUNT,ingredient_Name,unit_Of_Measure,RECIPE_FK)VALUES(-125,1,'Ulje','TEASPOON',-133);
 
+INSERT INTO RECIPES.TAG(ID,VALUE) VALUES (-111,'breakfast');
+INSERT INTO RECIPES.TAG(ID,VALUE) VALUES (-112,'lunch');
+INSERT INTO RECIPES.TAG(ID,VALUE) VALUES (-113,'dinner');
+INSERT INTO RECIPES.TAG(ID,VALUE) VALUES (-114,'main');
+INSERT INTO RECIPES.TAG(ID,VALUE) VALUES (-115,'brunch');
+
+INSERT INTO RECIPES.RECIPES_TAGS_MAP(RECIPE_FK,TAG_FK) VALUES (-133 , -111 );
+INSERT INTO RECIPES.RECIPES_TAGS_MAP(RECIPE_FK,TAG_FK) VALUES ( -133 , -113 );
+INSERT INTO RECIPES.RECIPES_TAGS_MAP(RECIPE_FK,TAG_FK) VALUES ( -133 , -114 );
 
 INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
   VALUES (-1, 'Very tasteful dish!', -133, 'marko', current_timestamp);
@@ -141,7 +150,15 @@ INSERT INTO RECIPES.UNIT_OF_MEASURE(ID,description)VALUES(-5,'PINC');
 INSERT INTO RECIPES.UNIT_OF_MEASURE(ID,description)VALUES(-6,'OUNCE');
 INSERT INTO RECIPES.UNIT_OF_MEASURE(ID,description)VALUES(-7,'DASH');
 INSERT INTO RECIPES.UNIT_OF_MEASURE(ID,description)VALUES(-8,'PINT');
+INSERT INTO RECIPES.USERS (USER_ID, user_name,password,email, name, last_name, role,enabled)
+VALUES (-1,'user',
+'$2a$10$XptfskLsT1l/bRTLRiiCgejHqOpgXFreUnNUa35gJdCr2v2QbVFzu','aaa@aaa.com','Marko', 'Markovic',
+'ROLE_USER', 1);
 
+INSERT INTO RECIPES.USERS (USER_ID, user_name,password,email, name, last_name, role,enabled)
+VALUES (-2,'admin',
+'$2a$10$zxvEq8XzYEYtNjbkRsJEbukHeRx3XS6MDXHMu8cNuNsRfZJWwswDy','aaa@aaa.com','Marko', 'Markovic',
+'ROLE_ADMIN', 1);
 --INSERT INTO asocijacije.category (id, description, name) VALUES (-1, 'Dance', 'Dance description');
 --INSERT INTO asocijacije.category (id, description, name) VALUES (-2, 'Animals', 'Animals description');
 --INSERT INTO asocijacije.category (id, description, name) VALUES (-3, 'Music', 'Music description');

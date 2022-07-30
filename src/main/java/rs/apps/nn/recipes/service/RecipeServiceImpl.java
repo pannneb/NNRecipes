@@ -81,13 +81,15 @@ public class RecipeServiceImpl implements RecipeService {
 		}	
 		); 
 		
-		object.getIngredients().stream().forEach(i -> 
-		{
-			if (i.getId() == null) {
-				i.setRecipe(object);
-			}
-		}	
-		); 
+		if (object.getIngredients()!=null) {
+			object.getIngredients().stream().forEach(i -> 
+			{
+				if (i.getId() == null) {
+					i.setRecipe(object);
+				}
+			}	
+			); 
+		}
 		Recipe r = recipeRepository.save(object);
 //		List<Ingredient> lst = ingredientRepository.findAllByRecipeId(object.getId());
 //		r.getIngredients().stream().forEach(i -> 

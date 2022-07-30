@@ -1,0 +1,105 @@
+server:
+  servlet:
+    context-path: /recipes
+  port: 8081
+#  context-path: /guessme   deprecated
+
+
+#spring:
+#  datasource:
+#  jpa:
+#    hibernate: 
+#      ddl-auto: update
+
+
+#driver=com.mysql.cj.jdbc.Driver
+#url=jdbc:mysql://ec2-34-220-115-146.us-west-2.compute.amazonaws.com:3306/recipes
+#username=nnuser
+#password=nUserPass1!
+#outputChangeLogFile=src/main/resources/liquibase-outputChangeLogOut.xml
+#changeLogFile=src/main/resources/liquibase-outputChangeLog.xml
+#liquibaseSchemaName=recipes
+#currentSchema=recipes
+#defaultSchema=recipes
+
+spring:
+  h2:
+    console:
+      enabled: false
+      path: /h2-console
+  datasource:
+    url: jdbc:mysql://ec2-34-220-115-146.us-west-2.compute.amazonaws.com:3306/recipes?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: nnuser
+    password: nUserPass1!
+    platform: mysql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+    enabled: true
+#    outputChangeLogFile: src/main/resources/liquibase-outputChangeLog.xml
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    #database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      # validate: validate the schema, makes no changes to the database.
+      # update: update the schema.
+      # create: creates the schema, destroying previous data.
+      # create-drop: drop the schema when the SessionFactory is closed explicitly, typically when the application is stopped.
+      # none: does nothing with the schema, makes no changes to the database
+    properties:
+      hibernate:
+        format_sql: true
+        hbm2ddl:
+          delimiter: ;
+      javax:
+        persistence:
+          schema-generation:
+            drop-source: metadata
+            create-source: metadata
+            create-database-schemas: true
+            scripts:
+              action: none
+              # none – doesn't generate any DDL commands
+              # create – generates only database create commands
+              # drop – generates only database drop commands
+              # drop-and-create – generates database drop commands followed by create commands
+              drop-target: np_database_create.sql
+              create-target: np_database_create.sql
+            database:
+              action: none
+              # none - No schema creation or deletion will take place.
+              # create - The provider will create the database artifacts on application deployment. The artifacts will remain unchanged after application redeployment.
+              # drop-and-create - Any artifacts in the database will be deleted, and the provider will create the database artifacts on deployment.
+              # drop - Any artifacts in the database will be deleted on application deployment.
+            
+          #validation:
+          #  mode: auto
+  messages:
+    basename: messages/messages
+
+#      action: none #drop-and-create
+#      ddl-auto: validate
+
+logging:
+  level:
+#     root: INFO
+    rs:
+      apps:
+        nn:
+          asocijacije: DEBUG
+          recipes: DEBUG
+    liquibase: DEBUG
+#  pattern:
+#    console: '%d{"yyyy/MM/dd HH:mm:ss,SSS"} [%p] [%t] %M\(%F:%L\) - %msg%n'
+
+#actuator start
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: "conditions,configprops"
+#actuator end
+        

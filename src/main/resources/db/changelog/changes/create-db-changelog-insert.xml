@@ -1,0 +1,596 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <property name="now" value="sysdate" dbms="oracle"/>
+  	<property name="now" value="now()" dbms="mysql"/>
+  	<property name="now" value="now()" dbms="postgresql"/>
+	<!-- <property name="now" value="UNIX_TIMESTAMP()" dbms="mysql"/> -->
+
+	<!--  
+	INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source)
+	  VALUES (-130, 'gulas', 'www.aaa.111', 'This is description for first recipe record', 25, 75, 4, 'Source of first recipe record');
+	INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source)
+	  VALUES (-131, 'pizza', 'www.2222222.ccc', 'The best pizza recipe I have ever seen.', 55, 5, 8, 'I have heared for this recept from come Italian');
+	INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source)
+	  VALUES (-133, 'tortilja sa prelivom', 'www.333.aaa', 'Another great recept.', 5, 115, 11, 'This is recept seen on TV show');
+	-->
+    <changeSet author="Nebojsa (generated)" id="20220724_INS-1">
+        <insert tableName="recipe">
+	        <column name="id" valueNumeric="-130"/>
+	        <column name="title" value="gulas"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="25"/>
+	        <column name="cook_time" valueNumeric="75"/>
+	        <column name="portions" valueNumeric="4"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-131"/>
+	        <column name="title" value="pizza"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="5"/>
+	        <column name="cook_time" valueNumeric="115"/>
+	        <column name="portions" valueNumeric="7"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-133"/>
+	        <column name="title" value="tortilja sa prelivom"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-112"/>
+	        <column name="title" value="lazanje"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-113"/>
+	        <column name="title" value="pasulj"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-114"/>
+	        <column name="title" value="tortilja sa prelivom 4"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-115"/>
+	        <column name="title" value="tortilja sa prelivom 5"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-116"/>
+	        <column name="title" value="tortilja sa prelivom 6"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-117"/>
+	        <column name="title" value="tortilja sa prelivom 7"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-118"/>
+	        <column name="title" value="tortilja sa prelivom 8"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-119"/>
+	        <column name="title" value="tortilja sa prelivom 9"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-120"/>
+	        <column name="title" value="tortilja sa prelivom 10"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-121"/>
+	        <column name="title" value="tortilja sa prelivom 11"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-122"/>
+	        <column name="title" value="tortilja sa prelivom 12"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-123"/>
+	        <column name="title" value="tortilja sa prelivom 13"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-124"/>
+	        <column name="title" value="tortilja sa prelivom 14"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-125"/>
+	        <column name="title" value="tortilja sa prelivom 15"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-126"/>
+	        <column name="title" value="tortilja sa prelivom 16"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-127"/>
+	        <column name="title" value="tortilja sa prelivom 17"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-128"/>
+	        <column name="title" value="tortilja sa prelivom 18"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-129"/>
+	        <column name="title" value="tortilja sa prelivom 19"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-155"/>
+	        <column name="title" value="tortilja sa prelivom 20"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+	    <insert tableName="recipe">
+	        <column name="id" valueNumeric="-157"/>
+	        <column name="title" value="tortilja sa prelivom 21"/>
+	        <column name="url" value="www.aaa.com"/>
+	        <column name="description" value="This is description for first recipe record"/>
+	        <column name="prep_time" valueNumeric="21"/>
+	        <column name="cook_time" valueNumeric="15"/>
+	        <column name="portions" valueNumeric="11"/>
+	        <column name="source" value="Source of first recipe record"/>
+	    </insert>
+    </changeSet>
+    
+    <changeSet author="Nebojsa (generated)" id="20220724_INS-2">
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1201"/>
+	        <column name="description" value="Breakfast"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1202"/>
+	        <column name="description" value="Lunch"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1033"/>
+	        <column name="description" value="Deserts"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1102"/>
+	        <column name="description" value="Entree"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1114"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1115"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1116"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1117"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1118"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1119"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1120"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1121"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1122"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1123"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1124"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1125"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1126"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1127"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1128"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1129"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+        <insert tableName="category">
+	        <column name="id" valueNumeric="-1130"/>
+	        <column name="description" value="Fine dining"/>
+	    </insert>
+    </changeSet>
+    
+    <changeSet author="Nebojsa (generated)" id="20220724_INS-3">
+        <insert tableName="ingredient">
+	        <column name="id" valueNumeric="-123"/>
+	        <column name="AMOUNT" valueNumeric="1123"/>
+	        <column name="ingredient_Name" value="Brasno"/>
+	        <column name="uom" valueNumeric="-5"/>
+	        <column name="RECIPE_FK" valueNumeric="-133"/>
+	    </insert>
+        <insert tableName="ingredient">
+	        <column name="id" valueNumeric="-124"/>
+	        <column name="AMOUNT" valueNumeric="3"/>
+	        <column name="ingredient_Name" value="Jaja"/>
+	        <column name="uom" valueNumeric="-3"/>
+	        <column name="RECIPE_FK" valueNumeric="-133"/>
+	    </insert>
+        <insert tableName="ingredient">
+	        <column name="id" valueNumeric="-125"/>
+	        <column name="AMOUNT" valueNumeric="1"/>
+	        <column name="ingredient_Name" value="Ulje"/>
+	        <column name="uom" valueNumeric="-7"/>
+	        <column name="RECIPE_FK" valueNumeric="-133"/>
+	    </insert>
+    </changeSet>
+    
+	 <!--    
+	INSERT INTO RECIPES.TAG(ID,VALUE) VALUES (-111,'breakfast');
+	INSERT INTO RECIPES.TAG(ID,VALUE) VALUES (-112,'lunch');
+	INSERT INTO RECIPES.TAG(ID,VALUE) VALUES (-113,'dinner');
+	INSERT INTO RECIPES.TAG(ID,VALUE) VALUES (-114,'main');
+	INSERT INTO RECIPES.TAG(ID,VALUE) VALUES (-115,'brunch');
+     -->
+     <changeSet author="Nebojsa (generated)" id="20220724_INS-4">
+        <insert tableName="tag">
+	        <column name="id" valueNumeric="-111"/>
+	        <column name="VALUE" value="breakfast"/>
+	    </insert>
+	    <insert tableName="tag">
+	        <column name="id" valueNumeric="-112"/>
+	        <column name="VALUE" value="lunch"/>
+	    </insert>
+	    <insert tableName="tag">
+	        <column name="id" valueNumeric="-113"/>
+	        <column name="VALUE" value="dinner"/>
+	    </insert>
+	    <insert tableName="tag">
+	        <column name="id" valueNumeric="-114"/>
+	        <column name="VALUE" value="main"/>
+	    </insert>
+	    <insert tableName="tag">
+	        <column name="id" valueNumeric="-115"/>
+	        <column name="VALUE" value="brunch"/>
+	    </insert>
+    </changeSet>
+    
+    <!-- 
+	INSERT INTO RECIPES.RECIPES_TAGS_MAP(RECIPE_FK,TAG_FK) VALUES (-133 , -111 );
+	INSERT INTO RECIPES.RECIPES_TAGS_MAP(RECIPE_FK,TAG_FK) VALUES ( -133 , -113 );
+	INSERT INTO RECIPES.RECIPES_TAGS_MAP(RECIPE_FK,TAG_FK) VALUES ( -133 , -114 );
+    -->
+    <changeSet author="Nebojsa (generated)" id="20220724_INS-5">
+        <insert tableName="recipes_tags_map">
+	        <column name="recipe_fk" valueNumeric="-133"/>
+	        <column name="tag_fk" valueNumeric="-111"/>
+	    </insert>
+        <insert tableName="recipes_tags_map">
+	        <column name="recipe_fk" valueNumeric="-133"/>
+	        <column name="tag_fk" valueNumeric="-113"/>
+	    </insert>
+        <insert tableName="recipes_tags_map">
+	        <column name="recipe_fk" valueNumeric="-133"/>
+	        <column name="tag_fk" valueNumeric="-114"/>
+	    </insert>
+    </changeSet>
+
+	<!-- 
+	INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
+	  VALUES (-1, 'Very tasteful dish!', -133, 'marko', current_timestamp);
+	INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
+	  VALUES (-2, 'Great.', -133, 'marija', current_timestamp);
+	INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
+	  VALUES (-3, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', -133, 'ana antonic', current_timestamp);
+	INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
+	  VALUES (-4, 'Interesting!', -133, 'janko', current_timestamp);
+	INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
+	  VALUES (-5, 'This is great!', -133, 'mirko', current_timestamp);
+	INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
+	  VALUES (-7, 'This is great!', -133, 'marko', current_timestamp);
+	INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
+	  VALUES (-8, 'This is great!', -133, 'marko', current_timestamp);
+	INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
+	  VALUES (-9, 'This is great!', -133, 'marko', current_timestamp);
+	INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
+	  VALUES (-10, 'This is great!', -133, 'marko', current_timestamp);
+	INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
+	  VALUES (-11, 'This is great!', -133, 'marko', current_timestamp);
+	INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
+	  VALUES (-12, 'This is great!', -133, 'marko', current_timestamp);
+	INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
+	  VALUES (-13, 'This is great!', -133, 'marko', current_timestamp);
+	INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
+	  VALUES (-14, 'This is great!', -133, 'marko', current_timestamp);
+	INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
+	  VALUES (-15, 'This is great!', -133, 'marko', current_timestamp);
+	INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
+	  VALUES (-16, 'This is great!', -133, 'marko', current_timestamp);
+	INSERT INTO recipes.comment (id, text, recipe_fk, username, inserted_dt)
+	  VALUES (-17, 'This is great!', -133, 'marko', current_timestamp);
+	-->
+    <changeSet author="Nebojsa (generated)" id="20220724_INS-6">
+        <insert tableName="comment">
+	        <column name="id" valueNumeric="-1"/>
+	        <column name="text" value="Very tasteful dish!"/>
+	        <column name="recipe_fk" valueNumeric="-133"/>
+	        <column name="username" value="marko"/>
+	        <column name="inserted_dt"  valueDate="${now}"/>
+	    </insert>
+	    
+        <insert tableName="comment">
+	        <column name="id" valueNumeric="-2"/>
+	        <column name="text" value="Great."/>
+	        <column name="recipe_fk" valueNumeric="-133"/>
+	        <column name="username" value="janko"/>
+	        <column name="inserted_dt"  valueDate="${now}"/>
+	    </insert>
+	    
+        <insert tableName="comment">
+	        <column name="id" valueNumeric="-3"/>
+	        <column name="text" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
+	        <column name="recipe_fk" valueNumeric="-133"/>
+	        <column name="username" value="ana antonic"/>
+	        <column name="inserted_dt"  valueDate="${now}"/>
+	    </insert>
+	    
+        <insert tableName="comment">
+	        <column name="id" valueNumeric="-4"/>
+	        <column name="text" value="Very tasteful dish!"/>
+	        <column name="recipe_fk" valueNumeric="-133"/>
+	        <column name="username" value="marko"/>
+	        <column name="inserted_dt"  valueDate="${now}"/>
+	    </insert>
+	    
+        <insert tableName="comment">
+	        <column name="id" valueNumeric="-5"/>
+	        <column name="text" value="Very tasteful dish!"/>
+	        <column name="recipe_fk" valueNumeric="-133"/>
+	        <column name="username" value="marko"/>
+	        <column name="inserted_dt"  valueDate="${now}"/>
+	    </insert>
+	    
+        <insert tableName="comment">
+	        <column name="id" valueNumeric="-6"/>
+	        <column name="text" value="Very tasteful dish!"/>
+	        <column name="recipe_fk" valueNumeric="-133"/>
+	        <column name="username" value="marko"/>
+	        <column name="inserted_dt"  valueDate="${now}"/>
+	    </insert>
+	    
+        <insert tableName="comment">
+	        <column name="id" valueNumeric="-7"/>
+	        <column name="text" value="Very tasteful dish!"/>
+	        <column name="recipe_fk" valueNumeric="-133"/>
+	        <column name="username" value="marko"/>
+	        <column name="inserted_dt"  valueDate="${now}"/>
+	    </insert>
+	    
+        <insert tableName="comment">
+	        <column name="id" valueNumeric="-8"/>
+	        <column name="text" value="Very tasteful dish!"/>
+	        <column name="recipe_fk" valueNumeric="-133"/>
+	        <column name="username" value="marko"/>
+	        <column name="inserted_dt"  valueDate="${now}"/>
+	    </insert>
+	    
+        <insert tableName="comment">
+	        <column name="id" valueNumeric="-9"/>
+	        <column name="text" value="Very tasteful dish!"/>
+	        <column name="recipe_fk" valueNumeric="-133"/>
+	        <column name="username" value="marko"/>
+	        <column name="inserted_dt"  valueDate="${now}"/>
+	    </insert>
+	    
+        <insert tableName="comment">
+	        <column name="id" valueNumeric="-10"/>
+	        <column name="text" value="Very tasteful dish!"/>
+	        <column name="recipe_fk" valueNumeric="-133"/>
+	        <column name="username" value="marko"/>
+	        <column name="inserted_dt"  valueDate="${now}"/>
+	    </insert>
+	    
+        <insert tableName="comment">
+	        <column name="id" valueNumeric="-11"/>
+	        <column name="text" value="Very tasteful dish!"/>
+	        <column name="recipe_fk" valueNumeric="-133"/>
+	        <column name="username" value="marko"/>
+	        <column name="inserted_dt"  valueDate="${now}"/>
+	    </insert>
+	    
+        <insert tableName="comment">
+	        <column name="id" valueNumeric="-12"/>
+	        <column name="text" value="Very tasteful dish!"/>
+	        <column name="recipe_fk" valueNumeric="-133"/>
+	        <column name="username" value="marko"/>
+	        <column name="inserted_dt"  valueDate="${now}"/>
+	    </insert>
+        <insert tableName="comment">
+	        <column name="id" valueNumeric="-13"/>
+	        <column name="text" value="Very tasteful dish!"/>
+	        <column name="recipe_fk" valueNumeric="-133"/>
+	        <column name="username" value="marko"/>
+	        <column name="inserted_dt"  valueDate="${now}"/>
+	    </insert>
+	</changeSet>
+
+	<!-- 
+	INSERT INTO RECIPES.UNIT_OF_MEASURE(ID,description)VALUES(-1,'EACH');
+	INSERT INTO RECIPES.UNIT_OF_MEASURE(ID,description)VALUES(-2,'TEASPOON');
+	INSERT INTO RECIPES.UNIT_OF_MEASURE(ID,description)VALUES(-3,'TABLESPOON');
+	INSERT INTO RECIPES.UNIT_OF_MEASURE(ID,description)VALUES(-4,'CUP');
+	INSERT INTO RECIPES.UNIT_OF_MEASURE(ID,description)VALUES(-5,'PINC');
+	INSERT INTO RECIPES.UNIT_OF_MEASURE(ID,description)VALUES(-6,'OUNCE');
+	INSERT INTO RECIPES.UNIT_OF_MEASURE(ID,description)VALUES(-7,'DASH');
+	INSERT INTO RECIPES.UNIT_OF_MEASURE(ID,description)VALUES(-8,'PINT');
+	-->
+    <changeSet author="Nebojsa (generated)" id="20220724_INS-7">
+        <insert tableName="unit_of_measure">
+	        <column name="ID" valueNumeric="-1"/>
+	        <column name="description" value="EACH"/>
+	    </insert>
+        <insert tableName="unit_of_measure">
+	        <column name="id" valueNumeric="-2"/>
+	        <column name="description" value="TEASPOON"/>
+	    </insert>
+        <insert tableName="unit_of_measure">
+	        <column name="id" valueNumeric="-3"/>
+	        <column name="description" value="TABLESPOON"/>
+	    </insert>
+        <insert tableName="unit_of_measure">
+	        <column name="id" valueNumeric="-4"/>
+	        <column name="description" value="CUP"/>
+	    </insert>
+        <insert tableName="unit_of_measure">
+	        <column name="id" valueNumeric="-5"/>
+	        <column name="description" value="PINC"/>
+	    </insert>
+        <insert tableName="unit_of_measure">
+	        <column name="id" valueNumeric="-6"/>
+	        <column name="description" value="OUNCE"/>
+	    </insert>
+        <insert tableName="unit_of_measure">
+	        <column name="id" valueNumeric="-7"/>
+	        <column name="description" value="DASH"/>
+	    </insert>
+        <insert tableName="unit_of_measure">
+	        <column name="id" valueNumeric="-8"/>
+	        <column name="description" value="PINT"/>
+	    </insert>
+	</changeSet>
+	   
+
+</databaseChangeLog>
+

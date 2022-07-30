@@ -3,6 +3,7 @@ package rs.apps.nn.recipes.domain;
 import java.util.ArrayList;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @ToString
+@Table(name = "Recipe_Ingredients_Data", schema = "recipes")
 public class RecipeIngredientsData extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;

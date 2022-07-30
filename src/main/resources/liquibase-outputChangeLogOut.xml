@@ -1,0 +1,215 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    
+    <changeSet author="Nebojsa (generated)" id="1657693122107-1">
+        <createTable tableName="NewTable">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="value" type="VARCHAR(100)"/>
+            <column name="val2" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+    
+    <changeSet author="Nebojsa (generated)" id="1657693122107-2">
+        <createTable tableName="authority">
+            <column name="authority" type="VARCHAR(255)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="username" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    
+    <changeSet author="Nebojsa (generated)" id="1657693122107-3">
+        <createTable tableName="category">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="description" type="VARCHAR(250)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-4">
+        <createTable tableName="comment">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="inserted_dt" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="VARCHAR(1200)"/>
+            <column name="username" type="VARCHAR(255)"/>
+            <column name="recipe_fk" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-5">
+        <createTable tableName="file_data">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="data" type="BLOB"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="type" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-6">
+        <createTable tableName="ingredient">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="amount" type="DECIMAL(19, 2)"/>
+            <column name="unit_of_measure" type="VARCHAR(255)"/>
+            <column name="ingredient_name" type="VARCHAR(255)"/>
+            <column name="recipe_fk" type="BIGINT"/>
+            <column name="uom" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-7">
+        <createTable tableName="recipe">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="cook_time" type="INT"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="directions" type="TEXT"/>
+            <column name="difficulty" type="VARCHAR(255)"/>
+            <column name="portions" type="INT"/>
+            <column name="prep_time" type="INT"/>
+            <column name="source" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="url" type="VARCHAR(255)"/>
+            <column name="category_fk" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-8">
+        <createTable tableName="recipe_image_data">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="file_type" type="VARCHAR(255)"/>
+            <column name="recipe_image_data" type="BIGINT"/>
+            <column name="recipe_fk" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-9">
+        <createTable tableName="recipe_ingredients_data">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="ing_ingredient_list" type="BINARY(255)"/>
+            <column name="ing_measure_list" type="BINARY(255)"/>
+            <column name="ing_quantity_list" type="BINARY(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-10">
+        <createTable tableName="recipes_tags_map">
+            <column name="recipe_fk" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="tag_fk" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-11">
+        <createTable tableName="tag">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="value" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-12">
+        <createTable tableName="unit_of_measure">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-13">
+        <createTable tableName="user">
+            <column name="username" type="VARCHAR(255)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="enabled" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-14">
+        <createTable tableName="word">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="word" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-15">
+        <createIndex indexName="FK4ch55tucnpc5n9vapx40dcft9" tableName="recipes_tags_map">
+            <column name="tag_fk"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-16">
+        <createIndex indexName="FK9s2v59jhc0uid7x9k5m1k4ucc" tableName="comment">
+            <column name="recipe_fk"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-17">
+        <createIndex indexName="FKb4t2mdoirdarhgd9llv2jotc3" tableName="recipe">
+            <column name="category_fk"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-18">
+        <createIndex indexName="FKkk0kuq04waku9mck92f0yee04" tableName="ingredient">
+            <column name="recipe_fk"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-19">
+        <createIndex indexName="FKljgmd4h8prtl0nk1r6dj4by1r" tableName="authority">
+            <column name="username"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-20">
+        <createIndex indexName="FKo0ytahedcdtvo8cuiaypnkm1v" tableName="recipe_image_data">
+            <column name="recipe_fk"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-21">
+        <createIndex indexName="FKqkuxhh0nfp1sw8n3ckolu8j98" tableName="recipe_image_data">
+            <column name="recipe_image_data"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-22">
+        <addForeignKeyConstraint baseColumnNames="tag_fk" baseTableName="recipes_tags_map" constraintName="FK4ch55tucnpc5n9vapx40dcft9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tag" validate="true"/>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-23">
+        <addForeignKeyConstraint baseColumnNames="recipe_fk" baseTableName="recipes_tags_map" constraintName="FK5ss3dt4l282sya95ym0aqqedx" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="recipe" validate="true"/>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-24">
+        <addForeignKeyConstraint baseColumnNames="recipe_fk" baseTableName="comment" constraintName="FK9s2v59jhc0uid7x9k5m1k4ucc" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="recipe" validate="true"/>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-25">
+        <addForeignKeyConstraint baseColumnNames="category_fk" baseTableName="recipe" constraintName="FKb4t2mdoirdarhgd9llv2jotc3" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="category" validate="true"/>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-26">
+        <addForeignKeyConstraint baseColumnNames="recipe_fk" baseTableName="ingredient" constraintName="FKkk0kuq04waku9mck92f0yee04" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="recipe" validate="true"/>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-27">
+        <addForeignKeyConstraint baseColumnNames="username" baseTableName="authority" constraintName="FKljgmd4h8prtl0nk1r6dj4by1r" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="username" referencedTableName="user" validate="true"/>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-28">
+        <addForeignKeyConstraint baseColumnNames="recipe_fk" baseTableName="recipe_image_data" constraintName="FKo0ytahedcdtvo8cuiaypnkm1v" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="recipe" validate="true"/>
+    </changeSet>
+    <changeSet author="Nebojsa (generated)" id="1657693122107-29">
+        <addForeignKeyConstraint baseColumnNames="recipe_image_data" baseTableName="recipe_image_data" constraintName="FKqkuxhh0nfp1sw8n3ckolu8j98" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="file_data" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

@@ -4,39 +4,54 @@ server:
   port: 8081
 #  context-path: /guessme   deprecated
 
-spring:
+spring: 
+  liquibase:
+#    outputchangelogfile: src/main/resources/liquibase-inputChangeLog.xml  
+    #change-log: src/main/resources/db/changelog/db.changelog-master.xml
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+    enabled: false
   h2:
     console:
       enabled: true
       path: /h2-console
   datasource:
     platform: H2
-    url: jdbc:h2:mem:recdb;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL;INIT=CREATE SCHEMA IF NOT EXISTS recipes
+    url: jdbc:h2:mem:recdb;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL;INIT=CREATE SCHEMA IF NOT EXISTS recipes
     username: sa
     password:
     driverClassName: org.h2.Driver
-#  jpa:
-#    database-platform: org.hibernate.dialect.H2Dialect
-#    database: postgresql
-#    show-sql: true
-#    hibernate:
-#      ddl-auto: validate
-#    properties:
-#      hibernate:
-#        format_sql: true
-#      javax:
-#        persistence:
-#          schema-generation:
-#            drop-source: metadata
-#            create-source: metadata
-#            scripts:
-#              action: none #drop-and-create
-#              drop-target: np_database_create.sql
-#              create-target: np_database_create.sql
-#            database:
-#              action: drop-and-create
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        hbm2ddl:
+          delimiter: ;
+      javax:
+        persistence:
+          schema-generation:
+            drop-source: metadata
+            create-source: metadata
+            create-database-schemas: false
+            scripts:
+              action: drop-and-create
+              drop-target: np_database_create_drop.sql
+              create-target: np_database_create_create.sql
+            database:
+              action: drop-and-create
+          #validation:
+          #  mode: auto
   messages:
     basename: messages/messages
+
+#      action: none #drop-and-create
+#      ddl-auto: validate
+
+
 
 logging:
   level:
@@ -46,6 +61,7 @@ logging:
         nn:
           asocijacije: DEBUG
           recipes: DEBUG
+    liquibase: DEBUG
 #  pattern:
 #    console: '%d{"yyyy/MM/dd HH:mm:ss,SSS"} [%p] [%t] %M\(%F:%L\) - %msg%n'
 

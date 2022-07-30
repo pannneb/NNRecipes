@@ -6,10 +6,11 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://ec2-46-137-177-160.eu-west-1.compute.amazonaws.com:5432/d69khgdes1m2cr
-    username: nahsqaslwvvwkp
+    url: jdbc:mysql://ec2-34-220-115-146.us-west-2.compute.amazonaws.com:3306/recipes
+    username: nnuser
     password: e0af0e608cd5bd2fdfd64ce6efda35cce54fc266f15e09583b1c969b92184046
-
+  liquibase:
+    outputChangeLogFile: src/main/resources/liquibase-outputChangeLog.xml  
   jpa:
     hibernate:
       ddl-auto: none

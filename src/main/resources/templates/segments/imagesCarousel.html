@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div class="col-md-12 col-lg-12">
+	<div class="form-group has-feedback">
+		<div class="card">
+			<h6 class="card-header text-white bg-light mb-3">
+        		<a class=" d-block collapsed" data-toggle="collapse" href="#comm-collapse-collapsed" aria-expanded="false" aria-controls="comm-collapse-collapsed" id="heading-collapsed" >
+        		    <i class="fa fa-chevron-down pull-right"></i>
+            			<span th:text="#{label.recipe.comments.addNewPhoto}"></span>
+        		</a>
+    		</h6>
+			<!-- <div class="card-header" th:text="#{label.recipe.imageInfo}">Recipe photo:</div>-->
+		    <div id="comm-collapse-collapsed" class="collapse" aria-labelledby="heading-collapsed">
+		        <div class="card-body" style="padding-top:0">
+	    			  <div class="col-md-12 col-lg-12 row zeroMargin" style="font-style: oblique;" >
+                            	  <div>
+										<form method="POST" enctype="multipart/form-data" th:action="@{${commentImagesRecipeId}+'/uploadCommentsPhoto'}" >
+											<table>
+												<tr>
+													<td><span th:text="#{label.files.uploadNewFile}"></span></td>
+													<td><input type="file" name="file" class="btn btn-primary" />
+													</td>
+												</tr>
+												<tr>
+													<td></td>
+													<td><input type="submit" value="Upload" id="uploadBtn" class="btn btn-outline-primary" >
+													</td>
+												</tr>
+											</table>
+									    	<input type="hidden" id="newCommentPhotoRecipeId" name="newCommentPhotoRecipeId" th:value="${commentImagesRecipeId}">
+										</form>
+								  </div>
+                            
+                   	  </div>		  
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div th:switch="${recipeImagesFromComments}" class="container padding10 my-2">
+    
+    <h2  style="text-align:center" th:case="null" th:text="#{label.images.list.noImagesYet}"></h2>
+    <div th:case="*">
+		<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+		  
+		  <ol class="carousel-indicators" >
+		    <li th:each="img, imgStat:${recipeImagesFromComments}" data-target="#carouselExampleIndicators" th:attr="data-slide-to=${imgStat.index}" th:class="${imgStat.index}==0 ? 'active':''"></li>
+		  </ol>
+
+		  <div class="carousel-inner">
+			    <div th:class="${imgStat.index}== 0  ? 'carousel-item active':'carousel-item'" th:each="img, imgStat:${recipeImagesFromComments}">
+			      <img th:src="@{'/recipeImage/image/' + ${img.fileData.id}}" height="350" style="object-fit: contain;" class="d-block w-100" alt="..."/>
+			    </div>
+		  </div>
+		  
+		  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev" >
+		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		    <span class="sr-only">Previous</span>
+		  </a>
+		  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next" >
+		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		    <span class="sr-only">Next</span>
+		  </a>
+		</div>
+     </div>
+</div>
+
+<!-- 
+<div class="container">
+  <h2>Carousel Example</h2>  
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <div class="carousel-inner">
+      <div class="item active">
+        <img src="/recipes/img/placehldrImg.png" alt="Los Angeles" style="width:100%;">
+      </div>
+
+      <div class="item">
+        <img src="/recipes/img/placehldrImg.png" alt="Chicago" style="width:100%;">
+      </div>
+    
+      <div class="item">
+        <img src="/recipes/img/placehldrImg.png" alt="New york" style="width:100%;">
+      </div>
+    </div>
+
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+ -->
+
+
+

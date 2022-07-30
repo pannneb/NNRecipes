@@ -1,0 +1,96 @@
+1. kako se pokrece keycloak?
+
+	standalone.bat -Djboss.socket.binding.port-offset=100 -b 192.168.100.23
+	
+2. kako se pokrece h2 u in-memory rezimu?
+
+	u application-dev.properties se doda :mem:
+	
+	spring.datasource.url= jdbc:h2:mem:testdb-switch;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
+	
+3. kako se pokrece h2 u file rezimu?
+
+	u application-dev.properties se doda :file:ime_fajla
+	
+	spring.datasource.url=jdbc:h2:file:~/spring-boot-h2-db
+	
+4. Auditing
+
+	- za auditing se koristi kombinacija hibernate envers biblioteke i JPA anotacija.
+	- @Audited se koristi na nivou entity objekata da oznaci klase kao klase koje treba da se audituju.
+	- @AuditOverride(forClass=BaseEntity.class) se koristi nad child entitetima kako bi se auditovala polja iz parent klase
+	- polja u parent klasi su JPA specific - @CreatedBy, @CreatedDate, @LastModifiedBy i @LastModifiedDate
+	- da bi se ova polja anotirala, trebalo je dodati @EnableJpaAuditing(auditorAwareRef = "jpaAuditorAware") u AuditConfig.
+	- takodje je trebalo registrovati AuditorAware<T> implementaciju koja prosledjuje podatke koji se upisuju u @CreatedBy i @LastAuditedBy
+		- ako AuditorAware vraca String, onda su polja anotirana sa @CreatedBy i @LastAuditedBy takodje String
+	
+	- za auditing se koristi posebna schema. ona se konfigurise u application.properties
+	
+		spring.jpa.properties.org.hibernate.envers.default_schema=switch_history 
+
+	- envers ocekuje da schema postoji. u razvoju je u h2 bazi bilo tesko kreirati schemu za auditing bez pomocnih skriptova pa je to reseno preko INIT komande u jdbc url (application-dev.properties)
+	
+		spring.datasource.url= jdbc:h2:mem:testdb-switch;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1;INIT=create schema IF NOT EXISTS switch_history;
+
+5. spotbugs
+
+	- static analysis tool
+
+	- otvori se terminal i pokrene se analiza sa
+		mvn spotbugs:spotbugs
+
+	- kreira se report koji moze da se otvori sa
+		mvn spotbugs:gui
+		
+6. liquibase
+
+	liquibase maven plugin je podesen tako da kupi podatke iz liquibase.properties
+
+	postoje opcije da se generise change log i da se generise diff u odnosu na trenutne jpa entitete
+
+	a) generate change log - kreira changelog od nule ako je outputChangeLogFile prazan
+
+		 mvn -X liquibase:generateChangeLog
+	
+		Opcije za generateChangeLog
+			https://www.liquibase.org/documentation/maven/generated/generateChangeLog-mojo.html
+
+	b) update sql
+	
+		kreira sql koji je potreban za azuriranje baze na stanje opisano u changelogu.
+		kao takva komanda moze biti zgodna samo kada baza kaska za change logom ali ne i obrnuto
+
+	c) poredi stanje dve baze (nije testirano)
+
+	 	mvn -X liquibase:diff
+
+
+7. postgres
+
+	testna baza na dockeru na 192.168.100.222
+	pokrece se sa 
+	docker run --name switch-psql -p 5432:5432 -e POSTGRES_DB=switch -e POSTGRES_PASSWORD=switch -d -v /var/lib/postgresql/data:/var/lib/postgresql/data postgres
+
+8. sql ddl schema dump - dodati u application.properties
+
+#https://stackoverflow.com/questions/36966337/how-to-generate-a-ddl-creation-script-with-a-modern-spring-boot-data-jpa-and-h/36966419#36966419
+spring.jpa.properties.javax.persistence.schema-generation.create-source=metadata
+spring.jpa.properties.javax.persistence.schema-generation.scripts.action=create
+spring.jpa.properties.javax.persistence.schema-generation.scripts.create-target=create.sql	
+
+9. export podataka iz tabela u postgres bazi
+
+	pg_dump.exe --host=192.168.100.222 --username=postgres --password=switch --dbname="switch" --table="switch.app_user" --data-only --column-inserts > app_user.sql
+	pg_dump.exe --host=192.168.100.222 --username=postgres --password=switch --dbname="switch" --table="switch.card_network" --data-only --column-inserts > card_network.sql
+	pg_dump.exe --host=192.168.100.222 --username=postgres --password=switch --dbname="switch" --table="switch.card_product" --data-only --column-inserts > card_product.sql
+	pg_dump.exe --host=192.168.100.222 --username=postgres --password=switch --dbname="switch" --table="switch.flow_configuration" --data-only --column-inserts > flow_configuration.sql
+	pg_dump.exe --host=192.168.100.222 --username=postgres --password=switch --dbname="switch" --table="switch.host_configuration" --data-only --column-inserts > host_configuration.sql
+	pg_dump.exe --host=192.168.100.222 --username=postgres --password=switch --dbname="switch" --table="switch.host_connection" --data-only --column-inserts > host_connection.sql
+	pg_dump.exe --host=192.168.100.222 --username=postgres --password=switch --dbname="switch" --table="switch.hsm_key" --data-only --column-inserts > hsm_key.sql
+	pg_dump.exe --host=192.168.100.222 --username=postgres --password=switch --dbname="switch" --table="switch.institution" --data-only --column-inserts > institution.sql
+	pg_dump.exe --host=192.168.100.222 --username=postgres --password=switch --dbname="switch" --table="switch.menu_item" --data-only --column-inserts > menu_item.sql
+	pg_dump.exe --host=192.168.100.222 --username=postgres --password=switch --dbname="switch" --table="switch.role" --data-only --column-inserts > role.sql
+	pg_dump.exe --host=192.168.100.222 --username=postgres --password=switch --dbname="switch" --table="switch.route" --data-only --column-inserts > route.sql
+	pg_dump.exe --host=192.168.100.222 --username=postgres --password=switch --dbname="switch" --table="switch.transaction_command" --data-only --column-inserts > transaction_command.sql
+	pg_dump.exe --host=192.168.100.222 --username=postgres --password=switch --dbname="switch" --table="switch.user_settings" --data-only --column-inserts > user_settings.sql
+	pg_dump.exe --host=192.168.100.222 --username=postgres --password=switch --dbname="switch" --table="switch.validation" --data-only --column-inserts > validation.sql			

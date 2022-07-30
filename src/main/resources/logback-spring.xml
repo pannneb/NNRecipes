@@ -68,6 +68,15 @@
 		</root>
 	</springProfile>
 
+   	<springProfile name="dev_lb_aws">
+		<!-- <root level="INFO">
+			<appender-ref ref="LOG_ROLLING_DEV" />
+		</root> -->
+		<root level="INFO">
+			<appender-ref ref="STDOUT" />
+		</root>
+	</springProfile>
+	
    	<springProfile name="test_pg">
 		<root level="DEBUG">
 			<appender-ref ref="STDOUT" />

@@ -32,6 +32,17 @@
     <meta name="author" content="">
 
     <th:block id="home-static-resources"> 
+
+        <!-- Main styles for this template (for Recipe application) -->
+<!--     	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-tagsinput.css}" href="../../static/css/bootstrap-tagsinput.css" />
+     -->	
+    	<!-- Custom scripts for all pages-->
+<!--		<script type="text/javascript" src="../../static/js/bootstrap-tagsinput.js" th:src="@{/js/bootstrap-tagsinput.js}"></script>
+     -->
+     
+     <link rel="stylesheet" type="text/css" th:href="@{/css/tags-standalone.css}" href="../../static/css/tags-standalone.css" />
+ 	 <script type="text/javascript" src="../../static/js/tags.js" th:src="@{/js/tags.js}"></script>
+    
     </th:block>
 
 </head>
@@ -72,7 +83,8 @@
 	               </div>
 
 	 <hr></hr>
-                    <div class="col-md-12 col-xl-12 col-lg-12">
+                    <!-- <div class="col-md-12 col-xl-12 col-lg-12">  -->
+                    <div>
                       <div class="card">    
                           <div class="card-header">
                           	  <span th:text="( (${recipe.id==null}) ? #{label.recipe.newRecipe} : (#{label.recipe.updateRecipe} + ' : [ ' + ${recipe.id} + ' ]' ) )"></span> 
@@ -238,6 +250,82 @@
 						    </div>
 
         					<br>
+
+
+							
+                            <div class="col-md-12 col-lg-12">
+							    <div class="form-group has-feedback">
+									<div class="col-md-12 col-lg-12">
+									  		<div class="card col-md-12 col-lg-12 zeroPadding">
+								  				<div class="card-header"  th:text="#{label.recipe.tags}">
+								    				Tags:
+								  				</div>
+											    <div class="card-body">
+											    	<select class="form-select" id="recipesTags" name="recipesTags" multiple data-allow-clear="true" data-clear-label="Clear" data-allow-new="true">
+														<option selected disabled hidden value="">Choose a tag...</option>
+													    <option selected="selected" th:each="prod,iterStat : ${recipe.tags}" 
+										                  th:value="(${prod.id}+':'+${prod.value})" 
+										                  th:text="(${iterStat.count}+' ['+${prod.id}+'] : '+${prod.value})"
+										                  >Cup
+			  								            </option>
+													</select>
+
+
+
+											    <!-- 
+											    	<table>
+													  <tr>
+													  </tr>
+													  <tr th:each="prod,iterStat : ${recipe.tags}" th:class="${iterStat.odd}? 'odd'">
+													    <td th:text="${prod.id}">ID</td>
+													    <td th:text="${prod.value}">value</td>
+													    <td>
+															<span class="badge bg-primary me-2" data-value="1">
+															    <button type="button" style="font-size:0.65em" class="me-2 btn-close btn-close-white" aria-label="Clear"></button><span th:text="${prod.value}"></span>
+														        < ! -- <button type="button" style="font-size:0.65em" class="me-2 btn-close btn-close-white" aria-label="Clear">aaa</button> -- >
+															</span>
+														</td>
+													  </tr>
+													</table>
+											    -->
+												</div>
+												<div>
+												
+												<!-- 
+												<select class="form-select" id="validationTags" multiple data-allow-clear="true" data-clear-label="Clear" data-allow-new="true">
+												  <option selected disabled hidden value="">Choose a tag...</option>
+												  <option value="1" selected="selected">JavaScript</option>
+												  <option value="2">HTML5</option>
+												  <option value="3">CSS3</option>
+												  <option value="4">jQuery</option>
+												  <option value="5">React</option>
+												  <option value="6">Angular</option>
+												  <option value="7">Vue</option>
+												  <option value="8">Python</option>
+												</select>
+												-->
+											  
+									          
+										    <!--  <td  class='row_no' th:text="(${rowStat.count}+'.')">1</td>
+									           -->
+												<!-- 
+												<div class="invalid-feedback">Please select a valid tag.</div>
+												-->
+												
+<!-- 													<input type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput" /> 
+-->
+												</div>
+									  		</div>
+								    </div>
+								</div>
+						    </div>
+        					
+        					<br>
+        					<br>
+							
+
+
+        					<br>
         
 						    </div>
 						    <div class="form-group">
@@ -259,10 +347,59 @@
 
 							<div class="col-md-12 col-lg-12">
 								<div class="form-group has-feedback">
+								
+									<div class="card">
+									
+										<h6 class="card-header text-white bg-light mb-3">
+							        		<a class=" d-block " data-toggle="collapse" href="#collapse-collapsed" aria-expanded="true" aria-controls="collapse-collapsed" id="heading-collapsed" >
+							        		    <i class="fa fa-chevron-down pull-right"></i>
+							            			<span th:text="#{label.recipe.imageInfo}"></span>
+							        		</a>
+							    		</h6>
+
+										<!-- <div class="card-header" th:text="#{label.recipe.imageInfo}">Recipe photo:</div>-->
+									    <div id="collapse-collapsed" class="collapse show" aria-labelledby="heading-collapsed">
+									        <div class="card-body" style="padding-top:0">
+								    			  <div class="col-md-12 col-lg-12 row zeroMargin" style="font-style: oblique;" >
+			                                	  		<div class="col-md-6 col-lg-6 zeroPadding" >
+							 								  <div>
+																	<form method="POST" enctype="multipart/form-data" th:action="@{${recipe.id}+'/uploadPhoto'}" >
+
+																		<table>
+																			<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+																			<tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+																		</table>
+																    	
+																    	<input type="hidden" id="newPhotoRecipeId" name="newPhotoRecipeId" th:value="${recipe.id}">
+																    	<input type="hidden" id="imageId" name="imageId" th:value="${recipeImage?.id}">
+
+																	</form>
+															  </div>
+			                                			</div>
+			                                	  		<div class="col-md-6 col-lg-6 zeroPadding" >
+							 								  <div>
+					               								<div th:switch="${recipeImage}" class="container my-2">
+                    				    							<img th:case="null" class="rounded mx-auto d-block" height="250" src="/recipes/img/placehldrImg.png">
+                        											<div th:case="*">
+															            <img class="card-img-top" height="350"  style="object-fit: contain;"  th:src="@{'/recipeImage/image/' + ${recipeImage.id}}">
+                        											</div>
+                        										</div>
+															  </div>
+			                                			</div>
+			                                	  </div>
+								    			  
+											</div>
+										</div>
+									</div>
+								
+								</div>
+							</div>
+
+							<div class="col-md-12 col-lg-12">
+								<div class="form-group has-feedback">
 									<div class="card col-md-12 col-lg-12 zeroPadding">
 										<div class="card-header" th:text="#{label.recipe.addInfo}">Additional:</div>
 										<div class="card-body">
-	
 											<div>
 												<div>
 												  <!-- Nav tabs -->
@@ -275,100 +412,41 @@
 												  <!-- Tab panes -->
 												  <div class="tab-content tabsContent">												  
 												    <br/>
+
 												    <div role="tabpanel" class="tab-pane fade show active" id="comments" aria-labelledby="home-tab">
-													    <div id="commentDataAJAX" name="commentDataAJAX" >
-														    <div th:switch="${recipe?.comments}" class="container padding10 my-2">
-													        	<div class="form-group row zeroMargin">
-																	<div class=" col-md-12 col-lg-8 zeroPaddingLeft paddingRight20">
-																		<div class="col-md-12 border" style="overflow: auto; height: 350px; border-radius: 5px; border-color: #91d8e3 !important " >
-													                        <h2 th:case="null" th:text="#{label.list.noCommentsYet}"/>
-													                        <div th:case="*">
-													                            <table class="table table-comments table-borderless table-responsive-md table-main-style hover">
-													                                <thead>
-													                                    <tr>
-													                                    </tr>
-													                                </thead>
-													                                <tbody>
-													                                    <tr th:each="com, comStat:${recipe?.comments}">
-													                                        <td th:if="${comStat.odd}" >
-													                                        	<div class="message-text-ballon col-md-9 col-lg-9 table-striped-comments-odd" >
-													                                        	
-													                                        		<div class="col-md-12 col-lg-12 row zeroMargin" >
-														                                       			<div th:text="' [ ' + ${com.id} + ' ] : ' + ${com.text}"></div>
-														                                        	</div>
-													                                        		<div class="col-md-12 col-lg-12 row zeroMargin" style="font-style: oblique;" >
-													                                        	  		<div class="col-md-6 col-lg-6 zeroPadding" >
-													                                        	  			<span th:text="${com.username}"></span>
-													                                        			</div>
-													                                        	  		<div class="col-md-6 col-lg-6 textRight zeroPadding" >
-															                                        		<span th:text="${#dates.format(com.insertedDt, #messages.msg('date.timestamp.format.main') )}" ></span>
-													                                        			</div>
-													                                        		</div>
-													                                        	
-													                                        	</div>																				  
-																							</td>
-													                                        <td th:if="${comStat.even}">
-													                                        	<div class="row">
-														                                        	<div class="col-md-2 col-lg-2" >
-														                                        	  
-														                                        	</div>
-														                                        	<div class="message-text-ballon col-md-9 col-lg-9 table-striped-comments-even">
-														                                        		<div class="col-md-12 col-lg-12 row zeroMargin" >
-														                                        			<div th:text="' [ ' + ${com.id} + ' ] : ' + ${com.text}"></div>
-														                                        		</div>
-														                                        		<div class="col-md-12 col-lg-12 row zeroMargin" style="font-style: oblique;" >
-														                                        	  		<div class="col-md-6 col-lg-6 zeroPadding" >
-														                                        	  			<span th:text="${com.username}"></span>
-														                                        			</div>
-														                                        	  		<div class="col-md-6 col-lg-6 textRight zeroPadding" >
-																                                        		<span style="font-style: oblique;"  th:text="${#dates.format(com.insertedDt, #messages.msg('date.timestamp.format.main') )}" ></span>
-														                                        			</div>
-														                                        		</div>
-														                                        	</div>			
-													                                        	</div>																	  
-													                                        </td>
-													                                    </tr>
-													                                </tbody>
-													                            </table>
-													                        </div>
-													
-													                    </div>
-																		
-																		</div>
-																		<div class=" col-md-12 col-lg-4 zeroPadding">
-																			<textarea class="form-control" id="newCommentText" rows="7"	name="newCommentText" th:placeholder="#{label.recipe.newComment}" required="required"></textarea>
-																			<br/>
-																			<input class="form-control" id="newCommentUsername"	name="newCommentUsername" th:placeholder="#{label.recipe.newCommentUsername}" required="required"></input>
-																			<br/>
-																   		    <input type="hidden" id="newCommentRecipeId" name="newCommentRecipeId" th:value="${recipe.id}">
-																			
-												                            <div class="btn-container">
-																				<button type="button" onClick="addNewCommentOnClick()" class='btn addmore btn-outline-info'
-																					th:text="#{button.action.insertComment}">+ Insert Comment</button>
-																			</div>
-											                            </div>
-																    </div>
-															    
-															    </div>
-													    	</div>
-												    	</div>
-													    <div role="tabpanel" class="tab-pane fade" id="images">
-													    	aaa
-													    </div>
-													    <div role="tabpanel" class="tab-pane fade" id="addAdvices">
-													    	bbb
-													    </div>
-												  	</div>
+												   		<div id="commentDataAJAX" >
+													    	<input type="hidden" id="newCommentRecipeId" name="newCommentRecipeId" th:value="${recipe.id}">
+														</div>
+												    </div>
+
+												    <div role="tabpanel" class="tab-pane fade" id="images">
+												   		<div id="commentImagesDataAJAX" >
+													    	<input type="hidden" id="commentImagesDataRecipeId" name="commentImagesDataRecipeId" th:value="${recipe.id}">
+														</div>
+												    </div>
+
+												    <div role="tabpanel" class="tab-pane fade" id="addAdvices">
+												    	<div>
+															<form method="POST" enctype="multipart/form-data" action="/">
+																<table>
+																	<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+																	<tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+																</table>
+															</form>
+														</div>
+												    </div>
+
+												  </div>
 											    </div>
 											    <br/>
 										    </div>
 										</div>
 									</div>
-									
-									
-									
 								</div>
 							</div>
+
+							
+							
 						</div>
 					  </div>
                     </div>
@@ -398,7 +476,15 @@
 	        </select>
 	</div>
         
+	<script type="module" >
+
+		import Tags from "../js/tags.js";
+    	Tags.init("select[multiple]:not(#regular)");
+	</script>
+	
 	<script>
+
+	
 		var i=0;
 		var deleted=0;
 		$(".addmore").on('click',function(){
@@ -408,7 +494,8 @@
 /* 		<input type="text" class="text-field-dynamicrow form-control" id="ingQuantityList2" size="3" name="ingQuantityList[]" th:field="*{ingQuantityList}">
 		<input type="text" class="text-field-dynamicrow form-control" id="ingIngredientList1" name="ingIngredientList" value="">
  */
-		function addMoreFunc() {
+
+ 		function addMoreFunc() {
 		    var rowCount = $('.row_no').length + 1;
 		    var newRowId = rowCount+deleted;
 		    var data="<tbody><tr style='line-height: 1;'>";
@@ -440,8 +527,7 @@
 	    onAddCheckboxRefresh();
 	    i++;
 	}*/
- 
-		
+
 	    // addMoreFunc();
 		
 		$(".delete").on('click', function() {
@@ -479,7 +565,37 @@
 			    $(this).parent().find('input[type=hidden]').val(target);
 			});
 		}
+
+		function refreshCommentListData() {
+			  var e2 = document.getElementById("newCommentRecipeId");
+			  var newCommentRecipeId = e2.value;
+			  $.ajax({
+				 type: "GET",
+			     url : '/recipes/recipe/'+newCommentRecipeId+'/comment/list',
+			     success : function(res) {
+					$("#commentDataAJAX").html(res);
+			     },
+			     error :  function(res) {
+			         alert('error:'+res);
+			     }
+			  });
+			}
 		
+		function refreshCommentImagesData() {
+			  var e2 = document.getElementById("commentImagesDataRecipeId");
+			  var imagesRecipeId = e2.value;
+			  $.ajax({
+				 type: "GET",
+			     url : '/recipes/recipe/'+imagesRecipeId+'/images/list',
+			     success : function(res) {
+					$("#commentImagesDataAJAX").html(res);
+			     },
+			     error :  function(res) {
+			         alert('error:'+res);
+			     }
+			  });
+			}
+
 		function addNewCommentOnClick() {
 			  //Prevent default submission of form
 			 //  e.preventDefault();
@@ -493,7 +609,7 @@
 			  
 			  var json = {"recipeFk":newCommentRecipeId, "text":strCommentText, "username":strCommentUsername};
 
-			  alert("json:"+JSON.stringify(json));
+			  // alert("json:"+JSON.stringify(json));
 			  $.ajax({
 				 type: "POST",
 			     url : '/recipes/recipe/'+newCommentRecipeId+'/comment/new',
@@ -510,6 +626,11 @@
 			     } 
 			  });
 			}
+		
+			$('document').ready(function(){
+				refreshCommentListData();
+				refreshCommentImagesData();
+			});
 		
 		</script>
 		
