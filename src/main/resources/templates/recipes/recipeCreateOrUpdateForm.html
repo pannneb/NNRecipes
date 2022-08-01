@@ -602,11 +602,13 @@
 			  
 			  var e = document.getElementById("newCommentText");
 			  var strCommentText = e.value;
-			  var e1 = document.getElementById("newCommentUsername");
-			  var strCommentUsername = e1.value;
+			  //var e1 = document.getElementById("newCommentUsername");
+			  //var strCommentUsername = e1.value;
 			  var e2 = document.getElementById("newCommentRecipeId");
 			  var newCommentRecipeId = e2.value;
 			  
+			  // 20220801 - Read Username from Logged user 
+			  // var json = {"recipeFk":newCommentRecipeId, "text":strCommentText, "username":strCommentUsername};
 			  var json = {"recipeFk":newCommentRecipeId, "text":strCommentText, "username":strCommentUsername};
 
 			  // alert("json:"+JSON.stringify(json));

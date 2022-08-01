@@ -1,5 +1,7 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!-- <html xmlns:th="http://www.thymeleaf.org">  -->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 	<meta charset="UTF-8" />
@@ -184,7 +186,16 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                                 	Salsa developeri i kuvari :) 
-									<h6 >Welcome: [[${#httpServletRequest.remoteUser}]]</h6>
+									<!--                                
+									<p style="font-style: italic" th:text="'Welcome : ' + ${#httpServletRequest.remoteUser}">
+								      sample_user
+								    </p>
+   									-->
+   									
+                                	<p style="font-style: italic" th:text="'Welcome2: ' + ${#authentication.getPrincipal().getUsername()}">
+								    </p>
+
+									<!-- <h6 >Welcome: [[${#httpServletRequest.remoteUser}]]</h6> -->
 	                            </span>
 	                            
                                 <img class="img-profile rounded-circle"

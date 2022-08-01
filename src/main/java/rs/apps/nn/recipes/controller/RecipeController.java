@@ -16,6 +16,8 @@ import java.util.stream.Stream;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.context.SecurityContextHolder;
 //import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -273,21 +275,22 @@ public class RecipeController {
 //        if (result.hasErrors()) {
 //            return "pets/createOrUpdateCommentForm";
 //        } else {
-		log.debug("Save Comment - start");
         	Recipe r = recipeService.findById(recipeId);
         	// TODO Move to DB - if not populated -> set Default=current timestamp in DB.
         	// (Joda dateTime option)
         	comment.setInsertedDt(Timestamp.valueOf(LocalDateTime.now()));
         	comment.setRecipe(r);
         	
-//        	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        	String username="";
-//        	if (principal instanceof UserDetails) {
-//        	  username = ((UserDetails)principal).getUsername();
-//        	} else {
-//        	  username = principal.toString();
-//        	}
-//        	comment.setUsername(username);
+        	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        	String username="";
+        	if (principal instanceof UserDetails) {
+        	  username = ((UserDetails)principal).getUsername();
+        	} else {
+        	  username = principal.toString();
+        	}
+
+		log.debug("Save Comment - username: {}", username);
+        	comment.setUsername(username);
 
 		//	log.debug("Save Comment, user:{}", username);
 

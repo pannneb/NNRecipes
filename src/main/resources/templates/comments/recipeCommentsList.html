@@ -58,10 +58,11 @@
             </div>
 	    </div>
 		<div class=" col-md-12 col-lg-4 zeroPadding">
-			<textarea class="form-control" id="newCommentText" rows="7"	name="newCommentText" th:placeholder="#{label.recipe.newComment}" required="required"></textarea>
+			<textarea class="form-control" id="newCommentText" rows="9"	name="newCommentText" th:placeholder="#{label.recipe.newComment}" required="required"></textarea>
 			<br/>
-			<input class="form-control" id="newCommentUsername"	name="newCommentUsername" th:placeholder="#{label.recipe.newCommentUsername}" required="required"></input>
+			<!-- <input class="form-control" id="newCommentUsername"	name="newCommentUsername" th:placeholder="#{label.recipe.newCommentUsername}" required="required"></input>
 			<br/>
+			 -->
    		    <input type="hidden" id="newCommentRecipeId" name="newCommentRecipeId" th:value="${commentsRecipeId}">
             <div class="btn-container">
 				<button type="button" onClick="addNewCommentOnClick()" class='btn addmore btn-outline-info'
