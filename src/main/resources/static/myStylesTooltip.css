@@ -17,19 +17,21 @@ margin: 0 auto;
 	/* top: 18px; */
 	right: 18px;
 	text-align: center;
-	background-color: #4F798E;
+	background-color: #e3e6f0;
+	border: 1px solid #4F798E;
 	border-radius: 50%;
 	width: 24px;
 	height: 24px;
-	line-height: 26px;
+	/* line-height: 23px; */
 	cursor: default;
-	/*font-family: emoji;*/
+	font-family: initial;
+	font-style: italic;
 }
 
 .help-tip:before{
-	content:'?';
+	content:'i';
 	font-weight: bold;
-	color:#fff;
+	color:#4f798e;
 }
 
 .help-tip:hover p{
@@ -48,7 +50,6 @@ margin: 0 auto;
 	position: absolute;
 	border-radius: 7px;
 	color: #eaecf4;
-	box-shadow: red; 
 	/*1px 1px 1px rgba(0, 0, 0, 0.2);*/
 	right: -4px;
 	font-size: 13px; /* Change the font size inside tooltip */
