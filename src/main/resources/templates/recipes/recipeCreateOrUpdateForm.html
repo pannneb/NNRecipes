@@ -41,7 +41,10 @@
      -->
      
      <link rel="stylesheet" type="text/css" th:href="@{/css/tags-standalone.css}" href="../../static/css/tags-standalone.css" />
+ 	 <link rel="stylesheet" type="text/css" th:href="@{/myStylesTooltip.css}" href="../../static/myStylesTooltip.css" />
  	 <script type="text/javascript" src="../../static/js/tags.js" th:src="@{/js/tags.js}"></script>
+ 
+ 	 
     
     </th:block>
 
@@ -98,13 +101,11 @@
 								  
 								  <input type="hidden" th:field="*{id}" id="id">
 
-								  <!--
-		 					 	    <input
-								      th:replace="~{fragments/inputField :: input (label='recipe.id', name='id', type='number', classCustom='col-md-5 col-lg-5', readOnly='true')}" />					       
-								  -->
-								  
 							      <input
-							        th:replace="~{fragments/inputField :: input ('recipe.title', 'title', 'text')}" />
+							        th:replace="~{fragments/inputField :: input (label='recipe.title', name='title', type='text', classCustom='', readOnly='false', setTooltip='true')}" />
+							      <!--   th:replace="~{fragments/inputField :: input ('recipe.title', 'title', 'text', 'dummy tooltip')}" />
+							      -->
+							      
 							      
 							      <div class="form-group has-feedback row rowStyle" >
 		                            <div class="col-md-6 col-lg-6">
@@ -157,16 +158,10 @@
 								<input
 							        th:replace="~{fragments/inputField :: input ('recipe.source', 'source', 'text')}" />
 								
-								
-							    
-								
-							    
-						    </div>
+							</div>
 						
         					<br>
         					<br>
-        					
-        					
         					<br>
         					
                             <div class="col-md-12 col-lg-12">

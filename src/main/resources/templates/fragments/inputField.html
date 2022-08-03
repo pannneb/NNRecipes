@@ -1,11 +1,26 @@
 <html>
 <body>
   <form>
-   
-    <th:block th:fragment="input (label, name, type)"  th:with="classCustom=${classCustom} ?: '', readOnly=${readOnly} ?: ''">
+
+									   
+    <th:block th:fragment="input (label, name, type)"  th:with="classCustom=${classCustom} ?: '', readOnly=${readOnly} ?: '', setTooltip=${setTooltip} ?: ''">
       <div th:with="valid=${!#fields.hasErrors(name)}"
-        th:class="${'form-group' + (valid ? '' : ' has-error')}" class="form-group">
-        <label class="col-sm-12 control-label" th:text="(#{'label.'+${label}})">Label</label>
+        th:class="${'form-group' + (valid ? '' : ' has-error')}" class="">
+        
+		<div id="tool_tip">
+			<div th:if="${#strings.length(setTooltip)}" class="help-tip myTooltip">
+				<p th:text="(#{'label.'+${label}+'.tooltip'})"></p>
+			</div>
+	       <!--  <label class="col-sm-12 control-label" th:text="(#{'label.'+${label}})">Label</label> -->
+	        <label class="control-label" th:text="(#{'label.'+${label}})">Label</label>
+		</div>
+<!-- 		<div id="tool_tip">
+			<div class="help-tip">
+				<p>This is a tooltip appears on mouse hovering.</p>
+			</div>
+			<p>This is a simple tooltip with just text display on hovering. Check it!</p>
+		</div>
+	 -->	
 
         <div th:class="'col-sm-12' + ' ' + ${(classCustom=='' ? '' : classCustom)}" >
             <div th:switch="${type}" >
