@@ -28,12 +28,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     	// https://stackoverflow.com/questions/57994953/ajax-request-with-spring-security-gives-403-forbidden
-        http.csrf().disable().cors()
+        
+        String[] staticResources  =  {
+            "/css/**",
+            "/img/**",
+            "/fonts/**",
+            "/scripts/**",
+            "/images/**",
+        };
+        
+    	http.csrf().disable().cors()
         	.and()
         	.authorizeRequests()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin().permitAll()
+        	.antMatchers(staticResources).permitAll()
+        	.anyRequest().authenticated()
+        	.and()
+            .formLogin()
+            .loginPage("/login")
+            .defaultSuccessUrl("/recipe/list", true)
+            .permitAll()
+            // .usernameParameter("email")
             .and()
             .logout().permitAll()
             ;     

@@ -1,17 +1,57 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Login page</title>
-  </head>
-  <body>
-    <h1>Login page111</h1>
-    <p th:if="${loginError}" class="error">Wrong user or password</p>
-    <form th:action="@{/login.html}" method="post">
-      <label for="username">Username</label>:
-      <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
-      <label for="password">Password</label>:
-      <input type="password" id="password" name="password" /> <br />
-      <input type="submit" value="Log in" />
-    </form>
-  </body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Login - NNRecipes Admin</title>
+    
+<!--     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-default.css}" href="../../static/css/bootstrap-default.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-default.css}" href="static/css/bootstrap-default.css" />
+    <link rel="stylesheet" th:href="@{/resources/static/css/bootstrap-default.css}"/>
+ -->
+ <!-- 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous" />-->
+ <link rel="stylesheet" type="text/css"  th:href="@{../../recipes/css/bootstrap-defaultlogin.css}"/>
+ 
+ <link rel="stylesheet" type="text/css"  th:href="@{../../recipes/myStyles.css}"/>
+
+</head>
+<body>
+<div class="container-fluid text-center">
+    <div>
+    
+<!--         <img class="rounded mx-auto d-block" height="150" src="/recipes/img/placehldrImg.png" />    -->
+        <img class="rounded mx-auto d-block" style="margin-top:10px" height="150" th:src="@{/img/LogoNNRecipes.jpg}" />
+    
+    </div>
+    <form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto;">
+     
+        <div th:if="${param.error}">
+            <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+        </div>
+         
+        <div th:if="${param.logout}">
+            <p class="text-warning">You have been logged out.</p>
+        </div>
+        
+        <div class="border border-secondary p-3 rounded" style="margin-top:10px">
+            <p>Access to NN Recipes Panel</p>
+            <p>
+                <input name="username" class="form-control" placeholder="Username" required autofocus/>
+            </p>
+            <p>
+                <input type="password" name="password" class="form-control" placeholder="Password" required />
+            </p>
+            <p>
+                <input type="checkbox" name="remember-me" />&nbsp;Remember Me
+            </p>
+            <p>
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </p>
+        </div>
+    </form>      
+</div>
+</body>
 </html>

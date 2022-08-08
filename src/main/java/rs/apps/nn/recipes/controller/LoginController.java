@@ -43,7 +43,8 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login() {
-        return "/login";
+        // custom logic before showing login page...
+        return "login";
     }
 
     @GetMapping("/403")
