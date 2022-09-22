@@ -1,5 +1,7 @@
 package rs.apps.nn.recipes.domain;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +23,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -88,10 +92,24 @@ public class Recipe extends BaseEntity {
 		}
 		return this.tags;
 	}
+
 	@Transient
 	private List<RecipeImageData> recipeImagesByOwner;
+	
 	@Transient
 	private List<RecipeImageData> recipeImagesFromComments;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dateOfCreation;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private Date dateTimeOfCreation;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date dateTimeOfCreation2;
+    
+    
+    private String timeOfCreation;
 
 	@Transient
 	private RecipeIngredientsData recipeIngredientsData;

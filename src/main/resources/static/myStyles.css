@@ -123,3 +123,33 @@
   font-size: 45px;
   color: #91d8e3;
 }
+
+.bootstrap-datetimepicker-widget.dropdown-menu {
+    z-index: 999 !important;
+    /*  background-color: red; */
+}
+
+.datepicker.dropdown-menu {
+  z-index: 1999 !important;
+  /* background-color: red; */
+}
+.bootstrap-datetimepicker-widget {
+  z-index: 1500 !important;
+  /* background-color: red; */
+}
+
+.selectDropDown {
+	-webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background-color: #fafafa;
+    height: 45px;
+    width: 100%;
+    background-image:  url("/recipes/img/dropdownarrow.png");  
+    /*background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAUCAMAAACtdX32AAAAdVBMVEUAAAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhMdQaAAAAJ3RSTlMAAAECAwQGBwsOFBwkJTg5RUZ4eYCHkJefpaytrsXGy8zW3+Do8vNn0bsyAAAAYElEQVR42tXROwJDQAAA0Ymw1p9kiT+L5P5HVEi3qJn2lcPjtIuzUIJ/rhIGy762N3XaThqMN1ZPALsZPEzG1x8LrFL77DHBnEMxBewz0fJ6LyFHTPL7xhwzWYrJ9z22AqmQBV757MHfAAAAAElFTkSuQmCC);*/
+    background-position: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    border-radius: 0;
+}

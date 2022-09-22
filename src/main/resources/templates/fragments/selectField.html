@@ -7,7 +7,7 @@
         <label class="col-sm-12 control-label" th:text="(#{'label.'+${label}})">Label</label>
 
         <div th:class="'col-sm-12' + ' ' + ${(classCustom=='' ? '' : classCustom)}" >
-          <select th:field="*{__${name}__}" class="form-control">
+          <select th:field="*{__${name}__}" class="form-control selectDropDown">
             <option th:each="item : ${items}" th:value="${item.id}"
               th:text="${item.label}">dog</option>
           </select>

@@ -39,13 +39,21 @@
     	<!-- Custom scripts for all pages-->
 <!--		<script type="text/javascript" src="../../static/js/bootstrap-tagsinput.js" th:src="@{/js/bootstrap-tagsinput.js}"></script>
      -->
-     
+  
      <link rel="stylesheet" type="text/css" th:href="@{/css/tags-standalone.css}" href="../../static/css/tags-standalone.css" />
  	 <link rel="stylesheet" type="text/css" th:href="@{/myStylesTooltip.css}" href="../../static/myStylesTooltip.css" />
- 	 <script type="text/javascript" src="../../static/js/tags.js" th:src="@{/js/tags.js}"></script>
- 
- 	 
-    
+ 	 <!-- <script type="text/javascript" src="../../static/js/tags.js" th:src="@{/js/tags.js}"></script> -->
+
+  	 <script type="text/javascript" src="../../static/js/moment-with-locales.min.js" th:src="@{/js/moment-with-locales.min.js}"></script> 	  	  
+     <script type="text/javascript" src="../../static/js/tether.min.js" th:src="@{/js/tether.min.js}"></script>
+
+	
+    <script type="text/javascript" src="../../static/js/tempusdominus-bootstrap-4.js" th:src="@{/js/tempusdominus-bootstrap-4.js}"></script>
+	 <link rel="stylesheet" type="text/css" th:href="@{/css/tempusdominus-bootstrap-4.css}" href="../../static/css/tempusdominus-bootstrap-4.css" />
+
+<!-- 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" href="../../static/css/font-awesome.min.css" />
+ -->
     </th:block>
 
 </head>
@@ -105,31 +113,15 @@
 							        th:replace="~{fragments/inputField :: input (label='recipe.title', name='title', type='text', classCustom='', readOnly='false', setTooltip='true')}" />
 							      <!--   th:replace="~{fragments/inputField :: input ('recipe.title', 'title', 'text', 'dummy tooltip')}" />
 							      -->
-							      
-							      
-							      <div class="form-group has-feedback row rowStyle" >
-		                            <div class="col-md-6 col-lg-6">
-		                              	<div class="col-md-12 form-group">
-		                                    <label th:text="#{label.recipe.difficulty}"></label>
-		                                    	<select class="form-control" th:field="*{enumDifficulty}">
-		      										<option th:each="item:${T(rs.apps.nn.recipes.domain.EnumDifficulty).values()}"
-		      											th:value="${item.name()}"
-		      											th:text="(#{label.enum.difficulty.+${item.name()}})"> val
-		      									</option>
-		                                    </select>
-		                                    <select class="form-control" th:remove="all">
-		                                        <option>Easy dummy</option>
-		                                        <option>Medium dummy</option>
-		                                        <option>Hard dummy</option>
-		                                    </select>
-		                                </div>
-                                	</div>
-                                	<div class="col-md-6 col-lg-6">
-                                		<input
-							    		    th:replace="~{fragments/inputField :: input ('recipe.portions', 'portions', 'number')}" />
-                                		
-									</div>
-								</div>
+
+							      <input
+							        th:replace="~{fragments/inputField :: input (label='recipe.dateOfCreation', name='dateOfCreation', type='date', classCustom='', readOnly='false', setTooltip='')}" />
+
+							      <input
+							        th:replace="~{fragments/inputField :: input (label='recipe.timeOfCreation', name='timeOfCreation', type='time', classCustom='', readOnly='false', setTooltip='')}" />
+
+							      <input
+							        th:replace="~{fragments/inputField :: input (label='recipe.dateTimeOfCreation', name='dateTimeOfCreation', type='dateTime', classCustom='', readOnly='false', setTooltip='')}" />
 							      
 							      <input
 							        th:replace="~{fragments/inputField :: input ('recipe.url', 'url', 'text')}" />
@@ -157,6 +149,30 @@
 								
 								<input
 							        th:replace="~{fragments/inputField :: input ('recipe.source', 'source', 'text')}" />
+								
+							      <div class="form-group has-feedback row rowStyle" >
+		                            <div class="col-md-6 col-lg-6">
+		                              	<div class="col-md-12 form-group">
+		                                    <label th:text="#{label.recipe.difficulty}"></label>
+		                                    	<select class="form-control" th:field="*{enumDifficulty}">
+		      										<option th:each="item:${T(rs.apps.nn.recipes.domain.EnumDifficulty).values()}"
+		      											th:value="${item.name()}"
+		      											th:text="(#{label.enum.difficulty.+${item.name()}})"> val
+		      									</option>
+		                                    </select>
+		                                    <select class="form-control" th:remove="all">
+		                                        <option>Easy dummy</option>
+		                                        <option>Medium dummy</option>
+		                                        <option>Hard dummy</option>
+		                                    </select>
+		                                </div>
+                                	</div>
+                                	<div class="col-md-6 col-lg-6">
+                                		<input
+							    		    th:replace="~{fragments/inputField :: input ('recipe.portions', 'portions', 'number')}" />
+                                		
+									</div>
+								</div>
 								
 							</div>
 						
@@ -306,8 +322,7 @@
 												<!-- 
 												<div class="invalid-feedback">Please select a valid tag.</div>
 												-->
-												
-<!-- 													<input type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput" /> 
+<!-- 														<input type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput" /> 
 -->
 												</div>
 									  		</div>
@@ -477,8 +492,17 @@
     	Tags.init("select[multiple]:not(#regular)");
 	</script>
 	
+	<script type="text/javascript">
+	
+		$(function () {
+               $('#dateTimeOfCreation').datetimepicker({
+                   format: 'DD/MM/YYYY HH:mm',
+               }); 
+        }); 
+    
+	</script>
+	
 	<script>
-
 	
 		var i=0;
 		var deleted=0;
@@ -524,7 +548,16 @@
 	}*/
 
 	    // addMoreFunc();
-		
+		$(function() {
+			
+			// const picker = new tempusdominus
+		    // .TempusDominus(document.getElementById('datetimepicker1'));
+			
+ 		  /* $('#datetimepicker1').datetimepicker();
+	      $('#exampleDateTime').datetimepicker(); */
+
+		});
+	
 		$(".delete").on('click', function() {
 		    $('.case:checkbox:checked').parents("tr").remove();
 			deleted=deleted+1;
@@ -623,12 +656,26 @@
 			     } 
 			  });
 			}
-		
+
 			$('document').ready(function(){
 				refreshCommentListData();
 				refreshCommentImagesData();
+
+//				delay(1000).then(() => abc());
+
 			});
-		
+
+			/* function abc() {
+				// alert(111);
+				$('#dateTimeOfCreation').datetimepicker({
+	                format: 'DD/MM/YYYY HH:mm',
+	            });
+			} */
+
+			/* function delay(time) {
+			    return new Promise(resolve => setTimeout(resolve, time));
+			}
+			 */
 		</script>
 		
         

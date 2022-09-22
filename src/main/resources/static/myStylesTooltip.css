@@ -101,11 +101,11 @@ margin: 0 auto;
 }
 
 .form-group {
-  z-index: 10000;
-  position: relative;
+  z-index: 10;
+  /* position: relative; */
 }
 
 .myTooltip {
-  z-index: 10001;
+  z-index: 11;
 }
 

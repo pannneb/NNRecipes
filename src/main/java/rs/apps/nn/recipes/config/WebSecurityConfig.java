@@ -34,10 +34,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/img/**",
             "/fonts/**",
             "/scripts/**",
+            "/h2-console/**",
             "/images/**",
         };
         
     	http.csrf().disable().cors()
+    	.and()
+        .headers().frameOptions().disable()
         	.and()
         	.authorizeRequests()
         	.antMatchers(staticResources).permitAll()

@@ -1,19 +1,27 @@
-INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source)
-  VALUES (-130, 'gulas', 'www.aaa.111', 'This is description for first recipe record', 25, 75, 4, 'Source of first recipe record');
+INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source, date_time_of_creation)
+  VALUES (-130, 'gulas', 'www.aaa.111', 'This is description for first recipe record', 25, 75, 4, 'Source of first recipe record', current_timestamp);
+
 INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source)
   VALUES (-131, 'pizza', 'www.2222222.ccc', 'The best pizza recipe I have ever seen.', 55, 5, 8, 'I have heared for this recept from come Italian');
-INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source)
-  VALUES (-133, 'tortilja sa prelivom', 'www.333.aaa', 'Another great recept.', 5, 115, 11, 'This is recept seen on TV show');
-INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source)
-  VALUES (-112, 'lazanje', 'www.333.aaa', 'Another great recept.', 5, 115, 11, 'This is recept seen on TV show');
+
+INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source, date_time_of_creation)
+  VALUES (-133, 'tortilja sa prelivom', 'www.333.aaa', 'Another great recept.', 5, 115, 11, 'This is recept seen on TV show', parsedatetime('01-11-2021 11:15:33', 'dd-MM-yyyy hh:mm:ss'));
+
+INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source, date_time_of_creation)
+  VALUES (-112, 'lazanje', 'www.333.aaa', 'Another great recept.', 5, 115, 11, 'This is recept seen on TV show', parsedatetime('01-11-2021 09:17:51', 'dd-MM-yyyy hh:mm:ss'));
+
 INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source)
   VALUES (-113, 'pasulj', 'www.333.aaa', 'Another great recept.', 5, 115, 11, 'This is recept seen on TV show');
-INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source)
-  VALUES (-114, 'prebranac', 'www.333.aaa', 'Another great recept.', 5, 115, 11, 'This is recept seen on TV show');
+
+INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source, date_time_of_creation)
+  VALUES (-114, 'prebranac', 'www.333.aaa', 'Another great recept.', 5, 115, 11, 'This is recept seen on TV show', parsedatetime('21-07-2022 21:55:57', 'dd-MM-yyyy hh:mm:ss'));
+
 INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source)
   VALUES (-115, 'corba', 'www.333.aaa', 'Another great recept.', 5, 115, 11, 'This is recept seen on TV show');
+
 INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source)
   VALUES (-116, 'potaz', 'www.333.aaa', 'Another great recept.', 5, 115, 11, 'This is recept seen on TV show');
+
 INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source)
   VALUES (-117, 'tortilja 1', 'www.333.aaa', 'Another great recept.', 5, 115, 11, 'This is recept seen on TV show');
 INSERT INTO recipes.recipe (id, title, url, description, prep_time, cook_time, portions, source)
@@ -96,9 +104,9 @@ INSERT INTO recipes.category (id, description)
 INSERT INTO recipes.category (id, description)
   VALUES (-225, 'Category 27');
 
-INSERT INTO RECIPES.INGREDIENT(ID,AMOUNT,ingredient_Name,unit_Of_Measure,RECIPE_FK)VALUES(-123,1.123,'Brasno','CUP',-133);
-INSERT INTO RECIPES.INGREDIENT(ID,AMOUNT,ingredient_Name,unit_Of_Measure,RECIPE_FK)VALUES(-124,3,'Jaja','EACH',-133);
-INSERT INTO RECIPES.INGREDIENT(ID,AMOUNT,ingredient_Name,unit_Of_Measure,RECIPE_FK)VALUES(-125,1,'Ulje','TEASPOON',-133);
+INSERT INTO RECIPES.INGREDIENT(ID,AMOUNT,ingredient_Name,uom,RECIPE_FK)VALUES(-123,1.123,'Brasno',-1,-133);
+INSERT INTO RECIPES.INGREDIENT(ID,AMOUNT,ingredient_Name,uom,RECIPE_FK)VALUES(-124,3,'Jaja',-2,-133);
+INSERT INTO RECIPES.INGREDIENT(ID,AMOUNT,ingredient_Name,uom,RECIPE_FK)VALUES(-125,1,'Ulje',-3,-133);
 
 INSERT INTO RECIPES.TAG(ID,VALUE) VALUES (-111,'breakfast');
 INSERT INTO RECIPES.TAG(ID,VALUE) VALUES (-112,'lunch');
@@ -151,14 +159,26 @@ INSERT INTO RECIPES.UNIT_OF_MEASURE(ID,description)VALUES(-6,'OUNCE');
 INSERT INTO RECIPES.UNIT_OF_MEASURE(ID,description)VALUES(-7,'DASH');
 INSERT INTO RECIPES.UNIT_OF_MEASURE(ID,description)VALUES(-8,'PINT');
 INSERT INTO RECIPES.USERS (USER_ID, user_name,password,email, name, last_name, role,enabled)
-VALUES (-1,'user',
+VALUES (-1,'user1',
 '$2a$10$XptfskLsT1l/bRTLRiiCgejHqOpgXFreUnNUa35gJdCr2v2QbVFzu','aaa@aaa.com','Marko', 'Markovic',
 'ROLE_USER', 1);
 
 INSERT INTO RECIPES.USERS (USER_ID, user_name,password,email, name, last_name, role,enabled)
-VALUES (-2,'admin',
+VALUES (-2,'admin1',
 '$2a$10$zxvEq8XzYEYtNjbkRsJEbukHeRx3XS6MDXHMu8cNuNsRfZJWwswDy','aaa@aaa.com','Marko', 'Markovic',
 'ROLE_ADMIN', 1);
+
+INSERT INTO RECIPES.USERS (USER_ID, user_name,password,email, name, last_name, role,enabled)
+VALUES (-3,'user',
+'$2a$10$MZc4Pl/SaG5HZAz0NBuFtOoEUBTgqjouCuKMlY7XCZR4SO1EqUlLK','aaa@aaa.com','Marko', 'Markovic',
+'ROLE_USER', 1);
+
+INSERT INTO RECIPES.USERS (USER_ID, user_name,password,email, name, last_name, role,enabled)
+VALUES (-4,'admin',
+'$2a$10$CSToaHLFFhrf/98fujQmOO2hsIlLuWue5AfLLFNHXnm5v91XEGuBO','aaa@aaa.com','Marko', 'Markovic',
+'ROLE_ADMIN', 1);
+
+
 --INSERT INTO asocijacije.category (id, description, name) VALUES (-1, 'Dance', 'Dance description');
 --INSERT INTO asocijacije.category (id, description, name) VALUES (-2, 'Animals', 'Animals description');
 --INSERT INTO asocijacije.category (id, description, name) VALUES (-3, 'Music', 'Music description');
