@@ -110,21 +110,21 @@
 								  <input type="hidden" th:field="*{id}" id="id">
 
 							      <input
-							        th:replace="~{fragments/inputField :: input (label='recipe.title', name='title', type='text', classCustom='', readOnly='false', setTooltip='true')}" />
+							        th:replace="~{fragments/inputField :: input (label='recipe.title', name='title', type='text', isReadOnly='true', classCustom='', readOnly='false', setTooltip='true')}" />
 							      <!--   th:replace="~{fragments/inputField :: input ('recipe.title', 'title', 'text', 'dummy tooltip')}" />
 							      -->
 
 							      <input
-							        th:replace="~{fragments/inputField :: input (label='recipe.dateOfCreation', name='dateOfCreation', type='date', classCustom='', readOnly='false', setTooltip='')}" />
+							        th:replace="~{fragments/inputField :: input (label='recipe.dateOfCreation', name='dateOfCreation', type='date', isReadOnly='false', classCustom='', readOnly='false', setTooltip='')}" />
 
 							      <input
-							        th:replace="~{fragments/inputField :: input (label='recipe.timeOfCreation', name='timeOfCreation', type='time', classCustom='', readOnly='false', setTooltip='')}" />
+							        th:replace="~{fragments/inputField :: input (label='recipe.timeOfCreation', name='timeOfCreation', type='time', isReadOnly='false', classCustom='', readOnly='false', setTooltip='')}" />
 
 							      <input
-							        th:replace="~{fragments/inputField :: input (label='recipe.dateTimeOfCreation', name='dateTimeOfCreation', type='dateTime', classCustom='', readOnly='false', setTooltip='')}" />
+							        th:replace="~{fragments/inputField :: input (label='recipe.dateTimeOfCreation', name='dateTimeOfCreation', type='dateTime', isReadOnly='false', classCustom='', readOnly='false', setTooltip='')}" />
 							      
 							      <input
-							        th:replace="~{fragments/inputField :: input ('recipe.url', 'url', 'text')}" />
+							        th:replace="~{fragments/inputField :: input ('recipe.url', 'url', 'text', 'false')}" />
 
 							    </div>
 						    </div>
@@ -139,16 +139,27 @@
 							    <div class="form-group has-feedback row rowStyle" >
 		                              <div class="col-md-6 col-lg-6">
 								          <input
-									        th:replace="~{fragments/inputField :: input ('recipe.prepTime', 'prepTime', 'number')}" />
+									        th:replace="~{fragments/inputField :: input ('recipe.prepTime', 'prepTime', 'number', 'false')}" />
 									  </div>
 		                              <div class="col-md-6 col-lg-6">
 									      <input
-									        th:replace="~{fragments/inputField :: input ('recipe.cookTime', 'cookTime', 'number')}" />
+									        th:replace="~{fragments/inputField :: input ('recipe.cookTime', 'cookTime', 'number', 'false')}" />
 									  </div>
+									  
+									  
+									  
+									  <div class="col-sm-12">
+									  	  	<label class="col-sm-2"  >Label</label>
+						                	<div class="col-sm-9">
+						                		<input class="" style="font-style: italic" type="text" />
+						                	</div>
+						              </div>
+										
+										
 								</div>
 								
 								<input
-							        th:replace="~{fragments/inputField :: input ('recipe.source', 'source', 'text')}" />
+							        th:replace="~{fragments/inputField :: input ('recipe.source', 'source', 'text', 'false')}" />
 								
 							      <div class="form-group has-feedback row rowStyle" >
 		                            <div class="col-md-6 col-lg-6">
@@ -169,7 +180,7 @@
                                 	</div>
                                 	<div class="col-md-6 col-lg-6">
                                 		<input
-							    		    th:replace="~{fragments/inputField :: input ('recipe.portions', 'portions', 'number')}" />
+							    		    th:replace="~{fragments/inputField :: input ('recipe.portions', 'portions', 'number', 'false')}" />
                                 		
 									</div>
 								</div>
@@ -256,7 +267,7 @@
                             <div class="col-md-12 col-lg-12">
 							    <div class="form-group has-feedback">
 							      <input
-							        th:replace="~{fragments/inputField :: input ('recipe.instructions', 'description', 'textarea')}" />
+							        th:replace="~{fragments/inputField :: input ('recipe.instructions', 'description', 'textarea', 'false')}" />
 							    </div>
 						    </div>
 
