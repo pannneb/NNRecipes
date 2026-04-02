@@ -13,4 +13,6 @@ public interface CategoryService extends CrudServiceRecipes<Category, Long>{
 
 	List<Category> findAllByOrderByIdAsc();
 
+	List<Category> findAllByOrderByDescriptionAsc();
+
 }

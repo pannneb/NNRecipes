@@ -1,7 +1,7 @@
 server:
   servlet:
     context-path: /recipes
-  port: 8081
+  port: 8083
 #  context-path: /guessme   deprecated
 
 
@@ -22,13 +22,16 @@ server:
 #currentSchema=recipes
 #defaultSchema=recipes
 
+#spring.datasource.jndi-name=java:comp/env/jdbc/j4s
+
 spring:
-  h2:
-    console:
-      enabled: false
-      path: /h2-console
+  #h2:
+  #  console:
+  #    enabled: false
+  #    path: /h2-console
   datasource:
-    url: jdbc:mysql://ec2-34-220-115-146.us-west-2.compute.amazonaws.com:3306/recipes?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+    #jndi-name: java:comp/env/jdbc/nnrecipesDataSource
+    url: jdbc:mysql://ec2-52-32-250-243.us-west-2.compute.amazonaws.com:3306/recipes?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
     username: nnuser
     password: nUserPass1!
     platform: mysql
@@ -36,7 +39,7 @@ spring:
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.xml
     enabled: true
-#    outputChangeLogFile: src/main/resources/liquibase-outputChangeLog.xml
+    #    outputChangeLogFile: src/main/resources/liquibase-outputChangeLog.xml
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     #database: postgresql

@@ -43,7 +43,7 @@ public class CategoryController {
 
 	@RequestMapping(value = { "/list/", "/list" }, method = RequestMethod.GET)
 	public String categoriesList(Model model) {
-		List<Category> categories = categoryService.findAllByOrderByIdAsc();
+		List<Category> categories = categoryService.findAllByOrderByDescriptionAsc();
 		// Set<Recipe> listOfRecipes = recipeService.getRecipes();
 		model.addAttribute("categories", categories);
 		// listOfRecipes.forEach(a->{

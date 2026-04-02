@@ -18,4 +18,16 @@ public interface RecipeService extends CrudServiceRecipes<Recipe, Long> {
 	List<Recipe> findAllByCookTimeGreaterThanEqualAndLessThanEqual(int timeFrom, int timeTo);
 
 	List<Recipe> findAllByOrderByIdAsc();
+
+	List<Recipe> findAllPublicOrOwnedByUser(String loggedUser);
+
+	/**
+	 * If loggedUser has role: ADMIN -> show all recipes.
+	 * Otherwise -> show only public recipes and recipes of logged user.
+	 * 
+	 * @param loggedUser
+	 * @return
+	 */
+	List<Recipe> findAllRecipesForList(String loggedUser);
+
 }

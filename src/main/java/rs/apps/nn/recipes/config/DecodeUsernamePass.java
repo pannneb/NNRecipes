@@ -13,7 +13,7 @@ public class DecodeUsernamePass {
         rawPassword = "user";
         encodedPassword = encoder.encode(rawPassword);
         System.out.println(encodedPassword);
-   	
+
     }
 
 }

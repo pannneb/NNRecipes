@@ -28,12 +28,27 @@
 		<script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
 
 <body>
+
+    <div id="statusMsgData" th:fragment = "statusMsgData" >
+	    <div th:class="'alert alert-custom alert-success alert-' + ${css} +  ' alert-dismissible'" role="alert" th:if="${msg}">
+			<button type="button" class="close alert-custom" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div th:text="#{${msg}}"/>
+	    </div>
+	    <div th:class="'alert alert-custom alert-danger alert-' + ${css} +  ' alert-dismissible'" role="alert" th:if="${err}">
+			<button type="button" class="close alert-custom" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div th:text="#{${err}}"/>
+	    </div>
+	</div>
     
 <!--         <img class="rounded mx-auto d-block" height="150" src="/recipes/img/placehldrImg.png" />    -->
-        <img class="rounded mx-auto d-block" style="margin-top:10px" height="150" th:src="@{/img/LogoNNRecipes.jpg}" />
+        <img class="rounded mx-auto d-block" style="margin-top:10px; margin-bottom:20px;" height="150" th:src="@{/img/LogoNNRecipes.jpg}" />
     
     </div>
-    <form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto;">
+    <form th:action="@{/login}" method="post" style="max-width: 395px; margin: 0 auto;">
      
         <div th:if="${param.error}">
             <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
@@ -55,9 +70,12 @@
             <p>
                 <input type="checkbox" name="remember-me" />&nbsp;Remember Me
             </p>
-            <p>
-                <input type="submit" value="Login" class="btn btn-primary" />
-            </p>
+            <row>
+	            <p>
+	                <input type="submit" value="Login" class="btn btn-primary" />
+	                <a style="float: right;" value="Registration" th:href="@{/user/registration}" class="btn btn-outline-primary">Registration</a>
+	            </p>
+            </row>
         </div>
     </form>      
 </div>

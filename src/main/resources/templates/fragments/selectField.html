@@ -1,26 +1,37 @@
 <html>
 <body>
   <form>
-    <th:block th:fragment="select (label, name, items)"  th:with="classCustom=${classCustom} ?: '', readOnly=${readOnly} ?: ''">
-      <div th:with="valid=${!#fields.hasErrors(name)}"
-        th:class="${'form-group' + (valid ? '' : ' has-error')}" class="form-group">
-        <label class="col-sm-12 control-label" th:text="(#{'label.'+${label}})">Label</label>
+    <th:block th:fragment="select (label, name, items, isReadOnly)"  th:with="classCustom=${classCustom} ?: '', readOnly=${readOnly} ?: ''">
+      <div th:with="valid=${!#fields.hasErrors(name)}" th:class="${'form-group' + (valid ? '' : ' has-error')}" class="form-group">
 
-        <div th:class="'col-sm-12' + ' ' + ${(classCustom=='' ? '' : classCustom)}" >
-          <select th:field="*{__${name}__}" class="form-control selectDropDown">
-            <option th:each="item : ${items}" th:value="${item.id}"
-              th:text="${item.label}">dog</option>
-          </select>
-          <span th:if="${valid}"
-            class="glyphicon glyphicon-ok form-control-feedback"
-            aria-hidden="true"></span>
+        <div th:if="${isReadOnly!='true'}" th:class="'col-sm-12' + ' ' + ${(classCustom=='' ? '' : classCustom)} + 'zeroMargin zeroPadding'" >
+              <label class="col-sm-12 control-label" th:text="(#{'label.'+${label}})">Label</label>
+	          <div class="col-sm-12">
+	          <select th:if="${isReadOnly!='true'}" th:field="*{__${name}__}" class="form-control selectDropDown" th:readonly="${isReadOnly=='true'}"  th:disabled="${isReadOnly=='true'}" >
+	            <option th:each="item : ${items}" th:value="${item.id}"
+	              th:text="${item.label}">dog</option>
+	          </select>
+	          </div>
+        </div>
+        
+        <div th:if="${isReadOnly=='true'}" class="row col-sm-12  zeroMargin zeroPadding" >
+          	  <div class="col-sm-5">
+          	      <label class="control-label align-middle labelPaddingTop" th:text="(#{'label.'+${label}})">Label</label>
+	          </div>
+          	  <div class="col-sm-7">
+		          <select th:field="*{__${name}__}" class="form-control selectDropDown" th:readonly="${isReadOnly=='true'}"  th:disabled="${isReadOnly=='true'}" >
+		            <option th:each="item : ${items}" th:value="${item.id}"
+		              th:text="${item.label}">dog</option>
+		          </select>
+	          </div>
+        </div>
+        
+        <span th:if="${valid}"         class="glyphicon glyphicon-ok form-control-feedback"            aria-hidden="true"></span>
           <th:block th:if="${!valid}">
-            <span
-              class="glyphicon glyphicon-remove form-control-feedback"
-              aria-hidden="true"></span>
+            <span              class="glyphicon glyphicon-remove form-control-feedback"    aria-hidden="true"></span>
             <span class="help-inline" th:errors="*{__${name}__}">Error</span>
           </th:block>
-        </div>
+
       </div>
     </th:block>
   </form>

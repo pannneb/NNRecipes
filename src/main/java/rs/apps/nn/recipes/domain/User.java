@@ -1,17 +1,12 @@
 package rs.apps.nn.recipes.domain;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
@@ -24,7 +19,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "USERS", schema = "recipes")
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -33,7 +27,7 @@ import lombok.NoArgsConstructor;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private int id;
 
@@ -44,7 +38,7 @@ public class User {
 
 	@Column(name = "email")
 	@Email(message = "*Please provide a valid Email")
-	@NotEmpty(message = "*Please provide an email")
+	// @NotEmpty(message = "*Please provide an email")
 	private String email;
 
 	@Column(name = "password")
@@ -65,6 +59,9 @@ public class User {
 
 	@Column(name = "enabled")
 	private Boolean enabled;
+
+	@Transient
+	private String confirmPassword;
 
 //	@ManyToMany(cascade = CascadeType.MERGE)
 //	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))

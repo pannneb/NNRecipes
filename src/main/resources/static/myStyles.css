@@ -3,9 +3,13 @@
 	padding-bottom: 0.5rem !important;
 }
 
-.zeroPadding{  
+.zeroPadding {  
 	padding-left: 0px;   
 	padding-right: 0px;
+}
+
+.labelPaddingTop {  
+	padding-top: 8px;   
 }
 
 .zeroPaddingLeft {  
@@ -20,7 +24,7 @@
 	padding-left: 10px; 
 }
 
-.zeroMargin{  
+.zeroMargin {
 	margin-left: 0px;   
 	margin-right: 0px;
 }
@@ -115,13 +119,12 @@
 {
   content: '>';
   font-size: 45px;
-  color: #91d8e3;
+  color: #5bb7c7;
 }
-
 .carousel-control-prev-icon:after {
   content: '<';
   font-size: 45px;
-  color: #91d8e3;
+  color: #5bb7c7;
 }
 
 .bootstrap-datetimepicker-widget.dropdown-menu {
@@ -153,3 +156,95 @@
     padding: 0.5rem;
     border-radius: 0;
 }
+
+.card-body {
+	padding: 0rem;
+}
+
+.page-main-content {
+	padding-left: 0px;   
+	padding-right: 0px;
+}
+
+body {
+	line-height: 1.0;
+}
+
+.mb-4, .my-4 {
+    margin-bottom: 0.0rem!important;
+}
+
+.container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.card-header {
+    margin-bottom: 10px;
+}
+
+.hrNoMargins {
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+}
+
+
+
+
+
+
+
+
+
+.round {
+  position: relative;
+}
+
+.round label {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 28px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 28px;
+}
+
+.round label:after {
+  border: 2px solid #fff;
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: 6px;
+  left: 7px;
+  opacity: 0;
+  position: absolute;
+  top: 8px;
+  transform: rotate(-45deg);
+  width: 12px;
+}
+
+.round input[type="checkbox"] {
+  visibility: hidden;
+}
+
+.round input[type="checkbox"]:checked + label {
+  background-color: #66bb6a;
+  border-color: #66bb6a;
+}
+
+.round input[type="checkbox"]:checked + label:after {
+  opacity: 1;
+}
+
+.carousel-indicators {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+.fas:before {
+    margin-right:10px;
+}
+

@@ -22,22 +22,32 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" th:fragment = "accordionSidebar">
 
-            <!-- Sidebar - Brand -->
+            <!-- Sidebar - Brand 
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">Recipes :) <sup>the best</sup></div>
             </a>
+            -->
+			<SPAN class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-cookie-bite"></i>
+                   <!--  <i class="fa-solid fa-hat-chef"></i> -->
+                </div>
+                <div class="sidebar-brand-text mx-3">Recipes :) <sup>the best</sup></div>
+            </SPAN>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+	            <span class="nav-link"  th:text="#{menu.label.dashboard}"/>
+               <!--  <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span th:text="#{menu.label.dashboard}"/></a>
+                     -->
             </li>
 
             <!-- Divider -->
@@ -61,7 +71,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header"  th:text="#{menu.label.options}"></h6>
                         <a class="collapse-item" th:href="@{/recipe/list}" th:text="#{menu.label.list}"></a>
-                        <a class="collapse-item" th:href="@{/recipe/new}" th:text="#{menu.label.add}"></a>
+                        <a class="collapse-item" th:href="@{/recipe/new}" th:text="#{menu.label.new}"></a>
                     </div>
                 </div>
             </li>
@@ -79,7 +89,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header"  th:text="#{menu.label.options}"></h6>
                         <a class="collapse-item" th:href="@{/category/list}" th:text="#{menu.label.list}"></a>
-                        <a class="collapse-item" th:href="@{/category/new}" th:text="#{menu.label.add}"></a>
+                        <a class="collapse-item" th:href="@{/category/new}" th:text="#{menu.label.new}"></a>
                     </div>
                 </div>
             </li>
@@ -91,15 +101,13 @@
 
 
             <!-- Heading -->
+            <!-- 
             <div class="sidebar-heading">
                 Interface
             </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-              <!--       <i class="fas fa-fw fa-cog"></i> -->
                     <i class="fas fa-balance-scale"></i>
                     
                     <span>Components1</span>
@@ -113,9 +121,8 @@
                 </div>
             </li>
 
-
-            <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+            <!-- Divider -->
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -124,7 +131,13 @@
 
             <!-- Sidebar Message -->
             <div class="sidebar-card">
-                <img class="sidebar-card-illustration mb-2" src="/recipes/img/undraw_rocket.svg" alt="">
+                <!--  <img class="sidebar-card-illustration mb-2" src="/recipes/img/undraw_rocket.svg" alt=""> -->
+
+                <div class="sidebar-brand-icon rotate-n-15" >
+                    <i class="fas fa-mortar-pestle" style="zoom: 3; margin-bottom: 7px;"></i>
+                    <!--  <i class="fa-solid fa-hat-chef"></i> -->
+                </div>
+
                 <p class="text-center mb-2"><strong>
                     <span th:text="#{menu.label.recipesAdmin}"></span></strong></p>
                 <a class="btn btn-success btn-sm" href="" th:text="#{menu.label.enjoy}"></a>

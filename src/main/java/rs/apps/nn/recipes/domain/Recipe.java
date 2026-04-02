@@ -52,10 +52,12 @@ public class Recipe extends BaseEntity {
 	@Size(min = 5, max = 250)
 	private String title;
 	private String description;
+	private String createdBy;
 	private Integer prepTime;
 	private Integer cookTime;
 //	private Integer servTime;
 	private Integer portions;
+	private Boolean isPublic;
 	@NotNull
 	private String source;
 	private String url;
@@ -69,6 +71,9 @@ public class Recipe extends BaseEntity {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
 	private List<RecipeImageData> recipeImages;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+	private List<RecipeImageMap> recipeImagesMap;
 
 	// Set<Course> likedCourses;
 	// @ManyToMany(cascade = CascadeType.ALL, mappedBy = "category")
@@ -102,7 +107,7 @@ public class Recipe extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfCreation;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date dateTimeOfCreation;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

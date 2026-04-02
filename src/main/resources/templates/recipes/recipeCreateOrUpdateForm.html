@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html xmlns:th="http://www.thymeleaf.org" 
       th:replace="~{layouts/guessme-newdesign-layout :: guessme_lo_constructor(
                                                 ~{::title},
@@ -17,9 +18,7 @@
 
     <!-- 
         	th:replace="~{layouts/guessme-newdesign-layout :: quessme_lo_constructor(
-      
       		th:replace="~{layouts/guessme-layout :: l_constructor (  
-
                                                 ~{:: #home-main-content},
     -->
 
@@ -33,28 +32,34 @@
 
     <th:block id="home-static-resources"> 
 
-        <!-- Main styles for this template (for Recipe application) -->
-<!--     	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-tagsinput.css}" href="../../static/css/bootstrap-tagsinput.css" />
-     -->	
-    	<!-- Custom scripts for all pages-->
-<!--		<script type="text/javascript" src="../../static/js/bootstrap-tagsinput.js" th:src="@{/js/bootstrap-tagsinput.js}"></script>
-     -->
-  
-     <link rel="stylesheet" type="text/css" th:href="@{/css/tags-standalone.css}" href="../../static/css/tags-standalone.css" />
- 	 <link rel="stylesheet" type="text/css" th:href="@{/myStylesTooltip.css}" href="../../static/myStylesTooltip.css" />
- 	 <!-- <script type="text/javascript" src="../../static/js/tags.js" th:src="@{/js/tags.js}"></script> -->
-
-  	 <script type="text/javascript" src="../../static/js/moment-with-locales.min.js" th:src="@{/js/moment-with-locales.min.js}"></script> 	  	  
-     <script type="text/javascript" src="../../static/js/tether.min.js" th:src="@{/js/tether.min.js}"></script>
-
+	     <!-- Main styles for this template (for Recipe application) -->
+		 <!--     	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-tagsinput.css}" href="../../static/css/bootstrap-tagsinput.css" />
+	     -->	
 	
-    <script type="text/javascript" src="../../static/js/tempusdominus-bootstrap-4.js" th:src="@{/js/tempusdominus-bootstrap-4.js}"></script>
-	 <link rel="stylesheet" type="text/css" th:href="@{/css/tempusdominus-bootstrap-4.css}" href="../../static/css/tempusdominus-bootstrap-4.css" />
+	     <!-- Custom scripts for all pages-->
+		 <!--		<script type="text/javascript" src="../../static/js/bootstrap-tagsinput.js" th:src="@{/js/bootstrap-tagsinput.js}"></script>
+	     -->
+	  
+	     <link rel="stylesheet" type="text/css" th:href="@{/css/tags-standalone.css}" href="../../static/css/tags-standalone.css" />
+	 	 <link rel="stylesheet" type="text/css" th:href="@{/myStylesTooltip.css}" href="../../static/myStylesTooltip.css" />
+	 	 <!-- <script type="text/javascript" src="../../static/js/tags.js" th:src="@{/js/tags.js}"></script> -->
+	
+	  	 <script type="text/javascript" src="../../static/js/moment-with-locales.min.js" th:src="@{/js/moment-with-locales.min.js}"></script> 	  	  
+	     <script type="text/javascript" src="../../static/js/tether.min.js" th:src="@{/js/tether.min.js}"></script>
+	
+		
+	     <script type="text/javascript" src="../../static/js/tempusdominus-bootstrap-4.js" th:src="@{/js/tempusdominus-bootstrap-4.js}"></script>
+		 <link rel="stylesheet" type="text/css" th:href="@{/css/tempusdominus-bootstrap-4.css}" href="../../static/css/tempusdominus-bootstrap-4.css" />
+		 <link rel="stylesheet" type="text/css" th:href="@{/css/awesome-bootstrap-checkbox.css}" href="../../static/css/awesome-bootstrap-checkbox.css" />
+	
+	     <script type="text/javascript" src="../../static/js/bootstrap-checkbox.min.js" th:src="@{/js/bootstrap-checkbox.min.js}"></script>
 
-<!-- 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" href="../../static/css/font-awesome.min.css" />
- -->
-    </th:block>
+		 <!-- 	
+			<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+	    	<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" href="../../static/css/font-awesome.min.css" />
+	 	 -->
+
+     </th:block>
 
 </head>
 
@@ -64,41 +69,42 @@
         <div class="container my-2 page-main-content">
         <div class="card">
             <div class="card-body">
-                <div th:switch="${recipes}" class="container my-2">
-            <!--     <div th:switch="${recipes}" class="container my-5"> -->
+                <div th:switch="${recipes}" class="container my-2" th:with="convertToReadOnly=${ (#strings.equals('[ROLE_ADMIN]',(#authentication.getPrincipal().getAuthorities()))) ? ('false') : ((recipe!=null && recipe.id!=null ) ? ( ! #strings.equals(recipe.createdBy, (#authentication.getPrincipal().getUsername()) ) ) : 'false' ) }" >
 	                <div class="row buttonsBar">
 	                    
 	                    <div class="nav-link">
 	                        <a href="/recipes/recipe/list" class="btn btn-primary">
-	                          <i class="fas fa-cheese" th:text="#{button.action.recipe.listAll}">List of All Recipes</i>
+	                          <i class="fas fa-list-ul" th:text="#{button.action.recipe.listAll}">List of All Recipes</i>
 	                        </a>
 	                    </div>
 	                    
-	                    <div class="nav-link">
-						  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuItem1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						    <span class="caret" th:text="#{label.info.dropdown}"></span>
-						  </button>
-						 <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-					          <a class="dropdown-item" href="#" th:text="#{button.action.action}"/>
-					          <a class="dropdown-item" href="#" th:text="#{button.action.action1}"/>
-					          <div class="dropdown-divider"></div>
-					          <a class="dropdown-item" href="#" th:text="#{button.action.action2}"/>
-					     </div>
-						</div>
-						
 						<div class="nav-link">
 						    <a href="/recipes/recipe/new" class="btn btn-primary"><i
-	       						class="fas fa-sync-alt ml-2"  th:text="#{button.action.refresh}"></i></a>
+	       						class="fas fa-sync-alt"  th:text="#{button.action.refresh}"></i></a>
 	                    </div>
 						
 	               </div>
 
-	 <hr></hr>
-                    <!-- <div class="col-md-12 col-xl-12 col-lg-12">  -->
+	 			   <hr class="hrNoMargins"/>
+
+                   <label th:text="AAAAAAAAA"></label>
+                   convertToReadOnly=
+                   <label th:text="${convertToReadOnly}"></label>
+                   recipe.createdBy=
+                   <label th:text="${recipe.createdBy}"></label>
+                   loggedUser=
+                   <label th:text="${(#authentication.getPrincipal().getUsername())}"></label>
+				   auth=
+                   <label th:text="${(#authentication.getPrincipal().getAuthorities())}"></label>
+
+		           <br>
+		           isPublic=                                            
+                   <label th:text="${recipe.isPublic}"></label>
+
                     <div>
                       <div class="card">    
                           <div class="card-header">
-                          	  <span th:text="( (${recipe.id==null}) ? #{label.recipe.newRecipe} : (#{label.recipe.updateRecipe} + ' : [ ' + ${recipe.id} + ' ]' ) )"></span> 
+                          	  <span th:text="( (${recipe.id==null}) ? #{label.recipe.newRecipe} : (  ( (${convertToReadOnly==true})  ? (#{label.recipe.viewRecipe} ) : (#{label.recipe.updateRecipe} ) ) + ' : [ ' + ${recipe.id} + ' ]' ) )"></span> 
 						  </div>
 					      <div class="card-body">
  
@@ -108,69 +114,64 @@
 							    <div class="form-group has-feedback">
 								  
 								  <input type="hidden" th:field="*{id}" id="id">
+								  <input type="hidden" th:field="*{createdBy}" id="createdBy">
 
 							      <input
-							        th:replace="~{fragments/inputField :: input (label='recipe.title', name='title', type='text', isReadOnly='true', classCustom='', readOnly='false', setTooltip='true')}" />
+							        th:replace="~{fragments/inputField :: input (label='recipe.title', name='title', type='text', isReadOnly=(''+${convertToReadOnly}), classCustom='', readOnly='false', setTooltip='true')}" />
 							      <!--   th:replace="~{fragments/inputField :: input ('recipe.title', 'title', 'text', 'dummy tooltip')}" />
 							      -->
 
 							      <input
-							        th:replace="~{fragments/inputField :: input (label='recipe.dateOfCreation', name='dateOfCreation', type='date', isReadOnly='false', classCustom='', readOnly='false', setTooltip='')}" />
+							        th:replace="~{fragments/inputField :: input (label='recipe.dateOfCreation', name='dateOfCreation', type='date', isReadOnly=(''+${convertToReadOnly}), classCustom='', readOnly='false', setTooltip='')}" />
 
 							      <input
-							        th:replace="~{fragments/inputField :: input (label='recipe.timeOfCreation', name='timeOfCreation', type='time', isReadOnly='false', classCustom='', readOnly='false', setTooltip='')}" />
+							        th:replace="~{fragments/inputField :: input (label='recipe.timeOfCreation', name='timeOfCreation', type='time', isReadOnly=(''+${convertToReadOnly}), classCustom='', readOnly='false', setTooltip='')}" />
 
 							      <input
-							        th:replace="~{fragments/inputField :: input (label='recipe.dateTimeOfCreation', name='dateTimeOfCreation', type='dateTime', isReadOnly='false', classCustom='', readOnly='false', setTooltip='')}" />
+							        th:replace="~{fragments/inputField :: input (label='recipe.dateTimeOfCreation', name='dateTimeOfCreation', type='dateTime', isReadOnly=(''+${convertToReadOnly}), classCustom='', readOnly='false', setTooltip='')}" />
 							      
 							      <input
-							        th:replace="~{fragments/inputField :: input ('recipe.url', 'url', 'text', 'false')}" />
+							        th:replace="~{fragments/inputField :: input (label='recipe.url', name='url', type='text', isReadOnly=(''+${convertToReadOnly}), classCustom='', readOnly='false', setTooltip='')}" />
 
 							    </div>
 						    </div>
 						    
                             <div class="col-md-12 col-lg-6">
-							    <div class="form-group has-feedback">
-							    
-							      <input
-							        th:replace="~{fragments/selectField :: select ('recipe.category', 'category', ${categoryList})}" />
 
+							    <div class="form-group has-feedback">
+							      <input
+							        th:replace="~{fragments/selectField :: select (label='recipe.category', name='category', items=${categoryList}, isReadOnly=(''+${convertToReadOnly}))}" />
 							    </div>
+
 							    <div class="form-group has-feedback row rowStyle" >
+
 		                              <div class="col-md-6 col-lg-6">
-								          <input
-									        th:replace="~{fragments/inputField :: input ('recipe.prepTime', 'prepTime', 'number', 'false')}" />
+		                                <input
+							           	  th:replace="~{fragments/inputField :: input (label='recipe.prepTime', name='prepTime', type='number', isReadOnly=(''+${convertToReadOnly}), classCustom='', readOnly='false', setTooltip='')}" />
 									  </div>
+
 		                              <div class="col-md-6 col-lg-6">
-									      <input
-									        th:replace="~{fragments/inputField :: input ('recipe.cookTime', 'cookTime', 'number', 'false')}" />
+		                              	<input
+							        	  th:replace="~{fragments/inputField :: input (label='recipe.cookTime', name='cookTime', type='number', isReadOnly=(''+${convertToReadOnly}), classCustom='', readOnly='false', setTooltip='')}" />
 									  </div>
-									  
-									  
-									  
-									  <div class="col-sm-12">
-									  	  	<label class="col-sm-2"  >Label</label>
-						                	<div class="col-sm-9">
-						                		<input class="" style="font-style: italic" type="text" />
-						                	</div>
-						              </div>
-										
-										
+
 								</div>
 								
-								<input
-							        th:replace="~{fragments/inputField :: input ('recipe.source', 'source', 'text', 'false')}" />
+															      
+							    <input
+							        th:replace="~{fragments/inputField :: input (label='recipe.source', name='source', type='text', isReadOnly=(''+${convertToReadOnly}), classCustom='', readOnly='false', setTooltip='')}" />
 								
-							      <div class="form-group has-feedback row rowStyle" >
+							    <div class="form-group has-feedback row rowStyle" >
 		                            <div class="col-md-6 col-lg-6">
 		                              	<div class="col-md-12 form-group">
-		                                    <label th:text="#{label.recipe.difficulty}"></label>
-		                                    	<select class="form-control" th:field="*{enumDifficulty}">
-		      										<option th:each="item:${T(rs.apps.nn.recipes.domain.EnumDifficulty).values()}"
-		      											th:value="${item.name()}"
-		      											th:text="(#{label.enum.difficulty.+${item.name()}})"> val
-		      									</option>
-		                                    </select>
+		                                    <label th:text="#{label.recipe.difficulty}" class="labelPaddingTop">
+		                                    </label>
+	                                    	<select class="form-control" th:field="*{enumDifficulty}" th:disabled="${convertToReadOnly}">
+	      										<option th:each="item:${T(rs.apps.nn.recipes.domain.EnumDifficulty).values()}"
+	      											th:value="${item.name()}"
+	      											th:text="(#{label.enum.difficulty.+${item.name()}})"> val
+	      										</option>
+	                                    	</select>
 		                                    <select class="form-control" th:remove="all">
 		                                        <option>Easy dummy</option>
 		                                        <option>Medium dummy</option>
@@ -180,11 +181,14 @@
                                 	</div>
                                 	<div class="col-md-6 col-lg-6">
                                 		<input
-							    		    th:replace="~{fragments/inputField :: input ('recipe.portions', 'portions', 'number', 'false')}" />
-                                		
+							        		th:replace="~{fragments/inputField :: input (label='recipe.portions', name='portions', type='number', isReadOnly=(''+${convertToReadOnly}), classCustom='', readOnly='false', setTooltip='')}" />
 									</div>
 								</div>
+							    					      
+							    <input
+							        th:replace="~{fragments/inputField :: input (label='recipe.isPublic', name='isPublic', type='checkbox', isReadOnly=(''+${convertToReadOnly}), classCustom='', readOnly='false', setTooltip='')}" />
 								
+							
 							</div>
 						
         					<br>
@@ -193,12 +197,20 @@
         					
                             <div class="col-md-12 col-lg-12">
 							    <div class="form-group has-feedback">
-									<div class="col-md-12 col-lg-12">
+									<div class=" col-md-12 col-lg-12">
 									  		<div class="card col-md-12 col-lg-12 zeroPadding">
-								  				<div class="card-header"  th:text="#{label.recipe.dynRow.ingredients}">
+									  		
+										  		<h6 class="card-header text-white bg-light mb-3">
+									        		<a class=" d-block " data-toggle="collapse" href="#ingredients-collapsed" aria-expanded="true" aria-controls="ingredients-collapsed" id="heading-ing-collapsed" >
+									        		    <i class="fa fa-chevron-down pull-right"></i>
+									            			<span th:text="#{label.recipe.dynRow.ingredients}"></span>
+									        		</a>
+									    		</h6>
+										  		
+								  				<!-- <div class="card-header"  th:text="#{label.recipe.dynRow.ingredients}">
 								    				Ingredients:
-								  				</div>
-											    <div class="card-body">
+								  				</div> -->
+											    <div id = "ingredients-collapsed" class="collapse show card-body" aria-labelledby="heading-collapsed">
 									  
 													  <div>
 													  
@@ -218,7 +230,8 @@
 														      <tbody>
 															    <tr th:each="row,rowStat : *{ingredients}">
 
-																  <td><input type='checkbox' class='case'/>
+																  <td>
+																    <input type='checkbox' th:disabled="${convertToReadOnly ? 'disabled' : 'false'}"  class='case'/>
 															        <input type="hidden" th:field="*{ingredients[__${rowStat.index}__].id}" />
 															        <input type="hidden" th:field="*{ingredients[__${rowStat.index}__].recipe.id}" />
 															        <!-- <input type="hidden" th:field="*{ingredients[__${rowStat.index}__].recipeFk}" /> -->
@@ -227,11 +240,11 @@
 															      <td  class='row_no' th:text="(${rowStat.count}+'.')">1</td>
 
 															      <td>
-															        <input type="text" size='3' class="text-field-dynamicrow form-control" th:field="*{ingredients[__${rowStat.index}__].amount}" />
+															        <input type="text" th:readonly="${convertToReadOnly ? 'readonly' : 'false'}" size='3' class=" aaa text-field-dynamicrow form-control" th:field="*{ingredients[__${rowStat.index}__].amount}" />
 															      </td>
 
 															      <td>
-															        <select class="form-control-sm col-12 col-md-12 form-control" th:field="*{ingredients[__${rowStat.index}__].uom}">
+															        <select  th:disabled="${convertToReadOnly ? 'disabled' : 'false'}" class="form-control-sm col-12 col-md-12 form-control" th:field="*{ingredients[__${rowStat.index}__].uom}">
 															          <option th:each="var : ${allUnitOfMeasuresList}" 
 															                  th:value="${var.id}" 
 															                  th:text="(#{label.enum.unitOfMeasure.+${var.description}})"
@@ -240,7 +253,7 @@
 															      </td>
 
 															      <td>
-															        <input type="text" class="text-field-dynamicrow form-control" th:field="*{ingredients[__${rowStat.index}__].ingredientName}" />
+															        <input type="text" th:readonly="${convertToReadOnly ? 'readonly' : 'false'}" class="text-field-dynamicrow form-control" th:field="*{ingredients[__${rowStat.index}__].ingredientName}" />
 															      </td>
 
 															    </tr>
@@ -249,7 +262,7 @@
 													  </div>
 													      
 													  </div>
-												      <div class="btn-container">
+												      <div  th:if="${!convertToReadOnly}"  class="btn-container">
 												        <button type="button" class='btn addmore btn-outline-info'  th:text="#{button.action.addMoreRows}">+ Add More</button>
 												        <button type="button" class='btn delete btn-outline-danger'  th:text="#{button.action.deleterows}" >- Delete</button>
 												      </div>
@@ -267,7 +280,8 @@
                             <div class="col-md-12 col-lg-12">
 							    <div class="form-group has-feedback">
 							      <input
-							        th:replace="~{fragments/inputField :: input ('recipe.instructions', 'description', 'textarea', 'false')}" />
+							        th:replace="~{fragments/inputField :: input (label='recipe.instructions', name='description', type='textarea', isReadOnly=(''+${convertToReadOnly}))}" />
+							    
 							    </div>
 						    </div>
 
@@ -283,7 +297,7 @@
 								    				Tags:
 								  				</div>
 											    <div class="card-body">
-											    	<select class="form-select" id="recipesTags" name="recipesTags" multiple data-allow-clear="true" data-clear-label="Clear" data-allow-new="true">
+											    	<select th:disabled="${convertToReadOnly ? 'disabled' : 'false'}" class="form-select" id="recipesTags" name="recipesTags" multiple data-allow-clear="true" data-clear-label="Clear" data-allow-new="true">
 														<option selected disabled hidden value="">Choose a tag...</option>
 													    <option selected="selected" th:each="prod,iterStat : ${recipe.tags}" 
 										                  th:value="(${prod.id}+':'+${prod.value})" 
@@ -292,49 +306,9 @@
 			  								            </option>
 													</select>
 
-
-
-											    <!-- 
-											    	<table>
-													  <tr>
-													  </tr>
-													  <tr th:each="prod,iterStat : ${recipe.tags}" th:class="${iterStat.odd}? 'odd'">
-													    <td th:text="${prod.id}">ID</td>
-													    <td th:text="${prod.value}">value</td>
-													    <td>
-															<span class="badge bg-primary me-2" data-value="1">
-															    <button type="button" style="font-size:0.65em" class="me-2 btn-close btn-close-white" aria-label="Clear"></button><span th:text="${prod.value}"></span>
-														        < ! -- <button type="button" style="font-size:0.65em" class="me-2 btn-close btn-close-white" aria-label="Clear">aaa</button> -- >
-															</span>
-														</td>
-													  </tr>
-													</table>
-											    -->
 												</div>
 												<div>
 												
-												<!-- 
-												<select class="form-select" id="validationTags" multiple data-allow-clear="true" data-clear-label="Clear" data-allow-new="true">
-												  <option selected disabled hidden value="">Choose a tag...</option>
-												  <option value="1" selected="selected">JavaScript</option>
-												  <option value="2">HTML5</option>
-												  <option value="3">CSS3</option>
-												  <option value="4">jQuery</option>
-												  <option value="5">React</option>
-												  <option value="6">Angular</option>
-												  <option value="7">Vue</option>
-												  <option value="8">Python</option>
-												</select>
-												-->
-											  
-									          
-										    <!--  <td  class='row_no' th:text="(${rowStat.count}+'.')">1</td>
-									           -->
-												<!-- 
-												<div class="invalid-feedback">Please select a valid tag.</div>
-												-->
-<!-- 														<input type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput" /> 
--->
 												</div>
 									  		</div>
 								    </div>
@@ -343,34 +317,26 @@
         					
         					<br>
         					<br>
-							
-
-
-        					<br>
-        
+							<br>
+        					
 						    </div>
 						    <div class="form-group">
-						      <div class="col-sm-offset-2 col-sm-10">
-						        <button
-						            th:with="text=${recipe['new']} ? 'save' : 'update'"
-						            class="btn btn-primary" type="submit" th:text="(#{button.action.+${text}})">
-						        </button>
-						        
+						      <div th:if="${!convertToReadOnly}" class="col-sm-offset-2 col-sm-10">
 						        <button class="btn btn-primary" type="submit">
-						            <i class="fas fa-user-plus ml-2" th:with="text=${recipe['new']} ? 'save' : 'update'" th:text="(#{button.action.+${text}})">  </i>
+						            <i class="fas fa-save" th:with="text=${recipe['new']} ? 'save' : 'update'" th:text="(#{button.action.+${text}})">  </i>
 						        </button>
-						        
 						      </div>
 						    </div>
 						    
+						    <hr>
 						  </form>
 
 
 							<div class="col-md-12 col-lg-12">
 								<div class="form-group has-feedback">
-								
+
 									<div class="card">
-									
+
 										<h6 class="card-header text-white bg-light mb-3">
 							        		<a class=" d-block " data-toggle="collapse" href="#collapse-collapsed" aria-expanded="true" aria-controls="collapse-collapsed" id="heading-collapsed" >
 							        		    <i class="fa fa-chevron-down pull-right"></i>
@@ -378,34 +344,65 @@
 							        		</a>
 							    		</h6>
 
-										<!-- <div class="card-header" th:text="#{label.recipe.imageInfo}">Recipe photo:</div>-->
 									    <div id="collapse-collapsed" class="collapse show" aria-labelledby="heading-collapsed">
 									        <div class="card-body" style="padding-top:0">
 								    			  <div class="col-md-12 col-lg-12 row zeroMargin" style="font-style: oblique;" >
-			                                	  		<div class="col-md-6 col-lg-6 zeroPadding" >
+			                                	  		<div th:if="${!convertToReadOnly}" class="col-md-4 col-lg-4 zeroPadding" >
 							 								  <div>
 																	<form method="POST" enctype="multipart/form-data" th:action="@{${recipe.id}+'/uploadPhoto'}" >
-
 																		<table>
-																			<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
-																			<tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+																			<tr>
+																				<td><span th:text="#{label.files.uploadNewFile}"></span></td>
+																			</tr>
+																			<tr>
+																				<td><input type="file" name="file" class="btn btn-primary" /></td>
+																			</tr>
+																			<tr>
+																				<td>
+																				<input type="submit" value="Upload" id="uploadBtn" class="btn btn-outline-primary" >
+																				</td>
+																			</tr>
 																		</table>
-																    	
+																		
 																    	<input type="hidden" id="newPhotoRecipeId" name="newPhotoRecipeId" th:value="${recipe.id}">
 																    	<input type="hidden" id="imageId" name="imageId" th:value="${recipeImage?.id}">
-
+																		
 																	</form>
 															  </div>
 			                                			</div>
-			                                	  		<div class="col-md-6 col-lg-6 zeroPadding" >
-							 								  <div>
-					               								<div th:switch="${recipeImage}" class="container my-2">
-                    				    							<img th:case="null" class="rounded mx-auto d-block" height="250" src="/recipes/img/placehldrImg.png">
-                        											<div th:case="*">
-															            <img class="card-img-top" height="350"  style="object-fit: contain;"  th:src="@{'/recipeImage/image/' + ${recipeImage.id}}">
-                        											</div>
-                        										</div>
-															  </div>
+			                                						                                			
+			                                			<div th:class="${(convertToReadOnly==true) ? ('col-md-12 col-lg-12 zeroPadding'):('col-md-8 col-lg-8 zeroPadding')}" >
+															<div th:switch="${recipeImagesByOwner==null || recipeImagesByOwner.size()==0}" class="container my-2">
+	                    				    						<div th:case="true">
+																		<img th:if="${!convertToReadOnly}" class="rounded mx-auto d-block" height="250" src="/recipes/img/placehldrImg.png">
+																	    <h2 th:if="${convertToReadOnly}" style="text-align:center" th:text="#{label.images.list.noImagesYet}"></h2>
+																	</div>
+	                        										<div th:case="false">
+																		<div id="carouselRecipeImageByOwner" style="border:1px solid #ccc" class="carousel slide" data-ride="carousel">
+	
+																		  <ol class="carousel-indicators" >
+																		    <li th:each="img, imgStat:${recipeImagesByOwner}" data-target="#carouselRecipeImageByOwner" th:attr="data-slide-to=${imgStat.index}" th:class="${imgStat.index}==0 ? 'active':''"></li>
+																		  </ol>
+	
+																		  <div class="carousel-inner">
+																			    <div th:class="${imgStat.index}== 0  ? 'carousel-item active':'carousel-item'" th:each="img, imgStat:${recipeImagesByOwner}">
+																			      <!-- <img th:src="@{'/recipeImage/image/' + ${img.fileData.id}}" height="350" style="object-fit: contain;" class="d-block w-100" alt="..."/>
+						  														   -->
+						  														  <img th:src="${img.url}"  height="450"  style="object-fit: contain;" class="d-block w-100" alt="...">																			      
+																			    </div>
+																		  </div>
+																		  
+																		  <a class="carousel-control-prev" href="#carouselRecipeImageByOwner" role="button" data-slide="prev" >
+																		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+																		    <span class="sr-only">Previous</span>
+																		  </a>
+																		  <a class="carousel-control-next" href="#carouselRecipeImageByOwner" role="button" data-slide="next" >
+																		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+																		    <span class="sr-only">Next</span>
+																		  </a>
+																		</div>
+															     	</div>
+															</div>
 			                                			</div>
 			                                	  </div>
 								    			  
@@ -416,18 +413,30 @@
 								</div>
 							</div>
 
+
+
 							<div class="col-md-12 col-lg-12">
 								<div class="form-group has-feedback">
 									<div class="card col-md-12 col-lg-12 zeroPadding">
-										<div class="card-header" th:text="#{label.recipe.addInfo}">Additional:</div>
-										<div class="card-body">
+										<!-- <div class="card-header" th:text="#{label.recipe.addInfo}">Additional:</div>
+										 -->
+										<h6 class="card-header text-white bg-light mb-3">
+							        		<a class=" d-block " data-toggle="collapse" href="#add-info-collapsed" aria-expanded="true" aria-controls="add-info-collapsed" id="heading-collapsed" >
+							        		    <i class="fa fa-chevron-down pull-right"></i>
+							            			<span th:text="#{label.recipe.addInfo}"></span>
+							        		</a>
+							    		</h6>
+										
+										<div id="add-info-collapsed" class="card-body collapse show">
 											<div>
 												<div>
 												  <!-- Nav tabs -->
 												  <ul class="nav nav-tabs mt-2" role="tablist">
 												    <li role="presentation" class="nav-item active"> <a href="#comments" class="nav-link active" aria-controls="home" role="tab" data-toggle="tab" th:text="#{label.recipe.commentsData}">Comments</a></li>
-												    <li role="presentation" class="nav-item" > <a href="#images" class="nav-link" aria-controls="profile" role="tab" data-toggle="tab" th:text="#{label.recipe.images}">Images</a></li>
+												    <li role="presentation" class="nav-item" > <a href="#images" class="nav-link" aria-controls="profile" role="tab" data-toggle="tab" th:text="#{label.recipe.galleryUsers}">Images</a></li>
+												    <!-- 
 												    <li role="presentation" class="nav-item" ><a href="#addAdvices" class="nav-link" aria-controls="messages" role="tab" data-toggle="tab" th:text="#{label.recipe.addTips}">Additional tips</a></li>
+ 													-->
 												  </ul>
 												  
 												  <!-- Tab panes -->
@@ -441,22 +450,51 @@
 												    </div>
 
 												    <div role="tabpanel" class="tab-pane fade" id="images">
+												   		<div  th:if="${!convertToReadOnly}"  class="col-md-12 col-lg-12">
+															<div class="form-group has-feedback">
+																<div  class="card">
+																	<h6 class="card-header text-white bg-light mb-3">
+														        		<a class=" d-block collapsed" data-toggle="collapse" href="#comm-collapse-collapsed" aria-expanded="false" aria-controls="comm-collapse-collapsed" id="heading-collapsed" >
+														        		    <i class="fa fa-chevron-down pull-right"></i>
+														            			<span th:text="#{label.recipe.comments.addNewPhoto}"></span>
+														        		</a>
+														    		</h6>
+																	<!-- <div class="card-header" th:text="#{label.recipe.imageInfo}">Recipe photo:</div>-->
+																    <div id="comm-collapse-collapsed" class="collapse" aria-labelledby="heading-collapsed">
+																        <div class="card-body" style="padding-top:0">
+															    			  <div class="col-md-12 col-lg-12 row zeroMargin" style="font-style: oblique;" >
+												                            	  <div>
+																					<form method="POST" enctype="multipart/form-data" th:action="@{${recipe.id}+'/uploadCommentsPhoto'}" >
+																						<table>
+																							<tr>
+																								<td><span th:text="#{label.files.uploadNewFile}"></span></td>
+																								<td><input type="file" name="file" class="btn btn-primary" />
+																								</td>
+																							</tr>
+																							<tr>
+																								<td></td>
+																								<td><input type="submit" value="Upload" id="uploadBtn" class="btn btn-outline-primary" >
+																								</td>
+																							</tr>
+																						</table>
+																				    	<input type="hidden" id="newCommentPhotoRecipeId" name="newCommentPhotoRecipeId" th:value="${recipe.id}">
+																					</form>
+																				  </div>
+														                      </div>		  
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
 												   		<div id="commentImagesDataAJAX" >
-													    	<input type="hidden" id="commentImagesDataRecipeId" name="commentImagesDataRecipeId" th:value="${recipe.id}">
+												   			<input type="hidden" id="commentImagesDataRecipeId" name="commentImagesDataRecipeId" th:value="${recipe.id}">
 														</div>
 												    </div>
-
+<!-- 
 												    <div role="tabpanel" class="tab-pane fade" id="addAdvices">
-												    	<div>
-															<form method="POST" enctype="multipart/form-data" action="/">
-																<table>
-																	<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
-																	<tr><td></td><td><input type="submit" value="Upload" /></td></tr>
-																</table>
-															</form>
-														</div>
+												    	
 												    </div>
-
+ -->
 												  </div>
 											    </div>
 											    <br/>
@@ -607,32 +645,38 @@
 
 		function refreshCommentListData() {
 			  var e2 = document.getElementById("newCommentRecipeId");
-			  var newCommentRecipeId = e2.value;
-			  $.ajax({
-				 type: "GET",
-			     url : '/recipes/recipe/'+newCommentRecipeId+'/comment/list',
-			     success : function(res) {
-					$("#commentDataAJAX").html(res);
-			     },
-			     error :  function(res) {
-			         alert('error:'+res);
-			     }
-			  });
+			  // alert('refreshCommentListData');
+			  // alert(e2.value);
+			  if (e2!=null && e2.value!="" ) {
+				  var newCommentRecipeId = e2.value;
+				  $.ajax({
+					 type: "GET",
+				     url : '/recipes/recipe/'+newCommentRecipeId+'/comment/list',
+				     success : function(res) {
+						$("#commentDataAJAX").html(res);
+				     },
+				     error :  function(res) {
+				         alert('error commets:'+res);
+				     }
+				  });
+			  }
 			}
 		
 		function refreshCommentImagesData() {
 			  var e2 = document.getElementById("commentImagesDataRecipeId");
 			  var imagesRecipeId = e2.value;
-			  $.ajax({
-				 type: "GET",
-			     url : '/recipes/recipe/'+imagesRecipeId+'/images/list',
-			     success : function(res) {
-					$("#commentImagesDataAJAX").html(res);
-			     },
-			     error :  function(res) {
-			         alert('error:'+res);
-			     }
-			  });
+			  if (e2!=null && e2.value!="" ) {
+				  $.ajax({
+					 type: "GET",
+				     url : '/recipes/recipe/'+imagesRecipeId+'/images/list',
+				     success : function(res) {
+						$("#commentImagesDataAJAX").html(res);
+				     },
+				     error :  function(res) {
+				         alert('error:'+res);
+				     }
+				  });
+			  }
 			}
 
 		function addNewCommentOnClick() {
@@ -648,7 +692,7 @@
 			  
 			  // 20220801 - Read Username from Logged user 
 			  // var json = {"recipeFk":newCommentRecipeId, "text":strCommentText, "username":strCommentUsername};
-			  var json = {"recipeFk":newCommentRecipeId, "text":strCommentText, "username":strCommentUsername};
+			  var json = {"recipeFk":newCommentRecipeId, "text":strCommentText};
 
 			  // alert("json:"+JSON.stringify(json));
 			  $.ajax({

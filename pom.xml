@@ -11,8 +11,10 @@
 	<groupId>rs.apps.nn.recipes.group</groupId>
 	<artifactId>rs.apps.nn.recipes</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>NNRecipes</name>
+	<name>recipes</name>
 	<description>NN recipes app</description>
+	
+	<packaging>war</packaging>
 
 	<properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -60,6 +62,11 @@
 		    <version>3.6.3</version>
 		</dependency> 
 				
+		<dependency>
+    		<groupId>javax.servlet</groupId>
+    		<artifactId>jstl</artifactId>
+    		<version>1.2</version>
+		</dependency>
 		
 		
 		<dependency>
@@ -109,6 +116,25 @@
 	    </dependency>
 	    <!-- end of webjars -->
 			
+		<!-- <dependency>
+		    <groupId>com.amazonaws</groupId>
+		    <artifactId>aws-java-sdk</artifactId>
+		    <version>1.12.420</version>
+		</dependency>
+		 -->
+		<!-- https://mvnrepository.com/artifact/software.amazon.awssdk/s3 -->
+		<dependency>
+		    <groupId>software.amazon.awssdk</groupId>
+		    <artifactId>s3</artifactId>
+		    <version>2.20.17</version>
+<!--     <scope>test</scope>-->
+		</dependency>
+
+    <!-- 	
+    	<groupId>software.amazon.awssdk</groupId>
+      	<artifactId>aws-sdk-java</artifactId>
+      	<version>2.X.X</version>
+		-->	
 <!-- 
 		<dependency>
 		    <groupId>com.integralblue</groupId>
@@ -140,6 +166,19 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -188,7 +227,19 @@
 		    <artifactId>mysql-connector-java</artifactId>
 		    <version>8.0.11</version>
 		</dependency>
-    	
+    
+	    <dependency>	
+		    <groupId>org.thymeleaf.extras</groupId>
+		    <artifactId>thymeleaf-extras-java8time</artifactId>
+		    <version>3.0.4.RELEASE</version>
+	    </dependency>
+	    
+	    <dependency>
+		    <groupId>org.imgscalr</groupId>
+		    <artifactId>imgscalr-lib</artifactId>
+		    <version>4.2</version>
+		</dependency>
+			    
 		<!-- 
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -199,6 +250,9 @@
 	</dependencies>
 
 	<build>
+
+		<finalName>recipes</finalName>  
+
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

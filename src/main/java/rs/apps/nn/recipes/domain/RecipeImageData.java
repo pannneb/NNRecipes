@@ -43,7 +43,7 @@ public class RecipeImageData {
 	private EnumFileType fileType;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    @JoinColumn(name = "recipeImageData", referencedColumnName = "id")
+    @JoinColumn(name = "fileDataFk", referencedColumnName = "id")
  	private FileData fileData;
 
 	@NonNull

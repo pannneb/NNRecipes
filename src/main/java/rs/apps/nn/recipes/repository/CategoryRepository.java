@@ -18,6 +18,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 	
 	Optional<Category> findByDescription(String desc);
 
+	List<Category> findAllByOrderByDescriptionAsc();
+
 	// Optional<Category> findByName(String name);
 
 	List<Category> findAllByDescriptionLike(String desc);

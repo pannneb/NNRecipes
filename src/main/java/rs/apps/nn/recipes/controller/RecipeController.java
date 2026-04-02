@@ -1,5 +1,6 @@
 package rs.apps.nn.recipes.controller;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.stream.Stream;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,6 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.slf4j.Slf4j;
+import rs.apps.nn.recipes.awss3.api.v2.S3Service;
 import rs.apps.nn.recipes.domain.Category;
 import rs.apps.nn.recipes.domain.Comment;
 import rs.apps.nn.recipes.domain.EnumFileType;
@@ -41,6 +44,7 @@ import rs.apps.nn.recipes.domain.EnumUnitOfMeasure;
 import rs.apps.nn.recipes.domain.FileData;
 import rs.apps.nn.recipes.domain.Recipe;
 import rs.apps.nn.recipes.domain.RecipeImageData;
+import rs.apps.nn.recipes.domain.RecipeImageMap;
 import rs.apps.nn.recipes.domain.Tag;
 import rs.apps.nn.recipes.domain.UnitOfMeasure;
 // import rs.apps.nn.recipes.domain.UnitOfMeasure;
@@ -48,6 +52,7 @@ import rs.apps.nn.recipes.service.CategoryService;
 import rs.apps.nn.recipes.service.CommentService;
 import rs.apps.nn.recipes.service.FileDataService;
 import rs.apps.nn.recipes.service.RecipeImageDataService;
+import rs.apps.nn.recipes.service.RecipeImageMapService;
 import rs.apps.nn.recipes.service.RecipeService;
 import rs.apps.nn.recipes.service.TagService;
 import rs.apps.nn.recipes.service.UnitOfMeasureService;
@@ -55,8 +60,11 @@ import rs.apps.nn.recipes.service.UnitOfMeasureService;
 @Slf4j
 @Controller
 @RequestMapping("recipe")
-public class RecipeController {
+public class RecipeController extends BasicController {
 
+	@Autowired
+	private S3Service s3Service;
+	
 	private static final String VIEWS_RECIPE_CREATE_OR_UPDATE_FORM = "recipes/recipeCreateOrUpdateForm";
 	private static final String VIEWS_RECIPE_COMMENTS_LIST = "comments/recipeCommentsList";
 	private static final String VIEWS_RECIPE_COMMENTS_IMAGES = "segments/imagesCarousel";
@@ -68,11 +76,12 @@ public class RecipeController {
 	private final CommentService commentService;
 	// private final FileDataService fileDataService;
 	private final RecipeImageDataService recipeImageDataService;
+	private final RecipeImageMapService recipeImageMapService;
 
 	public RecipeController(RecipeService recipeService, CategoryService categoryService, 
 			UnitOfMeasureService uomService, CommentService commentService, 
 			/*FileDataService fileDataService,*/ RecipeImageDataService recipeImageDataService,
-			TagService tagService) {
+			TagService tagService, RecipeImageMapService recipeImageMapService) {
 		super();
 		this.recipeService = recipeService;
 		this.categoryService = categoryService;
@@ -80,13 +89,16 @@ public class RecipeController {
 		this.commentService = commentService;
 		// this.fileDataService = fileDataService;
 		this.recipeImageDataService = recipeImageDataService;
+		this.recipeImageMapService = recipeImageMapService;
 		this.tagService = tagService;
 		log.debug("RecipeController constructor called");
 	}
 	
 	@RequestMapping(value = { "/list/", "/list" }, method = RequestMethod.GET)
 	public String recipesList(Model model) {
-		List<Recipe> recipes = recipeService.findAllByOrderByIdAsc();
+
+		List<Recipe> recipes = recipeService.findAllRecipesForList(getLoggedUserName());
+    	
 		// Set<Recipe> listOfRecipes = recipeService.getRecipes();
 		model.addAttribute("recipes", recipes);
 		// listOfRecipes.forEach(a->{
@@ -102,7 +114,17 @@ public class RecipeController {
 
 	@GetMapping({ "/new" })
 	public String initCreationForm(Model model) {
-		model.addAttribute("recipe", Recipe.builder().build());
+		
+		try {
+			s3Service.upload(null, null);
+		} catch (IOException e) {
+			log.error("s3Service.upload", e);
+			// e.printStackTrace();
+		}
+
+		Recipe r = Recipe.builder().build();
+		r.setIsPublic(true);
+		model.addAttribute("recipe", r);
 		prepareModelForAddUpdateView(model);
 		return VIEWS_RECIPE_CREATE_OR_UPDATE_FORM;
 	}
@@ -124,15 +146,28 @@ public class RecipeController {
 
 	@PostMapping({ "/new" })
 	public String submitCreationForm(@Valid Recipe recipe, BindingResult result) {
+		
+		
 		log.debug("recipe new POST");
+
 		if (result.hasErrors()) {
 			result.getAllErrors().forEach(error->{
 				log.debug(error.toString());
 			});
 
-			// result.geterr
 			return VIEWS_RECIPE_CREATE_OR_UPDATE_FORM;
 		} else {
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String username = "";
+			// if (principal instanceof UserDetails) {
+			username = ((UserDetails) principal).getUsername();
+			log.debug("principal instanceof UserDetails, username:" + username);
+			//} else {
+			//	log.debug("principal.toString");
+			//	username = principal.toString();
+			//}
+        	recipe.setCreatedBy(username);
+
 			Recipe c = recipeService.save(recipe);
 			return "redirect:/recipe/" + c.getId();
 		}
@@ -144,6 +179,12 @@ public class RecipeController {
 	@GetMapping({ "/{recipeId}"})
 	public String showById(@PathVariable("recipeId") Long recipeId, Model model) {
 		Recipe r = recipeService.findById(recipeId);
+		
+		//TODO
+		// Get all RecipeImageData for IMG_RECIPE_BY_OWNER and set in list
+		List<RecipeImageMap> recipeImageMapList = recipeImageMapService.findAllByRecipeIdAndFileTypeOrderByIdDesc(recipeId, EnumFileType.IMG_RECIPE_BY_OWNER);
+		model.addAttribute("recipeImagesByOwner", recipeImageMapList);
+		
 		List<RecipeImageData> a = recipeImageDataService.findAllByRecipeIdAndFileTypeOrderByIdDesc(recipeId, EnumFileType.IMG_RECIPE_BY_OWNER);
 		//List<FileData> a = new ArrayList<FileData>();
 		if (a!=null && !a.isEmpty()) {
@@ -153,7 +194,7 @@ public class RecipeController {
 			r.setRecipeImage(a.get(0));
 		}
 		model.addAttribute("recipe", r);
-		model.addAttribute("recipeImage", (a!=null && !a.isEmpty()) ? a.get(0) : null);
+ 		model.addAttribute("recipeImage", (a!=null && !a.isEmpty()) ? a.get(0) : null);
 		
 		log.debug("showRecipeById, tags.size: {} , tags: {}", r.getTags().size(), r.getTags());
 		 
@@ -225,6 +266,10 @@ public class RecipeController {
 			return VIEWS_RECIPE_CREATE_OR_UPDATE_FORM;
 		} else {
 			recipe.setId(recipeId);
+
+			if (recipe.getIsPublic() == null)
+				recipe.setIsPublic(false);
+			
 			Recipe c = recipeService.save(recipe);
 			return "redirect:/recipe/" + c.getId();
 		}
@@ -262,6 +307,8 @@ public class RecipeController {
 	public String showAllRecipeCommentImages(@PathVariable("recipeId") Long recipeId, Model model) {
 		log.debug("recipe showAllRecipeCommentImages GET, recipeId:{}", recipeId);
 
+//		List<RecipeImageMap> imgsFromComms = recipeImageMapService.findAllByRecipeIdAndFileTypeOrderByIdDesc(recipeId, EnumFileType.IMG_RECIPE_FROM_COMMENTS);
+
 		List<RecipeImageData> imgsFromComms = recipeImageDataService.findAllByRecipeIdAndFileTypeOrderByIdDesc(recipeId, EnumFileType.IMG_RECIPE_FROM_COMMENTS);
 		log.debug("showRecipeById, images from comments found, count: {} ",imgsFromComms.size());
 		model.addAttribute("recipeImagesFromComments", (imgsFromComms==null ||imgsFromComms.isEmpty()) ? null: imgsFromComms);
@@ -281,7 +328,7 @@ public class RecipeController {
         	// (Joda dateTime option)
         	comment.setInsertedDt(Timestamp.valueOf(LocalDateTime.now()));
         	comment.setRecipe(r);
-        	
+
         	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         	String username="";
         	if (principal instanceof UserDetails) {
@@ -290,7 +337,7 @@ public class RecipeController {
         	  username = principal.toString();
         	}
 
-		log.debug("Save Comment - username: {}", username);
+        	log.debug("Save Comment - username: {}", username);
         	comment.setUsername(username);
 
 		//	log.debug("Save Comment, user:{}", username);
@@ -308,22 +355,29 @@ public class RecipeController {
 			attributes.addFlashAttribute("message", "Please select a file to upload.");
 			return "redirect:/";
 		} else {
+			
+
+			boolean storeImageFileInDB = false;			
 			try {
-				
-				recipeImageDataService.store(file, EnumFileType.IMG_RECIPE_BY_OWNER, recipeService.findById(recipeId),imageId);
-
-				// Delete this 
-				// recipeImageDataService.store(file, EnumFileType.IMG_RECIPE_FROM_COMMENTS, recipeService.findById(recipeId),null);
-				// recipeImageDataService.store(file, EnumFileType.IMG_RECIPE_FROM_COMMENTS, recipeService.findById(recipeId),null);
-
-				log.debug("You successfully uploaded:{}, imageId:{}, resource:{}", file.getOriginalFilename(), imageId, file.getResource());
-				// message = "Uploaded the file successfully: " + file.getOriginalFilename();
-				//return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+				if (storeImageFileInDB) {
+					recipeImageDataService.store(file, EnumFileType.IMG_RECIPE_BY_OWNER, recipeService.findById(recipeId),imageId);
+					log.debug("Photo successfully uploaded into DB:{}, resource:{}", file.getOriginalFilename(), file.getResource());
+				} else {
+					recipeImageMapService.storeAWSS3(file, EnumFileType.IMG_RECIPE_BY_OWNER, recipeService.findById(recipeId),imageId);
+					log.debug("Photo successfully uploaded to the AWS S3:{}, resource:{}", file.getOriginalFilename(), file.getResource());					
+				} 
 			} catch (Exception e) {
 				log.error("Exception during image upload", e);
-				//message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-				// return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
 			}
+			
+//			try {
+//				
+//				recipeImageDataService.store(file, EnumFileType.IMG_RECIPE_BY_OWNER, recipeService.findById(recipeId),imageId);
+//
+//				log.debug("You successfully uploaded:{}, imageId:{}, resource:{}", file.getOriginalFilename(), imageId, file.getResource());
+//			} catch (Exception e) {
+//				log.error("Exception during image upload", e);
+//			}
 						
 		}
 
@@ -343,7 +397,7 @@ public class RecipeController {
 
 		return "redirect:/recipe/" + recipeId;
 	}
-	
+
 	@PostMapping("/{recipeId}/uploadCommentsPhoto")
 	public String uploadCommentPhoto(@RequestParam("file") MultipartFile file, @PathVariable("recipeId") Long recipeId, RedirectAttributes attributes) {
 		// check if file is empty
@@ -351,9 +405,16 @@ public class RecipeController {
 			attributes.addFlashAttribute("message", "Please select a file to upload.");
 			return "redirect:/";
 		} else {
+			
+			boolean storeImageFileInDB = true;			
 			try {
-				recipeImageDataService.store(file, EnumFileType.IMG_RECIPE_FROM_COMMENTS, recipeService.findById(recipeId),null);
-				log.debug("You successfully uploaded:{}, resource:{}", file.getOriginalFilename(), file.getResource());
+				if (storeImageFileInDB) {
+					recipeImageDataService.store(file, EnumFileType.IMG_RECIPE_FROM_COMMENTS, recipeService.findById(recipeId),null);
+					log.debug("Photo successfully uploaded into DB:{}, resource:{}", file.getOriginalFilename(), file.getResource());
+				} else {
+					recipeImageMapService.storeAWSS3(file, EnumFileType.IMG_RECIPE_FROM_COMMENTS, recipeService.findById(recipeId),null);
+					log.debug("Photo successfully uploaded to the AWS S3:{}, resource:{}", file.getOriginalFilename(), file.getResource());					
+				} 
 			} catch (Exception e) {
 				log.error("Exception during image upload", e);
 			}

@@ -63,9 +63,9 @@
                             <div class="col-md-12 col-lg-6">
 							    <div class="form-group has-feedback">
 							      <input
-							        th:replace="~{fragments/inputField :: input (label='category.id', name='id', type='number', classCustom='col-md-5 col-lg-5', readOnly='true', setTooltip='')}" />
+							        th:replace="~{fragments/inputField :: input (label='category.id', name='id', type='number', isReadOnly='false', classCustom='col-md-5 col-lg-5', readOnly='true', setTooltip='')}" />
 							      <input
-							        th:replace="~{fragments/inputField :: input ('category.description', 'description', 'text')}" />
+							        th:replace="~{fragments/inputField :: input ('category.description', 'description', 'text', 'false')}" />
 							    </div>
 						    </div>
 

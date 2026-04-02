@@ -43,6 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .headers().frameOptions().disable()
         	.and()
         	.authorizeRequests()
+            .antMatchers("/user/registration/**").permitAll()
         	.antMatchers(staticResources).permitAll()
         	.anyRequest().authenticated()
         	.and()
@@ -50,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .loginPage("/login")
             .defaultSuccessUrl("/recipe/list", true)
             .permitAll()
+            // TODO check what is this "usernameParameter" used for!!!
             // .usernameParameter("email")
             .and()
             .logout().permitAll()

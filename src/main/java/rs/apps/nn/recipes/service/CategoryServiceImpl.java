@@ -95,4 +95,9 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryRepository.findAllByOrderByIdAsc();
 	}
 
+	@Override
+	public List<Category> findAllByOrderByDescriptionAsc() {
+		return categoryRepository.findAllByOrderByDescriptionAsc();
+	}
+
 }

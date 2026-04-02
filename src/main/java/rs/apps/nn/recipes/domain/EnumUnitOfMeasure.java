@@ -9,7 +9,11 @@ public enum EnumUnitOfMeasure implements IdLabelInt {
 	CUP("CUP"), 
 	PINC("PINC"), 
 	OUNCE("OUNCE"), 
-	DASH("DASH"), 
+	DASH("DASH"),  
+	GRAM("G"),  
+	KG("KG"),   
+	LITER("LITER"),   
+	DECILITER("DECILITER"),  
 	PINT("PINT");
 	// @formatter:on
 

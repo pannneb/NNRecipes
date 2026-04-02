@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Registration - NNRecipes Admin</title>
+    
+	<link rel="stylesheet" type="text/css"  th:href="@{../../recipes/css/bootstrap-defaultlogin.css}"/>
+ 	<link rel="stylesheet" type="text/css"  th:href="@{../../recipes/css/myStylesLogin.css}"/>
+</head>
+
+	<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+	<script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+
+<body>
+    <div id="statusMsgData" th:fragment = "statusMsgData" >
+	    <div th:class="'alert alert-custom alert-success alert-' + ${css} +  ' alert-dismissible'" role="alert" th:if="${msg}">
+			<button type="button" class="close alert-custom" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div th:text="#{${msg}}"/>
+	    </div>
+	    <div th:class="'alert alert-custom alert-danger alert-' + ${css} +  ' alert-dismissible'" role="alert" th:if="${err}">
+			<button type="button" class="close alert-custom" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div th:text="#{${err}}"/>
+	    </div>
+	</div>
+
+    <img class="rounded mx-auto d-block" style="margin-top:10px; margin-bottom:20px;" height="150" th:src="@{/img/LogoNNRecipes.jpg}" />
+
+    <div>
+
+    <form th:object="${userReg}" th:action="@{/user/registration}" method="post" style="max-width: 395px; margin: 0 auto;">
+
+        <div th:if="${param.error}">
+            <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+        </div>
+         
+        <div th:if="${param.logout}">
+            <p class="text-warning">You have been logged out.</p>
+        </div>
+
+        <div class="loginPanel p-3" style="margin-top:10px">
+            <p th:text="#{msg.user.register.registerFormTitle}">Registration form</p>
+            <p>
+                <input th:field="*{userName}" class="form-control" placeholder="Username" required autofocus/>
+            </p>
+            <p>
+                <input th:field="*{password}" type="password" class="form-control" placeholder="Password" required />
+            </p>
+            <p>
+                <input th:field="*{confirmPassword}"  type="password" class="form-control" placeholder="Confirm Password" required />
+            </p>
+            <hr>            
+            <row>
+	            <p>
+	                <!-- <input type="submit" value="Register" class="btn btn-outline-primary" /> -->
+	                <button type="submit" value="Register" class="btn btn-primary" th:text="#{button.action.register}" >Register button</button>
+	                <a style="float: right;" th:href="@{/login}" class="btn btn-outline-primary">Login</a>
+	            </p>
+            </row>
+            
+        </div>
+    </form>      
+	</div>
+
+</body>
+</html>

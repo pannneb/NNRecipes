@@ -7,21 +7,30 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import rs.apps.nn.recipes.awss3.api.v2.S3Service;
 import rs.apps.nn.recipes.domain.EnumFileType;
 import rs.apps.nn.recipes.domain.FileData;
 import rs.apps.nn.recipes.domain.Recipe;
 import rs.apps.nn.recipes.domain.RecipeImageData;
 import rs.apps.nn.recipes.repository.RecipeImageDataRepository;
+import rs.apps.nn.recipes.repository.RecipeImageMapRepository;
 
 @Service
 public class RecipeImageDataServiceImpl implements RecipeImageDataService {
 
 	private RecipeImageDataRepository recipeImageDataRepository;
+	// private RecipeImageMapRepository recipeImageMapRepository;
+
 	private FileDataService fileDataService;
 
-	public RecipeImageDataServiceImpl(RecipeImageDataRepository recipeImageDataRepository, FileDataService fileDataservice) {
+	// private S3Service s3Service;
+
+	public RecipeImageDataServiceImpl(RecipeImageDataRepository recipeImageDataRepository,
+			FileDataService fileDataservice/*, S3Service s3Service, RecipeImageMapRepository recipeImageMapRepository*/) {
 		this.recipeImageDataRepository = recipeImageDataRepository;
 		this.fileDataService = fileDataservice;
+		// this.s3Service = s3Service;
+		// this.recipeImageMapRepository = recipeImageMapRepository;
 	}
 
 	@Override
@@ -51,39 +60,46 @@ public class RecipeImageDataServiceImpl implements RecipeImageDataService {
 		recipeImageDataRepository.deleteById(id);
 	}
 
-	public RecipeImageData store(MultipartFile file, EnumFileType enumFileType, Recipe recipe, Long imageId) throws IOException {
+	public RecipeImageData store(MultipartFile file, EnumFileType enumFileType, Recipe recipe, Long imageId)
+			throws IOException {
 		FileData fd = fileDataService.store(file, imageId);
+
 		RecipeImageData recipeImageData = new RecipeImageData();
 		recipeImageData.setFileType(enumFileType);
 		recipeImageData.setRecipe(recipe);
 		recipeImageData.setFileData(fd);
 		recipeImageData.setId(fd.getId());
-		
-		// RecipeImageData recipeImageData = new RecipeImageData();
-		/// recipeImageData.setId(imageId);
+
 		return recipeImageDataRepository.save(recipeImageData);
 	}
+
+//	@Override
+//	public RecipeImageMap storeAWSS3(MultipartFile file, EnumFileType enumFileType, Recipe recipe, Long imageId) throws IOException {
+//
+//		String imgName = s3Service.uploadAWSS3(file);
+//
+//		// TODO Prepate response recipeImageData:
+//		String imgUrl = S3Config.AWS_ACCESS_S3_URL_BASE.concat(imgName);
+//		
+//		RecipeImageMap recipeImageMap = new RecipeImageMap(recipe);
+//		recipeImageMap.setUrl(imgUrl);
+//		recipeImageMap.setFileType(enumFileType);
+//		//recipeImageMap.setRecipe(recipe);
+//		RecipeImageMap a = recipeImageMapRepository.save(recipeImageMap);
+//		return a;
+////		FileData fd = fileDataService.store(file);
+////		RecipeImageData recipeImageData = new RecipeImageData();
+////		recipeImageData.setFileType(enumFileType);
+////		recipeImageData.setRecipe(recipe);
+////		recipeImageData.setFileData(fd);
+////		recipeImageData.setId(fd.getId());
+////		
+////		return recipeImageDataRepository.save(recipeImageData);
+//	}
 
 	@Override
 	public List<RecipeImageData> findAllByRecipeIdAndFileTypeOrderByIdDesc(Long recipeId, EnumFileType fileType) {
 		return recipeImageDataRepository.findAllByRecipeIdAndFileTypeOrderByIdDesc(recipeId, fileType);
 	}
-
-//	@Override
-//	public List<RecipeImageData> findAllByRecipeFkOrderByIdDesc(Long id) {
-//	    // return recipeImageDataRepository.findAllByRecipeFkOrderByIdDesc(id);
-//		return null;
-//	}
-//
-//	@Override
-//	public List<RecipeImageData> findAllByRecipeFkAndFileModeOrderByIdDesc(Long id, String fileMode) {
-//	    //return recipeImageDataRepository.findAllByRecipeFkAndFileModeOrderByIdDesc(id, fileMode);
-//		return null;
-//	}
-	
-//	@Override
-//	public List<recipeImageDataRepository> findAllByOrderByIdAsc() {
-//		return recipeImageDataRepository.findAllByOrderByIdAsc();
-//	}
 
 }

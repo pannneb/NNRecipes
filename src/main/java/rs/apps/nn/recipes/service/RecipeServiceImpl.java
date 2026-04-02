@@ -2,14 +2,17 @@ package rs.apps.nn.recipes.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import rs.apps.nn.recipes.controller.RecipeController;
+import rs.apps.nn.recipes.domain.EnumUserRole;
 import rs.apps.nn.recipes.domain.Ingredient;
 import rs.apps.nn.recipes.domain.Recipe;
+import rs.apps.nn.recipes.domain.User;
 import rs.apps.nn.recipes.exception.ValidateException;
 import rs.apps.nn.recipes.repository.IngredientRepository;
 import rs.apps.nn.recipes.repository.RecipeRepository;
@@ -20,10 +23,12 @@ public class RecipeServiceImpl implements RecipeService {
 
 	private RecipeRepository recipeRepository;
 	private IngredientRepository ingredientRepository;
+	private UserService userService;
 
-	public RecipeServiceImpl(RecipeRepository recipeRepository, IngredientRepository ingredientRepository) {
+	public RecipeServiceImpl(RecipeRepository recipeRepository, IngredientRepository ingredientRepository, UserService userService) {
 		this.recipeRepository = recipeRepository;
 		this.ingredientRepository = ingredientRepository;
+		this.userService = userService;
 	}
 
 	@Override
@@ -65,6 +70,32 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 
 	@Override
+	public List<Recipe> findAllPublicOrOwnedByUser(String loggedUser) {
+		List<Recipe> recipes = new ArrayList<>();
+		recipeRepository.findAllPublicOrOwnedByUserSQL(loggedUser).forEach(recipes::add);
+		return recipes.size() > 0 ? recipes : null;
+	}
+
+	/**
+	 * If loggedUser has role: ADMIN -> show all recipes.
+	 * Otherwise -> show only public recipes and recipes of logged user.
+	 * 
+	 */
+	@Override
+	public List<Recipe> findAllRecipesForList(String loggedUser) {
+		List<Recipe> recipes = new ArrayList<>();
+		Optional<User> loggedUserDB = userService.findUserByUserName(loggedUser);
+		if (!loggedUserDB.isEmpty()) {
+			if (EnumUserRole.ROLE_ADMIN.getId().equalsIgnoreCase(loggedUserDB.get().getRole())) {
+				recipeRepository.findAll().forEach(recipes::add);
+				return recipes.size() > 0 ? recipes : null;
+			}
+		}
+		recipeRepository.findAllPublicOrOwnedByUserSQL(loggedUser).forEach(recipes::add);
+		return recipes.size() > 0 ? recipes : null;
+	}
+	
+	@Override
 	public Recipe findById(Long id) {
 		return recipeRepository.findById(id).orElse(null);
 	}
@@ -72,7 +103,7 @@ public class RecipeServiceImpl implements RecipeService {
 	@Override
 	public Recipe save(Recipe object) {
 		List<Ingredient> lst = ingredientRepository.findAllByRecipeId(object.getId());
-		
+
 		lst.stream().forEach(i -> 
 		{
 			if (!object.getIngredients().contains(i)) {					
