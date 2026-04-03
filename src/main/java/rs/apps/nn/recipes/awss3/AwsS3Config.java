@@ -10,8 +10,6 @@ import software.amazon.awssdk.services.s3.S3Client;
 
 public class AwsS3Config {
 
-	String awsAccessKeyPublic = "AKIAWRJXV2XUC7TGQYEL";
-	String awsAccessKeyPrivate = "CNroI675R61EFkv+nk7LFKviXyh9rHccQsYFmbWz";
 	
 
     @Bean(destroyMethod = "close")
